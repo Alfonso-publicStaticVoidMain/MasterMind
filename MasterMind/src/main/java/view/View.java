@@ -12,18 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author silvia
  */
 public class View extends javax.swing.JFrame {
-
-    //private JScrollPane scrollPane;
-    private JTextArea userTriesText1;
-    private JTextArea userTriesText2;
-    private JTextArea userTriesText3;
-    private JTextArea userTriesText4;
+    //array de 4 textfield para que el usuario escriba los 4 digitos
+    private JTextField[] textFields; 
+    // Array para que se muestreslos JTextArea de los intentos del usuario
+    private JTextArea[][] userTriesTexts; 
+    //Resto de elementos
     private JButton submitButton;
     private JTextField previousTriesText;
     private JTextField triesLeftNumbersText;
@@ -35,34 +35,49 @@ public class View extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        userTriesText1 = new JTextArea();
-        userTriesText2 = new JTextArea();
-        userTriesText3 = new JTextArea();
-        userTriesText4 = new JTextArea();
-
+        //Panel para el usuario
+        textFields= new JTextField[4];
+        JPanel fieldsPanel= new JPanel(new FlowLayout());
+        for(int i=0;i<textFields.length;i++){
+            textFields[i]= new JTextField(3);//ancho para un digito
+            textFields[i].setHorizontalAlignment(JTextField.CENTER);//horiz
+            fieldsPanel.add(textFields[i]);//añades al panel
+        }
+        
+        
+        //Panel para intentos de usuario:
+        userTriesTexts = new JTextArea[10][4];
+        JPanel triesPanel = new JPanel(new GridLayout(10, 4));
+        
+      for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 4; j++) {
+                userTriesTexts[i][j] = new JTextArea(10, 4); // 1 fila, 3 columnas de ancho
+                userTriesTexts[i][j].setEditable(false); // No permitir edición directa
+                //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
+                triesPanel.add(userTriesTexts[i][j]);
+            }
+        }
+        add(triesPanel);
+   
+        
+        //panel para el resto de elementos
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
         previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
         previousTriesText.setEditable(false);//intentos previos
         triesLeftNumbersText = new JTextField("intentos restantes: 10");
         triesLeftNumbersText.setEditable(false);
-
-        JPanel userPanel = new JPanel(new FlowLayout());
-        userPanel.add(userTriesText1);
-        userPanel.add(userTriesText2);
-        userPanel.add(userTriesText3);
-        userPanel.add(userTriesText4);
-        JPanel triesPanel = new JPanel(new GridLayout(4,10));
-        JPanel buttonPanel = new JPanel(new BorderLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(submitButton);
         buttonPanel.add(previousTriesText);
-        buttonPanel.add(triesLeftNumbersText);
-                
-        add(userPanel);
+        buttonPanel.add(triesLeftNumbersText); 
+     
+        //se añaden los paneles al contenedor       
+        add(fieldsPanel);
         add(triesPanel);
         add(buttonPanel);
         
-
+        //tamaño adaptado, contenido centrado, visible
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -76,9 +91,9 @@ public class View extends javax.swing.JFrame {
 
     
     //todo obtener cada uno de los textos
-    public String getUserTry() {
-        return userTriesText1.getText();
-    }
+  //  public String getUserTry() {
+       // return userTriesText1.getText();
+   // }
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
