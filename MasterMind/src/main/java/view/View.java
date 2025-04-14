@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -14,7 +15,7 @@ import javax.swing.JTextField;
  */
 public class View extends javax.swing.JFrame {
     
-    
+     //private JScrollPane scrollPane;
     private JTextArea userTriesText;
     private JButton submitButton;
     private JTextField previousTriesText;
@@ -27,6 +28,7 @@ public class View extends javax.swing.JFrame {
     public View() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        
         
         userTriesText= new JTextArea( );
         submitButton= new JButton("Submit");
@@ -80,3 +82,43 @@ public class View extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
+/*
+todo:    para que vaya pasando de un textfield a otro 
+   private JTextField[] textFields;
+for (int i = 0; i < numberOfFields; i++) {
+            textFields[i] = new JTextField(3); // Ancho para un dígito
+            textFields[i].setHorizontalAlignment(JTextField.CENTER);
+            add(textFields[i]);
+
+            final int currentIndex = i;
+            textFields[i].addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    char c = e.getKeyChar();
+                    if (!Character.isDigit(c) || textFields[currentIndex].getText().length() >= 1) {
+                        e.consume(); // Ignora caracteres no numéricos o si ya hay un dígito
+                    }
+                }
+
+
+// Establecer el foco en el primer campo al iniciar
+        if (numberOfFields > 0) {
+            textFields[0].requestFocusInWindow();
+        }
+    }
+//para ir cambiando de textfield al siguiente
+    @Override
+                public void keyReleased(KeyEvent e) {
+                    if (textFields[currentIndex].getText().length() == 1) {
+                        if (currentIndex < numberOfFields - 1) {
+                            textFields[currentIndex + 1].requestFocusInWindow();
+                        } else {
+                            // Opcional: realizar alguna acción cuando se llena el último campo
+                            System.out.println("Todos los campos llenos.");
+                        }
+                    }
+                }
+            });
+        }
+
+*/
