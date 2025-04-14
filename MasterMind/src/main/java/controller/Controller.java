@@ -9,7 +9,7 @@ import view.View;
  *
  * @author silvia
  */
-public class Controller implements ActionListener{
+public class Controller implements ActionListener {
     private View view;
     private Model model;
      private int triesLeft;

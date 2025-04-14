@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +24,9 @@ import javax.swing.SwingConstants;
 public class View extends javax.swing.JFrame {
 
     //array de 4 textfield para que el usuario escriba los 4 digitos
+    /**
+     * A length-4 array of text fields for the user to input their numbers.
+     */
     private JTextField[] textFields;
     // Array para que se muestreslos JTextArea de los intentos del usuario
     private JTextArea[][] userTriesTexts;
@@ -93,7 +97,8 @@ public class View extends javax.swing.JFrame {
 
         // Añadir KeyListeners a todos los JTextFields y limitar a un único dígito
         for (JTextField textField : textFields) {
-            textField.addKeyListener(new java.awt.event.KeyListener() {
+            textField.addKeyListener(
+                new java.awt.event.KeyListener() {
                 @Override
                 public void keyTyped(KeyEvent evt) {
                     char c = evt.getKeyChar();
@@ -109,7 +114,8 @@ public class View extends javax.swing.JFrame {
                 @Override
                 public void keyReleased(KeyEvent evt) {
                 }
-            });
+            }
+            );
         }
 
         // Añadir KeyListeners para pasar al siguiente JTextField al completar un dígito
