@@ -1,10 +1,14 @@
 package view;
 
 import controller.Controller;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -14,50 +18,69 @@ import javax.swing.JTextField;
  * @author silvia
  */
 public class View extends javax.swing.JFrame {
-    
-     //private JScrollPane scrollPane;
-    private JTextArea userTriesText;
+
+    //private JScrollPane scrollPane;
+    private JTextArea userTriesText1;
+    private JTextArea userTriesText2;
+    private JTextArea userTriesText3;
+    private JTextArea userTriesText4;
     private JButton submitButton;
     private JTextField previousTriesText;
     private JTextField triesLeftNumbersText;
     //TODO texto final de Acertaste! para colocar nmeros y que se vea en verde por ejemplo
-    
+
     private Controller controller;
-    
-    
+
     public View() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        
-        
-        userTriesText= new JTextArea( );
-        submitButton= new JButton("Submit");
+
+        userTriesText1 = new JTextArea();
+        userTriesText2 = new JTextArea();
+        userTriesText3 = new JTextArea();
+        userTriesText4 = new JTextArea();
+
+        submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
-        previousTriesText= new JTextField(" ");//todo meter dentro de un scroll
+        previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
         previousTriesText.setEditable(false);//intentos previos
-        triesLeftNumbersText= new JTextField("intentos restantes: 10");
+        triesLeftNumbersText = new JTextField("intentos restantes: 10");
         triesLeftNumbersText.setEditable(false);
+
+        JPanel userPanel = new JPanel(new FlowLayout());
+        userPanel.add(userTriesText1);
+        userPanel.add(userTriesText2);
+        userPanel.add(userTriesText3);
+        userPanel.add(userTriesText4);
+        JPanel triesPanel = new JPanel(new GridLayout(4,10));
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(submitButton);
+        buttonPanel.add(previousTriesText);
+        buttonPanel.add(triesLeftNumbersText);
+                
+        add(userPanel);
+        add(triesPanel);
+        add(buttonPanel);
         
-        add(userTriesText);
-        add(submitButton);
-        add(previousTriesText);
-        add(triesLeftNumbersText);
-        
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-   
+
     }
-    
-    public void setController(Controller controller){
-        this.controller=controller;
+
+    public void setController(Controller controller) {
+        this.controller = controller;
         submitButton.addActionListener((ActionListener) controller);
     }
 
-    public String getUserTry(){
-        return userTriesText.getText();
+    
+    //todo obtener cada uno de los textos
+    public String getUserTry() {
+        return userTriesText1.getText();
     }
-   
+
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -77,7 +100,6 @@ public class View extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
