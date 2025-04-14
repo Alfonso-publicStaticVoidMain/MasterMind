@@ -12,55 +12,50 @@ import java.util.Random;
  */
 public class MasterMind {
 
-    private int longitud;
-    private String numeroAleatorio;
-    // private String cadenaIntroducida;
-    //  private int numeroAciertosMismoLugar;
-    //  private int numeroAciertosDiferenteLugar;
+    private int length;
+    private String randomNumber;
+    
 
     public MasterMind(int longitud) {
 
-        this.longitud = longitud;
-        this.numeroAleatorio = numeroAleatorio(longitud);
-
-        //this.numeroAciertosMismoLugar = aciertosMismoLugar(cadenaIntroducida, this.numeroAleatorio);
-        //this.numeroAciertosDiferenteLugar = aciertosCualquierLugar(cadenaIntroducida, this.numeroAleatorio);
+        this.length = longitud;
+        this.randomNumber = createRandomNumber(longitud);
     }
 
-    public String getNumeroAleatorio() {
-        return numeroAleatorio;
+    public String getRandomNumber() {
+        return randomNumber;
     }
 
-    static public String numeroAleatorio(int longitud) {
-        StringBuilder cadena = new StringBuilder();
-        StringBuilder numerosCadena = new StringBuilder("123456789");
+    static public String createRandomNumber(int longitud) {
+        StringBuilder chain = new StringBuilder();
+        StringBuilder numbersOfChain = new StringBuilder("123456789");
         int numero;
         Random random = new Random();
         for (int i = 0; i < longitud; i++) {
-            numero = random.nextInt(0, numerosCadena.length());
-            cadena.append(numerosCadena.toString().charAt(numero));
-            numerosCadena.deleteCharAt(numero);
+            numero = random.nextInt(0, numbersOfChain.length());
+            chain.append(numbersOfChain.toString().charAt(numero));
+            numbersOfChain.deleteCharAt(numero);
         }
-        return cadena.toString();
+        return chain.toString();
     }
     
 
-    public int aciertosMismoLugar(String cadenaIntroducida) {
+    public int hitsSamePlace(String introducedString) {
         int contador = 0;
-        for (int i = 0; i < cadenaIntroducida.length(); i++) {
-            if (this.numeroAleatorio.charAt(i) == cadenaIntroducida.charAt(i)) {
+        for (int i = 0; i < introducedString.length(); i++) {
+            if (this.randomNumber.charAt(i) == introducedString.charAt(i)) {
                 contador++;
             }
         }
         return contador;
     }
 
-    public int aciertosCualquierLugar(String cadenaIntroducida) {
+    public int hitsAnyWhere(String introducedString) {
         int contador = 0;
-        for (int i = 0; i < cadenaIntroducida.length(); i++) {
+        for (int i = 0; i < introducedString.length(); i++) {
 
-            for (int j = 0; j < this.numeroAleatorio.length(); j++) {
-                if (cadenaIntroducida.charAt(i) == this.numeroAleatorio.charAt(j)) {
+            for (int j = 0; j < this.randomNumber.length(); j++) {
+                if (introducedString.charAt(i) == this.randomNumber.charAt(j)) {
                     contador++;
                     break;
                 }
@@ -70,37 +65,10 @@ public class MasterMind {
         return contador;
     }
 
-    public int getLongitud() {
-        return longitud;
-    }
-    
-    
+    public int getLength() {
+        return length;
+    } 
 
 }
 
-class TamañoIncorrectoException extends Exception {
 
-    @Override
-    public String getMessage() {
-        return "Tamaño incorrecto";
-    }
-
-}
-
-class ValoresInvalidosException extends Exception {
-
-    @Override
-    public String getMessage() {
-        return "Valores invalidos";
-    }
-
-}
-
-class ValoresRepetidosException extends Exception {
-
-    @Override
-    public String getMessage() {
-        return "Valores repetidos";
-    }
-
-}
