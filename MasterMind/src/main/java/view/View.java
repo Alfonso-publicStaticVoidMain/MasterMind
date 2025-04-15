@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -41,7 +42,8 @@ public class View extends javax.swing.JFrame {
 
     public View() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        BoxLayout bx= new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
+        setLayout(bx);
         //titulo
         setTitle("Mastermind");
         //fondo
@@ -53,7 +55,7 @@ public class View extends javax.swing.JFrame {
             
     
         JPanel titlePanel = new JPanel();
-        titlePanel.setBackground(getBackground()); 
+        titlePanel.setBackground(Color.pink); 
 
         titleLabel = new JLabel("Mastermind");
         //titleLabel.setFont(); 
@@ -68,16 +70,18 @@ public class View extends javax.swing.JFrame {
         //Panel para el usuario
         numberInputs = new JTextField[4];
         JPanel fieldsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-         fieldsPanel.setBackground(getBackground());
+         fieldsPanel.setBackground(Color.pink);
         fieldsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         for (int i = 0; i < numberInputs.length; i++) {
             numberInputs[i] = new JTextField(3);//ancho para un digito
             numberInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             numberInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
-          //  numberInputs[i].setBorder(BorderFactory.createCompoundBorder(
-                    //BorderFactory.createRoundBorder(8, new Color(52, 152, 219)), // Borde redondeado azul
-                   // BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
-            //));
+//           final int width = 30;  // Establecer un ancho fijo
+//            final int height = 30; // Establecer un alto fijo
+//            numberInputs[i].setBorder(BorderFactory.createCompoundBorder(
+//                    BorderFactory.createRoundedBorder(new RoundRectangle2D.Double(0, 0, width, height, 8, 8), new Color(52, 152, 219)), // Borde redondeado azul
+//                    BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
+//            ));
             fieldsPanel.add(numberInputs[i]);//añades al panel
         }
         fieldsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
@@ -86,8 +90,8 @@ public class View extends javax.swing.JFrame {
         userTriesTexts = new JTextArea[10][4];
         //ultimos 10 10para añadir espacio entre celdas
         JPanel triesPanel = new JPanel(new GridLayout(10, 4,10,10));
-        triesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-         triesPanel.setBackground(getBackground());
+        triesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+         triesPanel.setBackground(Color.PINK);
 
 
         for (int i = 0; i < 10; i++) {
@@ -99,7 +103,8 @@ public class View extends javax.swing.JFrame {
                 userTriesTexts[i][j].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
                 userTriesTexts[i][j].setAlignmentY(JTextArea.CENTER_ALIGNMENT);
                   userTriesTexts[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
-                triesPanel.add(userTriesTexts[i][j]);
+                userTriesTexts[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
+                  triesPanel.add(userTriesTexts[i][j]);
                 userTriesTexts[i][j].setBackground(Color.WHITE);
             }
         }
@@ -112,9 +117,12 @@ public class View extends javax.swing.JFrame {
         previousTriesText.setEditable(false);//intentos previos
         triesLeftNumbersText = new JTextField("intentos restantes: 10");
         triesLeftNumbersText.setEditable(false);
+        
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-
+        triesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+         submitButton.setBorderPainted(false);
+        
         buttonPanel.add(submitButton);
         buttonPanel.add(previousTriesText);
         buttonPanel.add(triesLeftNumbersText);
@@ -212,46 +220,7 @@ public class View extends javax.swing.JFrame {
         triesLeftNumbersText.setText("Intentos restantes: " + triesLeft);
     }
 
-//    public void displayFeedback(String guess, int correctPositions, int presentDigits) {
-//
-//        // Verifica si todavía quedan intentos disponibles.
-//        if (currentTry < 10) {
-//            // Itera a través de cada dígito del intento (hasta ñ longitud del número secreto).
-//            for (int i = 0; i < 4; i++) {
-//                // Asegura que ñestamos dentro de la longitud del intento proporcionado.
-//                if (i < guess.length()) {
-//                    // Establece el texto del JTextArea correspondiente en la cuadrícula de intentos
-//                    // con el dígito del intento actual.
-//                    userTriesTexts[currentTry][i].setText(String.valueOf(guess.charAt(i)));
-//
-//                    // Verde: el dígito es correcto y está en la posición correcta.
-//                    if (correctPositions > i) {
-//                        userTriesTexts[currentTry][i].setBackground(java.awt.Color.GREEN);
-//                    } // Amarillo: el dígito es correcto pero está en una posición incorrecta.
-//                    else if (correctPositions + presentDigits > i) {
-//                        userTriesTexts[currentTry][i].setBackground(java.awt.Color.YELLOW);
-//                    } // Color por defecto (null): el dígito no es correcto.
-//                    else {
-//                        userTriesTexts[currentTry][i].setBackground(null);
-//                    }
-//                } // Si el intento es más corto que el número de dígitos esperado,celda vacia color pered
-//                else {
-//                    userTriesTexts[currentTry][i].setText("");
-//                    userTriesTexts[currentTry][i].setBackground(null);
-//                }
-//            }
-//
-//            // Incrementa el contador de intentos para el siguiente intento.
-//            currentTry++;
-//        }
-//        // Si no quedan intentos (se ha alcanzado MAX_TRIES), este método no hará nada.
-//    }
-//    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-//  
 
-    
-    
-    
     
     
      public void displayFeedback(String guess, String[] feedback) {
