@@ -3,20 +3,21 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import model.Model;
-import view.View;
+import model.MasterMindModel;
+import view.MasterMindView;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
-public class Controller implements ActionListener {
+public class MasterMindController implements ActionListener {
 
-    private View view;
-    private Model model;
-    //private int currentTry = 0;
+    private MasterMindView view;
+    private MasterMindModel model;
 
-    public Controller(View view, Model model) {
+    public MasterMindController(MasterMindView view, MasterMindModel model) {
         this.view = view;
         this.model = model;
         
@@ -25,8 +26,11 @@ public class Controller implements ActionListener {
 
         this.view.setController(this);
         //inicial el cont de intentos
-        this.view.setTriesLeftNumbersText(this.triesLeft());
-        //this.currentTry = 0;
+        this.view.setTriesLeftText(this.triesLeft());
+    }
+    
+    public MasterMindModel model() {
+        return this.model;
     }
 
     public int maxTries() {
@@ -57,46 +61,15 @@ public class Controller implements ActionListener {
         if (!this.isGameFinished() && command.equals("submit")) {
             String guess = view.getUserDigits();
 
-            // Validar que el usuario ha introducido 4 dígitos
             if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
-//                int correctPositions = model.hitsSamePlace(guess);
-//                int presentDigits = model.hitsAnyWhere(guess) - correctPositions; // Evitar contar los correctos en posición
-
-//                view.displayFeedback(userGuess, correctPositions, presentDigits);
                 this.model.consumeTry();
-                view.setTriesLeftNumbersText(this.triesLeft());
+                view.setTriesLeftText(this.triesLeft());
                 view.clearInputFields();
 
-//                if (correctPositions == model.getLength()) {
-//
-//                } else if (triesLeft == 0) {
-//
-//                }
-//                correctPositions = model.hitsSamePlace(guess);
-//                presentDigits = model.hitsAnyWhere(guess);
-
-                /*
-                String[] feedback = new String[guess.length()];
-                for (int i = 0; i < guess.length(); i++) {
-                    if (correctPositions > i) {
-                        feedback[i] = "correct";
-                    } else if (correctPositions + presentDigits > i) {
-                        feedback[i] = "partial";
-                    } else {
-                        feedback[i] = "incorrect";
-                    }
-                }
-                 */
                 String[] feedbackInfo = this.model.feedbackInfo(guess);
                 view.displayFeedback(guess, feedbackInfo); // Pasar feedback a vista
 
-                if (this.model.hitsSamePlace(guess) == this.length()
-                        /*
-                        Stream.of(feedbackInfo)
-                        .filter(str -> str.equals("correct"))
-                        .count()
-                        == 4
-                        */) {
+                if (this.model.hitsSamePlace(guess) == this.length()) {
                     this.finishGame();
                     JOptionPane.showConfirmDialog(
                         this.view,

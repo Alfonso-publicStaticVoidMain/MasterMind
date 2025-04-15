@@ -6,9 +6,11 @@ import java.util.Random;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
-public class Model {
+public class MasterMindModel {
 
     /**
      * Número aleatorio que el usuario tiene que adivinar. Se almacena en una
@@ -16,8 +18,17 @@ public class Model {
      * repeticiones.
      */
     private String numberToGuess;
-    private int length = 4;
-    private int maxTries = 10;
+    /**
+     * Longitud del número aleatorio a generar.
+     */
+    private int length;
+    /**
+     * Número máximo de intentos.
+     */
+    private int maxTries;
+    /**
+     * Número de intentos restantes.
+     */
     private int triesLeft;
     //guardar el historial de intentos:
     private List<String> attemptHistory = new ArrayList<>();
@@ -25,11 +36,13 @@ public class Model {
 
     boolean[] secretUse;
 
-    public Model() {}
+    public MasterMindModel() {}
     
-    public Model(int length, int maxTries) {
+    public MasterMindModel(int length, int maxTries) {
         this.length = length;
+        this.numberToGuess = this.generateRandomNumber();
         this.maxTries = maxTries;
+        this.triesLeft = this.maxTries;
     }
 
     public int getMaxTries() {
@@ -38,7 +51,7 @@ public class Model {
 
     public void setLength(int length) {
         this.length = length;
-        this.numberToGuess = createRandomNumber(length);
+        this.numberToGuess = this.generateRandomNumber();
         System.out.println(numberToGuess);
     }
 
@@ -49,6 +62,10 @@ public class Model {
 
     public int getTriesLeft() {
         return triesLeft;
+    }
+
+    public void setTriesLeft(int triesLeft) {
+        this.triesLeft = triesLeft;
     }
 
     public boolean isGameFinished() {
@@ -67,12 +84,12 @@ public class Model {
         return numberToGuess;
     }
 
-    public static String createRandomNumber(int longitud) {
+    public String generateRandomNumber() {
         StringBuilder str = new StringBuilder();
         StringBuilder avaliableDigits = new StringBuilder("123456789");
         int numero;
         Random random = new Random();
-        for (int i = 0; i < longitud; i++) {
+        for (int i = 0; i < this.length; i++) {
             numero = random.nextInt(0, avaliableDigits.length());
             str.append(avaliableDigits.toString().charAt(numero));
             avaliableDigits.deleteCharAt(numero);
@@ -97,9 +114,12 @@ public class Model {
             boolean resultUpdated = false;
             for (int j = 0; j < this.length; j++) {
                 if (userDigit == numberToGuess.charAt(j)) {
-                    if (i == j) result[i] = "correct";
-                    else result[i] = "partial";
                     resultUpdated = true;
+                    if (i == j) {
+                        result[i] = "correct";
+                        break;
+                    }
+                    else result[i] = "partial";
                 }
             }
             if (!resultUpdated) result[i] = "incorrect";
@@ -117,22 +137,6 @@ public class Model {
         }
         return counter;
     }
-
-//    public int hitsAnyWhere(String introducedString) {
-//        int contador = 0;
-//        for (int i = 0; i < introducedString.length(); i++) {
-//
-//            for (int j = 0; j < this.numberToGuess.length(); j++) {
-//                if (introducedString.charAt(i) == this.numberToGuess.charAt(j)) {
-//                    contador++;
-//                    break;
-//                }
-//            }
-//
-//        }
-//        return contador;
-//    }
-    
     
     public int hitsAnyWhere(String guess) {
         int cont = 0;
@@ -165,8 +169,8 @@ public class Model {
 
     //  reiniciar el juego (generarnd nuevo num secreto)
     public void resetGame() {
-        this.numberToGuess = createRandomNumber(length);
-        // this.attemptHistory.clear(); // Si implementamos el historial
+        this.numberToGuess = this.generateRandomNumber();
+        this.attemptHistory.clear(); // Si implementamos el historial
     }
 
     //guardar el historial de intentos
