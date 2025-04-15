@@ -1,21 +1,18 @@
 package view;
 
 import controller.Controller;
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -46,22 +43,31 @@ public class View extends javax.swing.JFrame {
         //Panel para el usuario
         textFields = new JTextField[4];
         JPanel fieldsPanel = new JPanel(new FlowLayout());
+        fieldsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         for (int i = 0; i < textFields.length; i++) {
             textFields[i] = new JTextField(3);//ancho para un digito
             textFields[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             fieldsPanel.add(textFields[i]);//añades al panel
         }
-
+        fieldsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+        
         //Panel para intentos de usuario:
         userTriesTexts = new JTextArea[10][4];
-        JPanel triesPanel = new JPanel(new GridLayout(10, 4));
+        //5 5 para añadir espacio entre celdas
+        JPanel triesPanel = new JPanel(new GridLayout(10, 4,5,5));
+        triesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 4; j++) {
                 userTriesTexts[i][j] = new JTextArea(10, 4); // 1 fila, 3 columnas de ancho
                 userTriesTexts[i][j].setEditable(false); // No permitir edición directa
                 //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
+               userTriesTexts[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                userTriesTexts[i][j].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+                userTriesTexts[i][j].setAlignmentY(JTextArea.CENTER_ALIGNMENT);
                 triesPanel.add(userTriesTexts[i][j]);
+                userTriesTexts[i][j].setBackground(Color.WHITE);
             }
         }
         add(triesPanel);
@@ -74,6 +80,8 @@ public class View extends javax.swing.JFrame {
         triesLeftNumbersText = new JTextField("intentos restantes: 10");
         triesLeftNumbersText.setEditable(false);
         JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+
         buttonPanel.add(submitButton);
         buttonPanel.add(previousTriesText);
         buttonPanel.add(triesLeftNumbersText);
@@ -199,6 +207,11 @@ public class View extends javax.swing.JFrame {
         // Si no quedan intentos (se ha alcanzado MAX_TRIES), este método no hará nada.
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+  
+
+
+
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -220,4 +233,7 @@ public class View extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+//todo al acertar finaliza el juego
+
 }
