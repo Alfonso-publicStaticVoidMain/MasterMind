@@ -25,8 +25,7 @@ public class Model {
 
     boolean[] secretUse;
 
-    public Model() {
-    }
+    public Model() {}
     
     public Model(int length, int maxTries) {
         this.length = length;

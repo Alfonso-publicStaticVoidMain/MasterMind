@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -55,9 +56,29 @@ public class View extends javax.swing.JFrame {
     private int length = 4;
     private int maxTries = 10;
 
-    public View(int length, int maxTries) {
-        this.length = length;
-        this.maxTries = maxTries;
+    public View() {
+        
+        Object[] options = {"Easy", "Normal"};
+        int n = JOptionPane.showOptionDialog(
+            this,
+            "Choose the difficulty.",
+            "Difficulty menu",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,     //do not use a custom Icon
+            options,  //the titles of buttons
+            options[0]); //default button title
+        switch (n) {
+            case 0 -> {
+                this.length = 4;
+                this.maxTries = 10;
+            }
+            case 1 -> {
+                this.length = 5;
+                this.maxTries = 10;
+            }
+        }
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         //titulo
@@ -75,7 +96,7 @@ public class View extends javax.swing.JFrame {
         titlePanel.add(titleLabel);
 
         //Panel para el usuario
-        userInputs = new JTextField[length];
+        userInputs = new JTextField[this.length];
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         userInputPanel.setBackground(Color.pink);
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
@@ -94,16 +115,16 @@ public class View extends javax.swing.JFrame {
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
         //Panel para intentos de usuario:
-        previousTries = new JTextArea[maxTries][length];
+        previousTries = new JTextArea[this.maxTries][this.length];
         //ultimos 10 10para añadir espacio entre celdas
-        previousTriesPanel = new JPanel(new GridLayout(maxTries, length, 10, 10));
+        previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Color.PINK);
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
-                previousTries[i][j] = new JTextArea(maxTries, length); // 1 fila, 3 columnas de ancho
+                previousTries[i][j] = new JTextArea(this.maxTries, this.length); // 1 fila, 3 columnas de ancho
                 previousTries[i][j].setEditable(false); // No permitir edición directa
                 //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
                 previousTries[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
@@ -149,99 +170,100 @@ public class View extends javax.swing.JFrame {
     }
     
     
-    public View() {
-        this(4, 10);
-        
-        /*
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        //titulo
-        setTitle("Mastermind");
-        //fondo
-        getContentPane().setBackground(Color.PINK);
-
-        //panel titulo
-        titlePanel = new JPanel();
-        titlePanel.setBackground(Color.pink);
-
-        titleLabel = new JLabel("Mastermind");
-        //titleLabel.setFont(); 
-        titleLabel.setForeground(new Color(41, 128, 185));
-        titlePanel.add(titleLabel);
-
-        //Panel para el usuario
-        userInputs = new JTextField[4];
-        userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        userInputPanel.setBackground(Color.pink);
-        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-        for (int i = 0; i < userInputs.length; i++) {
-            userInputs[i] = new JTextField(3);//ancho para un digito
-            userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
-            userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
-//           final int width = 30;  // Establecer un ancho fijo
-//            final int height = 30; // Establecer un alto fijo
-//            numberInputs[i].setBorder(BorderFactory.createCompoundBorder(
-//                    BorderFactory.createRoundedBorder(new RoundRectangle2D.Double(0, 0, width, height, 8, 8), new Color(52, 152, 219)), // Borde redondeado azul
-//                    BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
-//            ));
-            userInputPanel.add(userInputs[i]);//añades al panel
-        }
-        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
-
-        //Panel para intentos de usuario:
-        previousTries = new JTextArea[10][4];
-        //ultimos 10 10para añadir espacio entre celdas
-        previousTriesPanel = new JPanel(new GridLayout(10, 4, 10, 10));
-        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        previousTriesPanel.setBackground(Color.PINK);
-        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 4; j++) {
-                previousTries[i][j] = new JTextArea(10, 4); // 1 fila, 3 columnas de ancho
-                previousTries[i][j].setEditable(false); // No permitir edición directa
-                //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
-                previousTries[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-                previousTries[i][j].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
-                previousTries[i][j].setAlignmentY(JTextArea.CENTER_ALIGNMENT);
-                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
-                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
-                previousTriesPanel.add(previousTries[i][j]);
-                previousTries[i][j].setBackground(Color.WHITE);
-            }
-        }
-        add(previousTriesPanel);
-
-        //panel para el resto de elementos
-        submitButton = new JButton("Submit");
-        submitButton.setActionCommand("submit");
-        //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
-        //previousTriesText.setEditable(false);//intentos previos
-        triesLeftField = new JTextField("intentos restantes: 10");
-        triesLeftField.setEditable(false);
-
-        bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-        
-        submitButton.setBorderPainted(false);
-
-        bottomPanel.add(submitButton);
-        bottomPanel.add(triesLeftField);
-
-        //se añaden los paneles al contenedor   
-        add(titlePanel, 0); // Añadir  parte superior
-        add(userInputPanel);
-        add(previousTriesPanel);
-        add(bottomPanel);
-
-        //tamaño adaptado, contenido centrado, visible
-        setSize(360, 640);
-        setResizable(false);//q no ca,bie el tamaño eluser
-        // pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-        */
-    }
+//    public View() {
+//        
+//        this(4, 10);
+//        
+//        /*
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+//        //titulo
+//        setTitle("Mastermind");
+//        //fondo
+//        getContentPane().setBackground(Color.PINK);
+//
+//        //panel titulo
+//        titlePanel = new JPanel();
+//        titlePanel.setBackground(Color.pink);
+//
+//        titleLabel = new JLabel("Mastermind");
+//        //titleLabel.setFont(); 
+//        titleLabel.setForeground(new Color(41, 128, 185));
+//        titlePanel.add(titleLabel);
+//
+//        //Panel para el usuario
+//        userInputs = new JTextField[4];
+//        userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
+//        userInputPanel.setBackground(Color.pink);
+//        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+//        for (int i = 0; i < userInputs.length; i++) {
+//            userInputs[i] = new JTextField(3);//ancho para un digito
+//            userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
+//            userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
+////           final int width = 30;  // Establecer un ancho fijo
+////            final int height = 30; // Establecer un alto fijo
+////            numberInputs[i].setBorder(BorderFactory.createCompoundBorder(
+////                    BorderFactory.createRoundedBorder(new RoundRectangle2D.Double(0, 0, width, height, 8, 8), new Color(52, 152, 219)), // Borde redondeado azul
+////                    BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
+////            ));
+//            userInputPanel.add(userInputs[i]);//añades al panel
+//        }
+//        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+//
+//        //Panel para intentos de usuario:
+//        previousTries = new JTextArea[10][4];
+//        //ultimos 10 10para añadir espacio entre celdas
+//        previousTriesPanel = new JPanel(new GridLayout(10, 4, 10, 10));
+//        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+//        previousTriesPanel.setBackground(Color.PINK);
+//        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+//        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
+//        for (int i = 0; i < 10; i++) {
+//            for (int j = 0; j < 4; j++) {
+//                previousTries[i][j] = new JTextArea(10, 4); // 1 fila, 3 columnas de ancho
+//                previousTries[i][j].setEditable(false); // No permitir edición directa
+//                //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
+//                previousTries[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+//                previousTries[i][j].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+//                previousTries[i][j].setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+//                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
+//                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
+//                previousTriesPanel.add(previousTries[i][j]);
+//                previousTries[i][j].setBackground(Color.WHITE);
+//            }
+//        }
+//        add(previousTriesPanel);
+//
+//        //panel para el resto de elementos
+//        submitButton = new JButton("Submit");
+//        submitButton.setActionCommand("submit");
+//        //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
+//        //previousTriesText.setEditable(false);//intentos previos
+//        triesLeftField = new JTextField("intentos restantes: 10");
+//        triesLeftField.setEditable(false);
+//
+//        bottomPanel = new JPanel(new FlowLayout());
+//        bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+//        
+//        submitButton.setBorderPainted(false);
+//
+//        bottomPanel.add(submitButton);
+//        bottomPanel.add(triesLeftField);
+//
+//        //se añaden los paneles al contenedor   
+//        add(titlePanel, 0); // Añadir  parte superior
+//        add(userInputPanel);
+//        add(previousTriesPanel);
+//        add(bottomPanel);
+//
+//        //tamaño adaptado, contenido centrado, visible
+//        setSize(360, 640);
+//        setResizable(false);//q no ca,bie el tamaño eluser
+//        // pack();
+//        setLocationRelativeTo(null);
+//        setVisible(true);
+//        */
+//    }
 
     public int getLength() {
         return this.length;

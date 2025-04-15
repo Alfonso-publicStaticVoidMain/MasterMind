@@ -13,7 +13,7 @@ import view.View;
 public class MasterMindMain {
 
     public static void main(String[] args) {
-        View view = new View(5, 12);
+        View view = new View();
         Model model= new Model();
         Controller controller = new Controller(view, model);
     }
