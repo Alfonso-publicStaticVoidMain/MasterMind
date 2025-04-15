@@ -14,6 +14,8 @@ public class Controller implements ActionListener {
     private Model model;
      private int triesLeft;
     private final int MAX_TRIES = 10;
+    private int currentTry = 0;
+    private boolean gameWon = false;
 
     public Controller(View view, Model model) {
         this.view = view;
@@ -23,6 +25,7 @@ public class Controller implements ActionListener {
         this.view.setController(this);
         //inicial el cont de intentos
          this.view.setTriesLeftNumbersText(triesLeft); 
+         this.currentTry = 0;
         updateView();
     }
 
@@ -39,16 +42,19 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-
+        
         if ("submit".equals(command)) {
-            String userGuess = view.getUserDigits();
+            String guess = view.getUserDigits();
 
             // Validar que el usuario ha introducido 4 dígitos
-            if (userGuess.length() == model.getLength() && userGuess.matches("[0-9]+")) {
-                int correctPositions = model.hitsSamePlace(userGuess);
-                int presentDigits = model.hitsAnyWhere(userGuess) - correctPositions; // Evitar contar los correctos en posición
+            if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
+                int correctPositions = model.hitsSamePlace(guess);
+                int presentDigits = model.hitsAnyWhere(guess) - correctPositions; // Evitar contar los correctos en posición
 
-                view.displayFeedback(userGuess, correctPositions, presentDigits);
+//                view.displayFeedback(userGuess, correctPositions, presentDigits);
+
+
+
                 triesLeft--;
                 view.setTriesLeftNumbersText(triesLeft);
                 view.clearInputFields();
@@ -58,6 +64,60 @@ public class Controller implements ActionListener {
                 } else if (triesLeft == 0) {
                     
                 }
+                
+                
+                
+                
+                
+                
+              
+  correctPositions = model.hitsSamePlace(guess);
+            presentDigits = model.hitsAnyWhere(guess);
+
+            String[] feedback = new String[guess.length()];
+            for (int i = 0; i < guess.length(); i++) {
+                if (correctPositions > i) {
+                    feedback[i] = "correct";
+                } else if (correctPositions + presentDigits > i) {
+                    feedback[i] = "partial";
+                } else {
+                    feedback[i] = "incorrect";
+                }
+            }
+            view.displayFeedback(guess, feedback); // Pasar feedback a vista
+
+            if (correctPositions == model.getLength()) {
+                gameWon = true;
+//                view.displayWinMessage("¡Felicidades! ¡Has ganado!");
+//                view.disableInputs();
+            } else {
+                currentTry++;
+                //view.setTriesLeft(MAX_TRIES - currentTry);
+                if (currentTry >= MAX_TRIES) {
+//                    view.displayWinMessage("¡Se acabaron los intentos! El número era " + model.getRandomNumber());
+//                    view.disableInputs();
+                }
+                view.clearInputFields();
+            }
+        }
+    
+  
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             } else {
                 // Informar al usuario sobre una entrada inválida (podrías añadir un mensaje en la View)
                 System.out.println("Entrada inválida. Debes ingresar " + model.getLength() + " dígitos.");
@@ -86,4 +146,4 @@ public class Controller implements ActionListener {
 
    
     
-}}
+}

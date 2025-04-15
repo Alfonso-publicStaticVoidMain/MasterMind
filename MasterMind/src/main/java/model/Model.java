@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,6 +15,8 @@ public class Model {
     private static final int filas = 10;
     //guardar el historial de intentos:
     private ArrayList<String> attemptsHistory;
+    
+    boolean[] secretUse;
 
     public Model() {
         this.randomNumber = createRandomNumber(columns);
@@ -68,7 +71,7 @@ public class Model {
     public int hitsAnyWhere(String introducedString) {
     int cont = 0;
     String secret = this.randomNumber;
-    boolean[] secretUse = new boolean[secret.length()]; // dig igual o no
+    secretUse = new boolean[secret.length()]; // dig igual o no
 
     for (int i = 0; i < introducedString.length(); i++) {
         char digitIntroduced = introducedString.charAt(i);
@@ -117,4 +120,11 @@ public class Model {
      }
     //todo q termine al acertar
      //todo q los intentos terminen en 0
+
+    public boolean[] getSecretUse() {
+        return secretUse;
+    }
+     
+        
+     
 }
