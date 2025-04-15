@@ -29,19 +29,10 @@ public class Controller implements ActionListener {
         //inicial el cont de intentos
         this.view.setTriesLeftNumbersText(triesLeft);
         this.currentTry = 0;
-        updateView();
     }
 
     public int getMAX_TRIES() {
         return MAX_TRIES;
-    }
-
-    private void updateView() {
-        // A: todo o que se xa funciona todo? TODO eliminar este método supoño.
-        //todo
-        //- view.triesLeftNumbersText -1 
-        //- previousTriesText añadir el intento del textArea
-        //userTriesText resetearlo
     }
 
     //TODO
