@@ -20,10 +20,12 @@ public class MasterMindController implements ActionListener {
     public MasterMindController(MasterMindView view, MasterMindModel model) {
         this.view = view;
         this.model = model;
-        
+
+        // Set initial game parameters
         this.model.setLength(this.view.getLength());
         this.model.setMaxTries(this.view.getMaxTries());
 
+        // Connect Controller with View
         this.view.setController(this);
         //inicial el cont de intentos
         this.view.setTriesLeftText(this.triesLeft());
@@ -36,19 +38,19 @@ public class MasterMindController implements ActionListener {
     public int maxTries() {
         return this.model.getMaxTries();
     }
-    
+
     public int triesLeft() {
         return this.model.getTriesLeft();
     }
-    
+
     public int length() {
         return this.model.getLength();
     }
-    
+
     public boolean isGameFinished() {
         return this.model.isGameFinished();
     }
-    
+
     public void finishGame() {
         this.model.finishGame();
     }
@@ -69,36 +71,74 @@ public class MasterMindController implements ActionListener {
                 String[] feedbackInfo = this.model.feedbackInfo(guess);
                 view.displayFeedback(guess, feedbackInfo); // Pasar feedback a vista
 
+                // **CONDICION DE GANAR**
                 if (this.model.hitsSamePlace(guess) == this.length()) {
                     this.finishGame();
-                    JOptionPane.showConfirmDialog(
-                        this.view,
-                        "You guessed the number correctly. Congrats!",
-                        "End of the game",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null
+                    int choice = JOptionPane.showConfirmDialog(
+                            this.view,
+                            "You guessed the number correctly. Congrats! Do you want to play again?",
+                            "End of the game",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE
                     );
+
+                    if (choice == JOptionPane.YES_OPTION) {
+                        resetGame(true); // ✅ Pass 'true' because the user won
+                    } else {
+                        view.disableInputs();
+                        showGoodbyeMessage(); //Show the goodbyw message
+                    }
+
                 }
-                
-                
+
+                // **CONDICION DE PERDER **
                 if (!this.isGameFinished() && this.triesLeft() == 0) {
                     this.finishGame();
-                    JOptionPane.showConfirmDialog(
-                        this.view,
-                        "You have no tries left. You lost!",
-                        "End of the game",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null
+                    int choice = JOptionPane.showConfirmDialog(
+                            this.view,
+                            "You have no tries left. You lost! Do you want to play again?",
+                            "Game Over",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE
                     );
-                }
-                
-            } 
 
+                    if (choice == JOptionPane.YES_OPTION) {
+                        resetGame(false); // ✅ Pass 'false' because the user lost
+                    } else {
+                        view.disableInputs();
+                        showGoodbyeMessage(); // 🚀 NEW: Show the goodbye message
+                    }
+                }
+            }
         } else {
             view.clearInputFields();
         }
+    }
+    // **🚀 Added Method to Show Goodbye Message and Exit**
+
+    private void showGoodbyeMessage() {
+        JOptionPane.showMessageDialog(
+                this.view,
+                "Thank you for playing Mastermind! See you soon. 👋",
+                "Goodbye!",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        // 🚀 Ensure the message is displayed before closing
+        javax.swing.SwingUtilities.invokeLater(() -> System.exit(0));
+    }
+
+    //Resetear xogo
+    public void resetGame(boolean won) {
+        String playerName = view.getPlayerName(); // Get player's name
+        model.updateScore(won); // Update score before reset
+        model.updateHighScores(playerName); // 🚀 Add name + score to leaderboard
+        view.showLeaderboard(model.getPlayerNames(), model.getHighScores()); // 🚀 Display leaderboard
+        model.startNewGame();
+        view.setScoreText(model.getScore());
+        view.clearPreviousTries();
+        view.setTriesLeftText(model.getMaxTries());
+        view.enableInputs();
     }
 
 }

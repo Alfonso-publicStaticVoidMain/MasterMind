@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,7 +31,7 @@ public class MasterMindView extends javax.swing.JFrame {
     private final JPanel previousTriesPanel;
     private final JPanel bottomPanel;
     private final JPanel titlePanel;
-    
+
     private final JLabel titleLabel;
     /**
      * Array de 4 textfield para que el usuario escriba los 4 digitos.
@@ -51,30 +52,26 @@ public class MasterMindView extends javax.swing.JFrame {
 
     private MasterMindController controller;
     
-    private int length = 4;
-    private int maxTries = 10;
+    private int length;
+    private int maxTries;
 
     public MasterMindView() {
-        
         Object[] options = {"Easy", "Normal"};
         int n = JOptionPane.showOptionDialog(
-            this,
-            "Choose the difficulty.",
-            "Difficulty menu",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            null,     //do not use a custom Icon
-            options,  //the titles of buttons
-            options[0]); //default button title
-        switch (n) {
-            case 0 -> {
-                this.length = 4;
-                this.maxTries = 10;
-            }
-            case 1 -> {
-                this.length = 5;
-                this.maxTries = 10;
-            }
+                this,
+                "Choose the difficulty.",
+                "Difficulty menu",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //do not use a custom Icon
+                options, //the titles of buttons
+                options[0]); //default button title
+        if (n == 1) {
+            this.length = 5;
+            this.maxTries = 10;
+        } else {
+            this.length = 4;
+            this.maxTries = 10;
         }
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,6 +95,12 @@ public class MasterMindView extends javax.swing.JFrame {
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         userInputPanel.setBackground(Color.pink);
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+
+        titlePanel.add(scoreLabel); // 🚀 Show score next to the game title
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 18)); // Bigger, clearer text
+        scoreLabel.setForeground(new Color(41, 128, 185)); // Stylish blue color
+        scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Space around label
+
         for (int i = 0; i < userInputs.length; i++) {
             userInputs[i] = new JTextField(3);//ancho para un digito
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
@@ -112,41 +115,51 @@ public class MasterMindView extends javax.swing.JFrame {
         }
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
+        for (int i = 0; i < userInputs.length; i++) {
+            final int currentIndex = i;
+            userInputs[i].addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent evt) {
+                    if (Character.isDigit(evt.getKeyChar())) {
+                        userInputs[currentIndex].setText(String.valueOf(evt.getKeyChar())); // Set input
+
+                        if (currentIndex < userInputs.length - 1) {
+                            userInputs[currentIndex + 1].requestFocusInWindow(); // Move to next field
+                        }
+                        evt.consume(); // Prevent extra characters
+                    }
+                }
+            });
+        }
+
         //Panel para intentos de usuario:
         previousTries = new JTextArea[this.maxTries][this.length];
         //ultimos 10 10para añadir espacio entre celdas
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Color.PINK);
-        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        // A: Ese 10 debería ser o MAX_TRIES do MasterMindController! Pero hai que mirar como facer iso ben
+        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
-                previousTries[i][j] = new JTextArea(this.maxTries, this.length); // 1 fila, 3 columnas de ancho
-                previousTries[i][j].setEditable(false); // No permitir edición directa
-                //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
-                previousTries[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-                previousTries[i][j].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
-                previousTries[i][j].setAlignmentY(JTextArea.CENTER_ALIGNMENT);
-                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
-                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
-                previousTriesPanel.add(previousTries[i][j]);
+                previousTries[i][j] = new JTextArea(1, 3);
+                previousTries[i][j].setEditable(false);
+                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2));
                 previousTries[i][j].setBackground(Color.WHITE);
+                previousTriesPanel.add(previousTries[i][j]);
             }
         }
-        add(previousTriesPanel);
 
-        //panel para el resto de elementos
+        // Submit button & tries left display
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
         //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
         //previousTriesText.setEditable(false);//intentos previos
-        triesLeftField = new JTextField("Tries left: 10");
+        triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
 
         bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
-        
+
         submitButton.setBorderPainted(false);
 
         bottomPanel.add(submitButton);
@@ -170,11 +183,12 @@ public class MasterMindView extends javax.swing.JFrame {
     public int getLength() {
         return this.length;
     }
-    
+
     public int getMaxTries() {
         return this.maxTries;
     }
     
+    /* TODO: CHECK THIS
     //añadir los listeners
     public void setController(MasterMindController controller) {
         this.controller = controller;
@@ -233,6 +247,11 @@ public class MasterMindView extends javax.swing.JFrame {
 
         // AL inicio el cursor en el primer textfield
         userInputs[0].requestFocusInWindow();
+    }*/
+
+    public void setController(MasterMindController controller) {
+        this.controller = controller;
+        submitButton.addActionListener(controller);
     }
 
     // Obtener los digitos introducidos por el usuario
@@ -244,7 +263,6 @@ public class MasterMindView extends javax.swing.JFrame {
         return digits.toString();
     }
 
-    //limpiar los textos del usuario
     public void clearInputFields() {
         for (JTextField textField : userInputs) {
             textField.setText("");
@@ -259,15 +277,84 @@ public class MasterMindView extends javax.swing.JFrame {
     public void displayFeedback(String guess, String[] feedback) {
         int currentTry = this.controller.maxTries() - this.controller.model().getTriesLeft() - 1;
         if (currentTry < this.getMaxTries()) {
+        //if (currentTry < this.maxTries) {
             for (int i = 0; i < this.length; i++) {
-                previousTries[currentTry][i].setText(String.valueOf(guess.charAt(i))); // Mostrar el número
+                previousTries[currentTry][i].setText(String.valueOf(guess.charAt(i)));
                 switch (feedback[i]) {
-                    case "correct" -> previousTries[currentTry][i].setBackground(Color.green);
-                    case "partial" -> previousTries[currentTry][i].setBackground(Color.ORANGE);
-                    default -> previousTries[currentTry][i].setBackground(Color.red);
+                    case "correct" ->
+                        previousTries[currentTry][i].setBackground(Color.GREEN);
+                    case "partial" ->
+                        previousTries[currentTry][i].setBackground(Color.ORANGE);
+                    default ->
+                        previousTries[currentTry][i].setBackground(Color.RED);
                 }
             }
         }
+    }
+
+    public void disableInputs() {
+        for (JTextField field : userInputs) {
+            field.setEnabled(false);
+        }
+        submitButton.setEnabled(false);
+    }
+
+    //Volver a xogar
+    public void enableInputs() {
+        for (JTextField field : userInputs) {
+            field.setText("");  // Clear existing input
+            field.setEnabled(true);  // 🚀 Make sure users can type again
+        }
+        submitButton.setEnabled(true);
+    }
+
+    //Borrar intentos anteriores
+    public void clearPreviousTries() {
+        for (int i = 0; i < previousTries.length; i++) {
+            for (int j = 0; j < previousTries[i].length; j++) {
+                previousTries[i][j].setText(""); // Clear text
+                previousTries[i][j].setBackground(Color.WHITE); // Reset color
+            }
+        }
+    }
+
+    //Puntuaxe
+    private JLabel scoreLabel = new JLabel("Score: 0");
+
+    public void setScoreText(int score) {
+        scoreLabel.setText("Score: " + score);
+    }
+
+    //Puntuaxe Máximo Logrado
+    public void showLeaderboard(List<String> names, List<Integer> scores) {
+        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
+        for (int i = 0; i < names.size(); i++) {
+            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
+                    .append(" - ").append(scores.get(i)).append(" points\n");
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                leaderboardText.toString(),
+                "Leaderboard",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    //Nome xogadores
+    public String getPlayerName() {
+        String playerName = JOptionPane.showInputDialog(
+                this,
+                "Enter your name for the leaderboard:",
+                "Player Name",
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (playerName == null || playerName.trim().isEmpty()) {
+            playerName = "Player"; // Default name if user cancels
+        }
+
+        return playerName; // Return the entered name
     }
 
 
