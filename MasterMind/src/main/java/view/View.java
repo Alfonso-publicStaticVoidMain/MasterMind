@@ -234,15 +234,9 @@ public class View extends javax.swing.JFrame {
             for (int i = 0; i < 4; i++) {
                 previousTries[currentTry][i].setText(String.valueOf(guess.charAt(i))); // Mostrar el número
                 switch (feedback[i]) {
-                    case "correct":
-                        previousTries[currentTry][i].setBackground(Color.green);
-                        break;
-                    case "partial":
-                        previousTries[currentTry][i].setBackground(Color.ORANGE);
-                        break;
-                    default:
-                        previousTries[currentTry][i].setBackground(Color.red);
-                        break;
+                    case "correct" -> previousTries[currentTry][i].setBackground(Color.green);
+                    case "partial" -> previousTries[currentTry][i].setBackground(Color.ORANGE);
+                    default -> previousTries[currentTry][i].setBackground(Color.red);
                 }
             }
             currentTry++;
