@@ -45,15 +45,114 @@ public class View extends javax.swing.JFrame {
      * Campo donde se muestran el número de intentos restantes.
      */
     private final JTextField triesLeftField;
-    //TODO texto final de Acertaste! para colocar nmeros y que se vea en verde por ejemplo
 
     private Controller controller;
     /**
      * Intento actual.
      */
     private int currentTry = 0;
+    
+    private int length = 4;
+    private int maxTries = 10;
 
+    public View(int length, int maxTries) {
+        this.length = length;
+        this.maxTries = maxTries;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        //titulo
+        setTitle("Mastermind");
+        //fondo
+        getContentPane().setBackground(Color.PINK);
+
+        //panel titulo
+        titlePanel = new JPanel();
+        titlePanel.setBackground(Color.pink);
+
+        titleLabel = new JLabel("Mastermind");
+        //titleLabel.setFont(); 
+        titleLabel.setForeground(new Color(41, 128, 185));
+        titlePanel.add(titleLabel);
+
+        //Panel para el usuario
+        userInputs = new JTextField[length];
+        userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        userInputPanel.setBackground(Color.pink);
+        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+        for (int i = 0; i < userInputs.length; i++) {
+            userInputs[i] = new JTextField(3);//ancho para un digito
+            userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
+            userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
+//           final int width = 30;  // Establecer un ancho fijo
+//            final int height = 30; // Establecer un alto fijo
+//            numberInputs[i].setBorder(BorderFactory.createCompoundBorder(
+//                    BorderFactory.createRoundedBorder(new RoundRectangle2D.Double(0, 0, width, height, 8, 8), new Color(52, 152, 219)), // Borde redondeado azul
+//                    BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
+//            ));
+            userInputPanel.add(userInputs[i]);//añades al panel
+        }
+        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+
+        //Panel para intentos de usuario:
+        previousTries = new JTextArea[maxTries][length];
+        //ultimos 10 10para añadir espacio entre celdas
+        previousTriesPanel = new JPanel(new GridLayout(maxTries, length, 10, 10));
+        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        previousTriesPanel.setBackground(Color.PINK);
+        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
+        for (int i = 0; i < maxTries; i++) {
+            for (int j = 0; j < length; j++) {
+                previousTries[i][j] = new JTextArea(maxTries, length); // 1 fila, 3 columnas de ancho
+                previousTries[i][j].setEditable(false); // No permitir edición directa
+                //userTriesTexts[i][j].setHorizontalAlignment(SwingConstants.CENTER); // Centrar texto
+                previousTries[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                previousTries[i][j].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+                previousTries[i][j].setAlignmentY(JTextArea.CENTER_ALIGNMENT);
+                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
+                previousTries[i][j].setBorder(BorderFactory.createLineBorder(new Color(221, 221, 221), 2)); // Borde gris claro
+                previousTriesPanel.add(previousTries[i][j]);
+                previousTries[i][j].setBackground(Color.WHITE);
+            }
+        }
+        add(previousTriesPanel);
+
+        //panel para el resto de elementos
+        submitButton = new JButton("Submit");
+        submitButton.setActionCommand("submit");
+        //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
+        //previousTriesText.setEditable(false);//intentos previos
+        triesLeftField = new JTextField("intentos restantes: 10");
+        triesLeftField.setEditable(false);
+
+        bottomPanel = new JPanel(new FlowLayout());
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+        
+        submitButton.setBorderPainted(false);
+
+        bottomPanel.add(submitButton);
+        bottomPanel.add(triesLeftField);
+
+        //se añaden los paneles al contenedor   
+        add(titlePanel, 0); // Añadir  parte superior
+        add(userInputPanel);
+        add(previousTriesPanel);
+        add(bottomPanel);
+
+        //tamaño adaptado, contenido centrado, visible
+        setSize(360, 640);
+        setResizable(false);//q no ca,bie el tamaño eluser
+        // pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+    }
+    
+    
     public View() {
+        this(4, 10);
+        
+        /*
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         //titulo
@@ -141,17 +240,25 @@ public class View extends javax.swing.JFrame {
         // pack();
         setLocationRelativeTo(null);
         setVisible(true);
+        */
+    }
 
+    public int getLength() {
+        return this.length;
     }
     
-
+    public int getMaxTries() {
+        return this.maxTries;
+    }
+    
     //añadir los listeners
     public void setController(Controller controller) {
         this.controller = controller;
-        submitButton.addActionListener((ActionListener) controller);
-        //tb con enter
+        submitButton.addActionListener(controller);
+        //TODO: Averiguar por que leches funciona isto
+        //Actualmente o que fai é que se pulsas enter borra os 4 numeros
         for (JTextField input : userInputs) {
-            input.addActionListener(controller); //todo
+            input.addActionListener(controller);
         }
 
         // Añadir KeyListeners a todos los JTextFields y limitar a un único dígito
@@ -212,10 +319,6 @@ public class View extends javax.swing.JFrame {
         }
         return digits.toString();
     }
-    
-    public int getMaxTries() {
-        return this.controller.getMAX_TRIES();
-    }
 
     //limpiar los textos del usuario
     public void clearInputFields() {
@@ -231,7 +334,7 @@ public class View extends javax.swing.JFrame {
 
     public void displayFeedback(String guess, String[] feedback) {
         if (currentTry < this.getMaxTries()) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < this.length; i++) {
                 previousTries[currentTry][i].setText(String.valueOf(guess.charAt(i))); // Mostrar el número
                 switch (feedback[i]) {
                     case "correct" -> previousTries[currentTry][i].setBackground(Color.green);

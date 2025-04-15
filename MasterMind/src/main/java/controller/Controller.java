@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.stream.Stream;
 import javax.swing.JOptionPane;
 import model.Model;
 import view.View;
@@ -15,24 +14,39 @@ public class Controller implements ActionListener {
 
     private View view;
     private Model model;
-    private int triesLeft;
-    private final int MAX_TRIES = 10;
-    private int currentTry = 0;
-    private boolean gameFinished = false;
+    //private int currentTry = 0;
 
     public Controller(View view, Model model) {
         this.view = view;
         this.model = model;
-        this.triesLeft = MAX_TRIES;
+        
+        this.model.setLength(this.view.getLength());
+        this.model.setMaxTries(this.view.getMaxTries());
 
         this.view.setController(this);
         //inicial el cont de intentos
-        this.view.setTriesLeftNumbersText(triesLeft);
-        this.currentTry = 0;
+        this.view.setTriesLeftNumbersText(this.triesLeft());
+        //this.currentTry = 0;
     }
 
-    public int getMAX_TRIES() {
-        return MAX_TRIES;
+    public int maxTries() {
+        return this.model.getMaxTries();
+    }
+    
+    public int triesLeft() {
+        return this.model.getTriesLeft();
+    }
+    
+    public int length() {
+        return this.model.getLength();
+    }
+    
+    public boolean isGameFinished() {
+        return this.model.isGameFinished();
+    }
+    
+    public void finishGame() {
+        this.model.finishGame();
     }
 
     //TODO
@@ -40,7 +54,7 @@ public class Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (!gameFinished && command.equals("submit")) {
+        if (!this.isGameFinished() && command.equals("submit")) {
             String guess = view.getUserDigits();
 
             // Validar que el usuario ha introducido 4 dígitos
@@ -49,8 +63,8 @@ public class Controller implements ActionListener {
 //                int presentDigits = model.hitsAnyWhere(guess) - correctPositions; // Evitar contar los correctos en posición
 
 //                view.displayFeedback(userGuess, correctPositions, presentDigits);
-                triesLeft--;
-                view.setTriesLeftNumbersText(triesLeft);
+                this.model.consumeTry();
+                view.setTriesLeftNumbersText(this.triesLeft());
                 view.clearInputFields();
 
 //                if (correctPositions == model.getLength()) {
@@ -76,14 +90,14 @@ public class Controller implements ActionListener {
                 String[] feedbackInfo = this.model.feedbackInfo(guess);
                 view.displayFeedback(guess, feedbackInfo); // Pasar feedback a vista
 
-                if (this.model.hitsSamePlace(guess) == 4 
+                if (this.model.hitsSamePlace(guess) == this.length()
                         /*
                         Stream.of(feedbackInfo)
                         .filter(str -> str.equals("correct"))
                         .count()
                         == 4
                         */) {
-                    gameFinished = true;
+                    this.finishGame();
                     JOptionPane.showConfirmDialog(
                         this.view,
                         "You guessed the number correctly. Congrats!",
@@ -93,25 +107,10 @@ public class Controller implements ActionListener {
                         null
                     );
                 }
-                /*
-                if (correctPositions == model.getLength()) {
-                    gameWon = true;
-//                view.displayWinMessage("¡Felicidades! ¡Has ganado!");
-//                view.disableInputs();
-                } else {
-                    currentTry++;
-                    //view.setTriesLeft(MAX_TRIES - currentTry);
-                    if (currentTry >= MAX_TRIES) {
-//                    view.displayWinMessage("¡Se acabaron los intentos! El número era " + model.getRandomNumber());
-//                    view.disableInputs();
-                    }
-                    view.clearInputFields();
-                }
-                 */
-                view.clearInputFields();
                 
-                if (!gameFinished && triesLeft == 0) {
-                    this.gameFinished = true;
+                
+                if (!this.isGameFinished() && this.triesLeft() == 0) {
+                    this.finishGame();
                     JOptionPane.showConfirmDialog(
                         this.view,
                         "You have no tries left. You lost!",
@@ -122,26 +121,11 @@ public class Controller implements ActionListener {
                     );
                 }
                 
-            } else {
-                // Informar al usuario sobre una entrada inválida (podrías añadir un mensaje en la View)
-                System.out.println("Entrada inválida. Debes ingresar " + model.getLength() + " dígitos.");
-            }
+            } 
 
+        } else {
+            view.clearInputFields();
         }
     }
 
-//           private void disableGame() {
-//        view.disableInput();
-//    }
-//
-//    // Método para iniciar el juego (si fuera necesario alguna inicialización adicional)
-//    public void startGame() {
-//        model.generateSecretNumber(); // Asegurarse de que se genere un nuevo número al iniciar
-//        triesLeft = MAX_TRIES;
-//        view.setTriesLeftNumbersText(triesLeft);
-//        view.clearInputFields();
-//        view.enableInput(); // Si tuvieras un método para habilitar la entrada
-//        view.resetFeedback(); // Si tuvieras un método para limpiar la cuadrícula de intentos
-//    }
-//    }
 }

@@ -1,8 +1,7 @@
 package model;
 
-import java.awt.Color;
-import java.awt.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -16,22 +15,57 @@ public class Model {
      * String para mayor comodidad de uso. Tiene por defecto 4 cifras sin
      * repeticiones.
      */
-    private String randomNumber;
-    private final int length = 4;
-    private final int tries = 10;
+    private String numberToGuess;
+    private int length = 4;
+    private int maxTries = 10;
+    private int triesLeft;
     //guardar el historial de intentos:
-    private ArrayList<String> attemptHistory;
+    private List<String> attemptHistory = new ArrayList<>();
+    private boolean gameFinished = false;
 
     boolean[] secretUse;
 
     public Model() {
-        this.randomNumber = createRandomNumber(length);
-        System.out.println(randomNumber);
-        this.attemptHistory = new ArrayList<>();
+    }
+    
+    public Model(int length, int maxTries) {
+        this.length = length;
+        this.maxTries = maxTries;
     }
 
-    public String getRandomNumber() {
-        return randomNumber;
+    public int getMaxTries() {
+        return maxTries;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+        this.numberToGuess = createRandomNumber(length);
+        System.out.println(numberToGuess);
+    }
+
+    public void setMaxTries(int maxTries) {
+        this.maxTries = maxTries;
+        this.triesLeft = this.maxTries;
+    }
+
+    public int getTriesLeft() {
+        return triesLeft;
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
+
+    public void finishGame() {
+        this.gameFinished = true;
+    }
+    
+    public void consumeTry() {
+        this.triesLeft -= 1;
+    }
+
+    public String getNumberToGuess() {
+        return numberToGuess;
     }
 
     public static String createRandomNumber(int longitud) {
@@ -58,12 +92,11 @@ public class Model {
      * y si aparece "incorrect" no aparece en el número del juego.
      */
     public String[] feedbackInfo(String guess) {
-        String[] result = new String[4];
-        String numberToGuess = this.getRandomNumber();
-        for (int i = 0; i < guess.length(); i++) {
+        String[] result = new String[this.length];
+        for (int i = 0; i < this.length; i++) {
             char userDigit = guess.charAt(i);
             boolean resultUpdated = false;
-            for (int j = 0; j < guess.length(); j++) {
+            for (int j = 0; j < this.length; j++) {
                 if (userDigit == numberToGuess.charAt(j)) {
                     if (i == j) result[i] = "correct";
                     else result[i] = "partial";
@@ -79,7 +112,7 @@ public class Model {
     public int hitsSamePlace(String guess) {
         int counter = 0;
         for (int i = 0; i < guess.length(); i++) {
-            if (this.randomNumber.charAt(i) == guess.charAt(i)) {
+            if (this.numberToGuess.charAt(i) == guess.charAt(i)) {
                 counter++;
             }
         }
@@ -90,8 +123,8 @@ public class Model {
 //        int contador = 0;
 //        for (int i = 0; i < introducedString.length(); i++) {
 //
-//            for (int j = 0; j < this.randomNumber.length(); j++) {
-//                if (introducedString.charAt(i) == this.randomNumber.charAt(j)) {
+//            for (int j = 0; j < this.numberToGuess.length(); j++) {
+//                if (introducedString.charAt(i) == this.numberToGuess.charAt(j)) {
 //                    contador++;
 //                    break;
 //                }
@@ -104,7 +137,7 @@ public class Model {
     
     public int hitsAnyWhere(String guess) {
         int cont = 0;
-        String secret = this.randomNumber;
+        String secret = this.numberToGuess;
         secretUse = new boolean[secret.length()]; // dig igual o no
 
         for (int i = 0; i < guess.length(); i++) {
@@ -133,7 +166,7 @@ public class Model {
 
     //  reiniciar el juego (generarnd nuevo num secreto)
     public void resetGame() {
-        this.randomNumber = createRandomNumber(length);
+        this.numberToGuess = createRandomNumber(length);
         // this.attemptHistory.clear(); // Si implementamos el historial
     }
 
@@ -143,7 +176,7 @@ public class Model {
     }
     //obter el historial de intentos
 
-    public ArrayList<String> getAttemptsHistory() {
+    public List<String> getAttemptsHistory() {
         return attemptHistory;
     }
     //todo q termine al acertar
