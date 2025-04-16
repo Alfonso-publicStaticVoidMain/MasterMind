@@ -30,6 +30,8 @@ public class Controller implements ActionListener {
     public Controller(View view, Model model) {
         this.view = view;
         this.model = model;
+        model.getLength();
+        this.view.createView(this.model.getLength(), this.model.getMaxTries());
         this.view.setActionListener(this);
         this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
         this.view.setScoreText(this.model.getScore()); // Inicializar el score en la vista

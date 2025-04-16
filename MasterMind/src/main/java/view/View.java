@@ -28,26 +28,26 @@ import javax.swing.JTextField;
 public class View extends javax.swing.JFrame {
 
     //Paneles de la vista
-    private final JPanel titlePanel;
-    private final JPanel userInputPanel;
-    private final JPanel previousTriesPanel;
-    private final JPanel bottomPanel;
+    private  JPanel titlePanel;
+    private  JPanel userInputPanel;
+    private  JPanel previousTriesPanel;
+    private  JPanel bottomPanel;
     //Elementos
-    private final JLabel titleLabel;
+    private  JLabel titleLabel;
     /**
      * Array de 4 textfield para que el usuario escriba los 4 digitos.
      */
-    private final JTextField[] userInputs;
+    private  JTextField[] userInputs;
     /**
      * Array de 4 JTextArea donde se muestran los intentos previos.
      */
-    private final JTextArea[][] previousTries;
+    private  JTextArea[][] previousTries;
     /**
      * Botón para que el usuario valide su intento.
      */
-    private final JButton submitButton;
+    private  JButton submitButton;
 
-    private final JTextField triesLeftField;
+    private  JTextField triesLeftField;
 
     //variables para los panles
     private int length = 4;
@@ -55,7 +55,11 @@ public class View extends javax.swing.JFrame {
     private int triesLeft = 10;
     private JLabel scoreLabel = new JLabel("Score: 0");
 
-    public View(int length, int maxTries) {
+    public View() {
+
+
+    }
+ public void createView(int length, int maxTries) {
         this.length = length;
         this.maxTries = maxTries;
 
@@ -157,7 +161,8 @@ public class View extends javax.swing.JFrame {
         setVisible(true);
 
     }
-
+    
+    
     public void setActionListener(Controller controller) {
         submitButton.addActionListener(controller);
         this.length = controller.getLength();

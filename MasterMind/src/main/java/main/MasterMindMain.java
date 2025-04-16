@@ -22,7 +22,7 @@ public class MasterMindMain {
         Model model = new Model();
 
         // Crear la vista, pasando la configuración inicial del modelo
-        View view = new View(model.getLength(), model.getMaxTries());
+        View view = new View();
 
         //  controlador, pasando la vista y el modelo
         Controller controller = new Controller(view, model);
