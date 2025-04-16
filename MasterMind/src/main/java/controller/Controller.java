@@ -19,136 +19,97 @@ public class Controller implements ActionListener {
     //view y model
     View view;
     Model model;
+    private int attemptsMade = 0; // Para controlar la fila en displayFeedback
     //otras variables
-    private int length;
-    private int maxTries;
-    private int triesLeft;
-    private boolean isGameFinished;
+//    private int length;
+//    private int maxTries;
+//    private int triesLeft;
+//    private boolean isGameFinished;
     
 
     public Controller(View view, Model model) {
-        //valor a view y a model
-        
+        this.view = view;
         this.model = model;
-       
-        //valor resto de variables
-        this.length=model.getLength();
-        this.maxTries=model.getMaxTries();
-        this.triesLeft=model.getTriesLeft();
-        this.isGameFinished=model.isGameFinished();
-        
-         this.view = view;
-        //conectamos la view cn el controler
         this.view.setActionListener(this);
-        //inicial el cont de intentos
-       
-        
-    
+        this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
+        this.view.setScoreText(this.model.getScore()); // Inicializar el score en la vista
     }
 
-     @Override
+      @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (!this.isGameFinished && command.equals("submit")) {
+        if (!this.model.isGameFinished() && command.equals("submit")) {
             String guess = view.getUserDigits();
 
             if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
                 this.model.consumeTry();
-                view.setTriesLeftText();
+                view.setTriesLeftText(this.model.getTriesLeft()); // Actualizar intentos restantes en la vista
                 view.clearInputFields();
 
                 String[] feedbackInfo = this.model.feedbackInfo(guess);
-                view.displayFeedback(guess, feedbackInfo); // Pasar feedback a vista
+                view.displayFeedback(this.attemptsMade, guess, feedbackInfo); // Pasar número de intento
 
-                // **CONDICION DE GANAR**
-                if (this.model.hitsSamePlace(guess) == this.length) {
-                    this.finishGame();
-                    int choice = JOptionPane.showConfirmDialog(
-                            this.view,
-                            "You guessed the number correctly. Congrats! Do you want to play again?",
-                            "End of the game",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+                this.attemptsMade++; // Incrementar el contador de intentos
 
-                    if (choice == JOptionPane.YES_OPTION) {
-                        resetGame(true); // ✅ Pass 'true' because the user won
-                    } else {
-                        view.disableInputs();
-                        showGoodbyeMessage(); //Show the goodbyw message
-                    }
-
+                if (this.model.hitsSamePlace(guess) == this.model.getLength()) {
+                    this.finishGame(true); // El jugador ganó
+                } else if (this.model.getTriesLeft() == 0) {
+                    this.finishGame(false); // El jugador perdió
                 }
-
-                // **CONDICION DE PERDER **
-                if (!this.isGameFinished && this.triesLeft == 0) {
-                    this.finishGame();
-                    int choice = JOptionPane.showConfirmDialog(
-                            this.view,
-                            "You have no tries left. You lost! Do you want to play again?",
-                            "Game Over",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-
-                    if (choice == JOptionPane.YES_OPTION) {
-                        resetGame(false); // ✅ Pass 'false' because the user lost
-                    } else {
-                        view.disableInputs();
-                        showGoodbyeMessage(); // 🚀 NEW: Show the goodbye message
-                    }
-                }
+            } else {
+                view.clearInputFields();
+                JOptionPane.showMessageDialog(view, "Please enter " + model.getLength() + " digits.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            view.clearInputFields();
         }
     }
 
+    private void finishGame(boolean won) {
+        this.model.finishGame();
+        String message = won ? "You guessed correctly! Play again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
+        String title = won ? "Congratulations!" : "Game Over";
+        int choice = JOptionPane.showConfirmDialog(view, message, title, JOptionPane.YES_NO_OPTION);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            resetGame();
+        } else {
+            view.disableInputs();
+            showGoodbyeMessage();
+        }
+    }
     
-     // **🚀 Added Method to Show Goodbye Message and Exit**
-
+    
     private void showGoodbyeMessage() {
-        JOptionPane.showMessageDialog(
-                this.view,
-                "Thank you for playing Mastermind! See you soon. 👋",
-                "Goodbye!",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-
-        // 🚀 Ensure the message is displayed before closing
-        javax.swing.SwingUtilities.invokeLater(() -> System.exit(0));
+        JOptionPane.showMessageDialog(view, "Thank you for playing Mastermind! See you soon. 👋", "Goodbye!", JOptionPane.INFORMATION_MESSAGE);
+       // javax.swing.SwingUtilities.invokeLater(System::exit);
     }
 
-    //Resetear xogo
-    public void resetGame(boolean won) {
-        String playerName = view.getPlayerName(); // Get player's name
-        model.updateScore(won); // Update score before reset
-        model.updateHighScores(playerName); // 🚀 Add name + score to leaderboard
-        view.showLeaderboard(model.getPlayerNames(), model.getHighScores()); // 🚀 Display leaderboard
-        model.startNewGame();
+    public void resetGame() {
+        boolean won = model.isGameFinished(); // Guardar el estado del juego anterior
+        String playerName = view.getPlayerName();
+        model.updateScore(won);
+        model.updateHighScores(playerName);
+        view.showLeaderboard(model.getPlayerNames(), model.getHighScores());
+        model.resetGame(); // Usar el método resetGame del Model
         view.setScoreText(model.getScore());
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
         view.enableInputs();
+        this.attemptsMade = 0; // Resetear el contador de intentos
     }
-    
-     public void finishGame() {
-        this.model.finishGame();
-    }
-    
+
     public int getLength() {
-        return length;
+        return model.getLength();
     }
 
     public int getMaxTries() {
-        return maxTries;
+        return model.getMaxTries();
     }
 
     public int getTriesLeft() {
-        return triesLeft;
+        return model.getTriesLeft();
     }
-    
+
     
     
     
