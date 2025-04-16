@@ -1,17 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
-/**
- *
- * @author Silvia García Bouza
- * @author Nuria Calo Mosquera
- * @author Alfonso Gallego Fernández
- */
-public class MasterMindModel {
+public class Model {
+    //variables
 
     /**
      * Número aleatorio que el usuario tiene que adivinar. Se almacena en una
@@ -32,18 +30,19 @@ public class MasterMindModel {
      */
     private int triesLeft;
     //guardar el historial de intentos:
-    private List<String> attemptHistory = new ArrayList<>();
+    private ArrayList<String> attemptHistory = new ArrayList<>();
     private boolean gameFinished = false;
+    private int score = 0;
 
     boolean[] secretUse;
 
-    public MasterMindModel() {}
-    
-    public MasterMindModel(int length, int maxTries) {
-        this.length = length;
-        this.maxTries = maxTries;
-        
-        resetGame(); // Ensure a secret number is generated
+    //constructor
+    public Model() {
+        this.length=4;
+        this.maxTries=10;
+        this.triesLeft=10;
+        resetGame();
+
     }
 
     //Resetear o xogo
@@ -60,29 +59,30 @@ public class MasterMindModel {
         this.gameFinished = false; // 🚀 Allow a new game to start
     }
 
-    public int getMaxTries() {
-        return maxTries;
-    }
-
+    //recibe numero de columnas
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
         System.out.println(numberToGuess);
     }
 
+    //recibe numero de filas
     public void setMaxTries(int maxTries) {
         this.maxTries = maxTries;
         this.triesLeft = this.maxTries;
     }
 
-    public int getTriesLeft() {
-        return triesLeft;
-    }
-
+    //recibe numero de intentos restantes y los va modificndpo
     public void setTriesLeft(int triesLeft) {
         this.triesLeft = triesLeft;
     }
+    //disminuye los intentos restantes
 
+    public void consumeTry() {
+        this.triesLeft -= 1;
+    }
+
+    //termina el juego
     public boolean isGameFinished() {
         return gameFinished;
     }
@@ -91,29 +91,22 @@ public class MasterMindModel {
         this.gameFinished = true;
     }
 
-    public void consumeTry() {
-        this.triesLeft -= 1;
-    }
-
-    
-    public String getNumberToGuess() {
-        return numberToGuess;
-    }
-
     public String generateRandomNumber() {
         StringBuilder str = new StringBuilder();
         StringBuilder avaliableDigits = new StringBuilder("123456789");
         Random random = new Random();
         for (int i = 0; i < this.length; i++) {
-            //TODO: CHECK THIS
-            //numero = random.nextInt(0, avaliableDigits.length());
-            //str.append(avaliableDigits.toString().charAt(numero));
             int numero = random.nextInt(avaliableDigits.length());
             str.append(avaliableDigits.charAt(numero));
             avaliableDigits.deleteCharAt(numero);
         }
+        System.out.println(str.toString());
         return str.toString();
     }
+    //
+//      public String getNumberToGuess() {
+//        return numberToGuess;
+//    }
 
     /**
      * Resume información acerca del intento del usuario en un array de Strings.
@@ -135,9 +128,10 @@ public class MasterMindModel {
                     resultUpdated = true;
                     if (i == j) {
                         result[i] = "correct";
-                        break; 
+                        break;
+                    } else {
+                        result[i] = "partial";
                     }
-                    else result[i] = "partial";
                 }
             }
             if (!resultUpdated) {
@@ -156,7 +150,7 @@ public class MasterMindModel {
         }
         return counter;
     }
-    
+
     public int hitsAnyWhere(String guess) {
         int cont = 0;
         String secret = this.numberToGuess;
@@ -181,10 +175,9 @@ public class MasterMindModel {
         }
         return cont;
     }
-
-    public int getLength() {
-        return length;
-    }
+//      public boolean[] getSecretUse() {
+//        return secretUse;
+//    }
 
     //guardar el historial de intentos
     public void addAttempt(String attempt) {
@@ -192,18 +185,11 @@ public class MasterMindModel {
     }
     //obter el historial de intentos
 
-    public List<String> getAttemptsHistory() {
+    public ArrayList<String> getAttemptsHistory() {
         return attemptHistory;
     }
-    
 
-    public boolean[] getSecretUse() {
-        return secretUse;
-    }
-
-    //Implementar puntuaxe
-    private int score = 0;
-
+    //puntuaje
     public int getScore() {
         return score;
     }
@@ -220,25 +206,24 @@ public class MasterMindModel {
     }
 
     //Histórico de Puntuaxe
-    private List<Integer> highScores = new ArrayList<>();
+    private ArrayList<Integer> highScores = new ArrayList<>();
 
-    public List<Integer> getHighScores() {
+    public ArrayList<Integer> getHighScores() {
         return highScores;
     }
 
     public void updateHighScores() {
         highScores.add(score); // Add current score to the list
         Collections.sort(highScores, Collections.reverseOrder()); // Sort from highest to lowest
-
+        //ranking
         if (highScores.size() > 5) {
             highScores.remove(highScores.size() - 1); // Keep only top 5 scores
         }
     }
-
     //Nome de xogadores
-    private List<String> playerNames = new ArrayList<>();
+    private ArrayList<String> playerNames = new ArrayList<>();
 
-    public List<String> getPlayerNames() {
+    public ArrayList<String> getPlayerNames() {
         return playerNames;
     }
 
@@ -247,9 +232,8 @@ public class MasterMindModel {
         highScores.add(score); // Add current score to the list
 
         // Sort scores and names together
-        List<Integer> sortedScores = new ArrayList<>(highScores);
-        List<String> sortedNames = new ArrayList<>(playerNames);
-
+        ArrayList<Integer> sortedScores = new ArrayList<>(highScores);
+        ArrayList<String> sortedNames = new ArrayList<>(playerNames);
 // Sort scores while keeping names aligned
         for (int i = 0; i < sortedScores.size(); i++) {
             for (int j = i + 1; j < sortedScores.size(); j++) {
@@ -281,4 +265,19 @@ public class MasterMindModel {
 
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public int getMaxTries() {
+        return maxTries;
+    }
+
+    public int getTriesLeft() {
+        return triesLeft;
+    }
+
+    
+    
+    
 }

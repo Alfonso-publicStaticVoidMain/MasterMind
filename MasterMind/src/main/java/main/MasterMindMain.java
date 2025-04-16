@@ -1,8 +1,11 @@
 package main;
 
+import controller.Controller;
 import controller.MasterMindController;
 import model.MasterMindModel;
+import model.Model;
 import view.MasterMindView;
+import view.View;
 
 /**
  *
@@ -13,8 +16,8 @@ import view.MasterMindView;
 public class MasterMindMain {
 
     public static void main(String[] args) {
-        MasterMindView view = new MasterMindView();
-        MasterMindModel model= new MasterMindModel();
-        MasterMindController controller = new MasterMindController(view, model);
+        View view = new View();
+        Model model= new Model();
+        Controller controller = new Controller(view, model);
     }
 }
