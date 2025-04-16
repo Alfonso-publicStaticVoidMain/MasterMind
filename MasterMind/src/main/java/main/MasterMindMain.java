@@ -1,8 +1,12 @@
 package main;
 
-import controller.MasterMindController;
-import model.MasterMindModel;
-import view.MasterMindView;
+import controller.Controller;
+
+
+
+import model.Model;
+
+import view.View;
 
 /**
  *
@@ -12,9 +16,16 @@ import view.MasterMindView;
  */
 public class MasterMindMain {
 
+
     public static void main(String[] args) {
-        MasterMindView view = new MasterMindView();
-        MasterMindModel model= new MasterMindModel();
-        MasterMindController controller = new MasterMindController(view, model);
+       
+        Model model = new Model();
+
+        // Crear la vista, pasando la configuración inicial del modelo
+        View view = new View();
+
+        //  controlador, pasando la vista y el modelo
+        Controller controller = new Controller(view, model);
+
     }
 }
