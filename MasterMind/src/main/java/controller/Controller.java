@@ -3,8 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import model.MasterMindModel;
-import view.MasterMindView;
+import model.Model;
+import view.View;
 
 /**
  *
@@ -12,12 +12,12 @@ import view.MasterMindView;
  * @author Nuria Calo Mosquera
  * @author Alfonso Gallego Fernández
  */
-public class MasterMindController implements ActionListener {
+public class Controller implements ActionListener {
 
-    private MasterMindView view;
-    private MasterMindModel model;
+    private View view;
+    private Model model;
 
-    public MasterMindController(MasterMindView view, MasterMindModel model) {
+    public Controller(View view, Model model) {
         this.view = view;
         this.model = model;
 
@@ -31,7 +31,7 @@ public class MasterMindController implements ActionListener {
         this.view.setTriesLeftText(this.triesLeft());
     }
     
-    public MasterMindModel model() {
+    public Model model() {
         return this.model;
     }
 

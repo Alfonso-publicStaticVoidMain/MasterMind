@@ -13,7 +13,7 @@ import java.util.Random;
  * @author Nuria Calo Mosquera
  * @author Alfonso Gallego Fernández
  */
-public class MasterMindModel {
+public class Model {
 
     /**
      * Número aleatorio que el usuario tiene que adivinar. Se almacena en una
@@ -47,9 +47,9 @@ public class MasterMindModel {
 
     boolean[] secretUse;
 
-    public MasterMindModel() {}
+    public Model() {}
     
-    public MasterMindModel(int length, int maxTries) {
+    public Model(int length, int maxTries) {
         this.length = length;
         this.maxTries = maxTries;
         

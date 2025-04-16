@@ -1,6 +1,6 @@
 package view;
 
-import controller.MasterMindController;
+import controller.Controller;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  * @author Nuria Calo Mosquera
  * @author Alfonso Gallego Fernández
  */
-public class MasterMindView extends javax.swing.JFrame {
+public class View extends javax.swing.JFrame {
 
     private final JPanel userInputPanel;
     private final JPanel previousTriesPanel;
@@ -50,12 +50,12 @@ public class MasterMindView extends javax.swing.JFrame {
      */
     private final JTextField triesLeftField;
 
-    private MasterMindController controller;
+    private Controller controller;
     
     private int length;
     private int maxTries;
 
-    public MasterMindView() {
+    public View() {
         Object[] options = {"Easy", "Normal"};
         int n = JOptionPane.showOptionDialog(
                 this,
@@ -187,7 +187,7 @@ public class MasterMindView extends javax.swing.JFrame {
     
     /* TODO: CHECK THIS
     //añadir los listeners
-    public void setController(MasterMindController controller) {
+    public void setController(Controller controller) {
         this.controller = controller;
         submitButton.addActionListener(controller);
         //TODO: Averiguar por que leches funciona isto
@@ -246,7 +246,7 @@ public class MasterMindView extends javax.swing.JFrame {
         userInputs[0].requestFocusInWindow();
     }*/
 
-    public void setController(MasterMindController controller) {
+    public void setController(Controller controller) {
         this.controller = controller;
         submitButton.addActionListener(controller);
     }
