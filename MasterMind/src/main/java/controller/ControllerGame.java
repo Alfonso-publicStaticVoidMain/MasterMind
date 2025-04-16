@@ -7,18 +7,18 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import model.Model;
-import view.View;
+import model.ModelGame;
+import view.ViewGame;
 
 
 /**
  *
  * @author silvia
  */
-public class Controller implements ActionListener {
+public class ControllerGame implements ActionListener {
     //view y model
-    View view;
-    Model model;
+    ViewGame view;
+    ModelGame model;
     private int attemptsMade = 0; // Para controlar la fila en displayFeedback
     //otras variables
 //    private int length;
@@ -27,7 +27,7 @@ public class Controller implements ActionListener {
 //    private boolean isGameFinished;
     
 
-    public Controller(View view, Model model) {
+    public ControllerGame(ViewGame view, ModelGame model) {
         this.view = view;
         this.model = model;
         model.getLength();
@@ -92,7 +92,7 @@ public class Controller implements ActionListener {
         model.updateScore(won);
         model.updateHighScores(playerName);
         view.showLeaderboard(model.getPlayerNames(), model.getHighScores());
-        model.resetGame(); // Usar el método resetGame del Model
+        model.resetGame(); // Usar el método resetGame del ModelGame
         view.setScoreText(model.getScore());
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
