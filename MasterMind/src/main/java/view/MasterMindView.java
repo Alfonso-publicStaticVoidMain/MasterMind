@@ -111,7 +111,7 @@ public class MasterMindView extends javax.swing.JFrame {
 //                    BorderFactory.createRoundedBorder(new RoundRectangle2D.Double(0, 0, width, height, 8, 8), new Color(52, 152, 219)), // Borde redondeado azul
 //                    BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
 //            ));
-            userInputPanel.add(userInputs[i]);//añades al panel
+            userInputPanel.add(userInputs[i]);
         }
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
@@ -138,7 +138,6 @@ public class MasterMindView extends javax.swing.JFrame {
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Color.PINK);
-        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
                 previousTries[i][j] = new JTextArea(1, 3);
@@ -152,8 +151,6 @@ public class MasterMindView extends javax.swing.JFrame {
         // Submit button & tries left display
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
-        //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
-        //previousTriesText.setEditable(false);//intentos previos
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
 
@@ -173,7 +170,7 @@ public class MasterMindView extends javax.swing.JFrame {
 
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
-        setResizable(false);//q no ca,bie el tamaño eluser
+        setResizable(false);//que no cambie el tamaño el usuario
         // pack();
         setLocationRelativeTo(null);
         setVisible(true);
