@@ -1,19 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-/**
- *
- * @author Silvia García Bouza
- * @author Nuria Calo Mosquera
- * @author Alfonso Gallego Fernández
- */
 public class Model {
+    // Variables
 
     /**
      * Número aleatorio que el usuario tiene que adivinar. Se almacena en una
@@ -33,70 +29,62 @@ public class Model {
      * Número de intentos restantes.
      */
     private int triesLeft;
-    //guardar el historial de intentos:
-    private List<String> attemptHistory = new ArrayList<>();
+    // Guardar el historial de intentos:
+    private ArrayList<String> attemptHistory = new ArrayList<>();
     private boolean gameFinished = false;
-    //Implementar puntuaxe
     private int score = 0;
-    // Puntuaxes como Map
-    private Map<String, Integer> scores = new LinkedHashMap<>();
-    //Histórico de Puntuaxe
-    private List<Integer> highScores = new ArrayList<>();
-    //Nome de xogadores
-    private List<String> playerNames = new ArrayList<>();
 
     boolean[] secretUse;
 
-    public Model() {}
-    
-    public Model(int length, int maxTries) {
-        this.length = length;
-        this.maxTries = maxTries;
-        
-        resetGame(); // Ensure a secret number is generated
+    // Histórico de Puntuaxe
+    private ArrayList<Integer> highScores = new ArrayList<>();
+    // Nome de xogadores
+    private ArrayList<String> playerNames = new ArrayList<>();
+
+    // Constructor
+    public Model() {
+        this.length = 4;
+        this.maxTries = 10;
+        resetGame(); // Inicializar el juego al crear el Model
     }
 
-    public Map<String, Integer> getScores() {
-        return scores;
-    }
-
-    //Resetear o xogo
+    // Resetear o xogo
     public void resetGame() {
         this.numberToGuess = generateRandomNumber();
         this.triesLeft = this.maxTries;
-        this.gameFinished = false;  // 🚀 Allow a new game to start
+        this.gameFinished = false;
+        this.attemptHistory.clear(); // Limpiar el historial al resetear
     }
 
-    //Novo xogo
+    // Novo xogo
     public void startNewGame() {
-        this.numberToGuess = generateRandomNumber(); // Generate new number
-        this.triesLeft = this.maxTries; // Reset attempts
-        this.gameFinished = false; // 🚀 Allow a new game to start
+        resetGame();
     }
 
-    public int getMaxTries() {
-        return maxTries;
-    }
-
+    // Recibe numero de columnas
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
         System.out.println(numberToGuess);
     }
 
+    // Recibe numero de filas
     public void setMaxTries(int maxTries) {
         this.maxTries = maxTries;
         this.triesLeft = this.maxTries;
     }
 
-    public int getTriesLeft() {
-        return triesLeft;
-    }
-
+    // Recibe numero de intentos restantes y los va modificando
     public void setTriesLeft(int triesLeft) {
         this.triesLeft = triesLeft;
     }
 
+    // Disminuye los intentos restantes
+    public void consumeTry() {
+        this.triesLeft -= 1;
+    }
+
+    // Termina el juego
     public boolean isGameFinished() {
         return gameFinished;
     }
@@ -105,26 +93,20 @@ public class Model {
         this.gameFinished = true;
     }
 
-    public void consumeTry() {
-        this.triesLeft -= 1;
-    }
-
-    public String getNumberToGuess() {
-        return numberToGuess;
-    }
-
     public String generateRandomNumber() {
         StringBuilder str = new StringBuilder();
-        StringBuilder avaliableDigits = new StringBuilder("123456789");
+        StringBuilder availableDigits = new StringBuilder("123456789");
         Random random = new Random();
         for (int i = 0; i < this.length; i++) {
-            //TODO: CHECK THIS
-            //numero = random.nextInt(0, avaliableDigits.length());
-            //str.append(avaliableDigits.toString().charAt(numero));
-            int numero = random.nextInt(avaliableDigits.length());
-            str.append(avaliableDigits.charAt(numero));
-            avaliableDigits.deleteCharAt(numero);
+            if (availableDigits.length() == 0) {
+                
+                break;
+            }
+            int numero = random.nextInt(availableDigits.length());
+            str.append(availableDigits.charAt(numero));
+            availableDigits.deleteCharAt(numero);
         }
+        System.out.println(str.toString());
         return str.toString();
     }
 
@@ -148,9 +130,10 @@ public class Model {
                     resultUpdated = true;
                     if (i == j) {
                         result[i] = "correct";
-                        break; //TODO: CHECK THIS
+                        break;
+                    } else {
+                        result[i] = "partial";
                     }
-                    else result[i] = "partial";
                 }
             }
             if (!resultUpdated) {
@@ -169,7 +152,7 @@ public class Model {
         }
         return counter;
     }
-    
+
     public int hitsAnyWhere(String guess) {
         int cont = 0;
         String secret = this.numberToGuess;
@@ -178,9 +161,9 @@ public class Model {
         for (int i = 0; i < guess.length(); i++) {
             char digitIntroduced = guess.charAt(i);
 
-            // si hay un acierto nomisma posición 
+            // si hay un acierto nomisma posición
             if (secret.charAt(i) == digitIntroduced) {
-                continue; // Si es acierto namisma posición, lo ignoramos 
+                continue; // Si es acierto namisma posición, lo ignoramos
             }
 
             // Buscamos en una posición diferente
@@ -188,33 +171,24 @@ public class Model {
                 if (!secretUse[j] && secret.charAt(j) == digitIntroduced && i != j) {
                     cont++;
                     secretUse[j] = true;
-                    break; // Pasamos al siguiente dgito 
+                    break; // Pasamos al siguiente dgito
                 }
             }
         }
         return cont;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    //guardar el historial de intentos
+    // Guardar el historial de intentos
     public void addAttempt(String attempt) {
         this.attemptHistory.add(attempt);
     }
-    //obter el historial de intentos
 
-    public List<String> getAttemptsHistory() {
+    // Obtener el historial de intentos
+    public ArrayList<String> getAttemptsHistory() {
         return attemptHistory;
     }
-    //todo q termine al acertar
-    //todo q los intentos terminen en 0
 
-    public boolean[] getSecretUse() {
-        return secretUse;
-    }
-
+    // Puntuaje
     public int getScore() {
         return score;
     }
@@ -230,66 +204,55 @@ public class Model {
         }
     }
 
-    public List<Integer> getHighScores() {
+    public ArrayList<Integer> getHighScores() {
         return highScores;
     }
 
-    public void updateHighScores() {
-        // TODO
-//        highScores.add(score); // Add current score to the list
-//        Collections.sort(highScores, Collections.reverseOrder()); // Sort from highest to lowest
-//
-//        if (highScores.size() > 5) {
-//            highScores.remove(highScores.size() - 1); // Keep only top 5 scores
-//        }
-    }
-
-    public List<String> getPlayerNames() {
+    public ArrayList<String> getPlayerNames() {
         return playerNames;
     }
 
     public void updateHighScores(String playerName) {
-        scores.put(playerName, score);
-        List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(scores.entrySet());
-        scoreList.sort(Map.Entry.comparingByValue());
-        scores.clear();
-        for (Map.Entry<String, Integer> entry : scoreList) scores.put(entry.getKey(), entry.getValue());
-//        playerNames.add(playerName);
-//        highScores.add(score); // Add current score to the list
-//
-//        // Sort scores and names together
-//        List<Integer> sortedScores = new ArrayList<>(highScores);
-//        List<String> sortedNames = new ArrayList<>(playerNames);
-//
-//        // Sort scores while keeping names aligned
-//        for (int i = 0; i < sortedScores.size(); i++) {
-//            for (int j = i + 1; j < sortedScores.size(); j++) {
-//                if (sortedScores.get(i) < sortedScores.get(j)) {
-//                    Collections.swap(sortedScores, i, j);
-//                    Collections.swap(sortedNames, i, j);
-//                }
-//            }
-//        }
-//
-//        // Keep only top 5
-//        while (sortedScores.size() > 5) {
-//            sortedScores.remove(sortedScores.size() - 1);
-//            sortedNames.remove(sortedNames.size() - 1);
-//        }
-//
-//        // Update sorted names and scores
-//        playerNames = sortedNames;
-//        highScores = sortedScores;
-//
-//        playerNames = new ArrayList<>(sortedNames);
-//        highScores = new ArrayList<>(sortedScores);
-//
-//        // Keep only top 5 scores
-//        while (highScores.size() > 5) {
-//            highScores.remove(highScores.size() - 1);
-//            playerNames.remove(playerNames.size() - 1);
-//        }
+        playerNames.add(playerName);
+        highScores.add(score);
 
+        // Sort scores and names together
+        ArrayList<Integer> sortedScores = new ArrayList<>(highScores);
+        ArrayList<String> sortedNames = new ArrayList<>(playerNames);
+
+        // Sort scores while keeping names aligned
+        for (int i = 0; i < sortedScores.size(); i++) {
+            for (int j = i + 1; j < sortedScores.size(); j++) {
+                if (sortedScores.get(i) < sortedScores.get(j)) {
+                    Collections.swap(sortedScores, i, j);
+                    Collections.swap(sortedNames, i, j);
+                }
+            }
+        }
+
+        // Keep only top 5
+        while (sortedScores.size() > 5) {
+            sortedScores.remove(sortedScores.size() - 1);
+            sortedNames.remove(sortedNames.size() - 1);
+        }
+
+        playerNames = sortedNames;
+        highScores = sortedScores;
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public int getMaxTries() {
+        return maxTries;
+    }
+
+    public int getTriesLeft() {
+        return triesLeft;
+    }
+
+    public String getNumberToGuess() {
+        return numberToGuess;
+    }
 }

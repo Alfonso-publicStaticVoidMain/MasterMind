@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package view;
 
 import controller.Controller;
@@ -5,10 +9,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.geom.RoundRectangle2D;
-import java.util.List;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,65 +23,50 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Silvia García Bouza
- * @author Nuria Calo Mosquera
- * @author Alfonso Gallego Fernández
+ * @author silvia
  */
 public class View extends javax.swing.JFrame {
 
-    private final JPanel userInputPanel;
-    private final JPanel previousTriesPanel;
-    private final JPanel bottomPanel;
-    private final JPanel titlePanel;
-
-    private final JLabel titleLabel;
+    //Paneles de la vista
+    private  JPanel titlePanel;
+    private  JPanel userInputPanel;
+    private  JPanel previousTriesPanel;
+    private  JPanel bottomPanel;
+    //Elementos
+    private  JLabel titleLabel;
     /**
      * Array de 4 textfield para que el usuario escriba los 4 digitos.
      */
-    private final JTextField[] userInputs;
+    private  JTextField[] userInputs;
     /**
      * Array de 4 JTextArea donde se muestran los intentos previos.
      */
-    private final JTextArea[][] previousTries;
+    private  JTextArea[][] previousTries;
     /**
      * Botón para que el usuario valide su intento.
      */
-    private final JButton submitButton;
-    /**
-     * Campo donde se muestran el número de intentos restantes.
-     */
-    private final JTextField triesLeftField;
+    private  JButton submitButton;
 
-    private Controller controller;
-    
-    private int length;
-    private int maxTries;
+    private  JTextField triesLeftField;
+
+    //variables para los panles
+    private int length = 4;
+    private int maxTries = 10;
+    private int triesLeft = 10;
+    private JLabel scoreLabel = new JLabel("Score: 0");
 
     public View() {
-        Object[] options = {"Easy", "Normal"};
-        int n = JOptionPane.showOptionDialog(
-                this,
-                "Choose the difficulty.",
-                "Difficulty menu",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null, //do not use a custom Icon
-                options, //the titles of buttons
-                options[0]); //default button title
-        if (n == 1) {
-            this.length = 5;
-            this.maxTries = 10;
-        } else {
-            this.length = 4;
-            this.maxTries = 10;
-        }
+
+
+    }
+ public void createView(int length, int maxTries) {
+        this.length = length;
+        this.maxTries = maxTries;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         //titulo
         setTitle("Mastermind");
-        //fondo
-        getContentPane().setBackground(Color.PINK);
 
         //panel titulo
         titlePanel = new JPanel();
@@ -105,13 +92,7 @@ public class View extends javax.swing.JFrame {
             userInputs[i] = new JTextField(3);//ancho para un digito
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
-//           final int width = 30;  // Establecer un ancho fijo
-//            final int height = 30; // Establecer un alto fijo
-//            numberInputs[i].setBorder(BorderFactory.createCompoundBorder(
-//                    BorderFactory.createRoundedBorder(new RoundRectangle2D.Double(0, 0, width, height, 8, 8), new Color(52, 152, 219)), // Borde redondeado azul
-//                    BorderFactory.createEmptyBorder(0, 5, 0, 5) // Espaciado interno
-//            ));
-            userInputPanel.add(userInputs[i]);
+            userInputPanel.add(userInputs[i]);//añades al panel
         }
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
@@ -138,6 +119,7 @@ public class View extends javax.swing.JFrame {
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Color.PINK);
+        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
                 previousTries[i][j] = new JTextArea(1, 3);
@@ -148,9 +130,12 @@ public class View extends javax.swing.JFrame {
             }
         }
 
+        //panel boton  inferior
         // Submit button & tries left display
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
+        //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
+        //previousTriesText.setEditable(false);//intentos previos
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
 
@@ -170,85 +155,42 @@ public class View extends javax.swing.JFrame {
 
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
-        setResizable(false);//que no cambie el tamaño el usuario
+        setResizable(false);//q no ca,bie el tamaño eluser
         // pack();
         setLocationRelativeTo(null);
         setVisible(true);
 
     }
-
-    public int getLength() {
-        return this.length;
-    }
-
-    public int getMaxTries() {
-        return this.maxTries;
-    }
     
-    /* TODO: CHECK THIS
-    //añadir los listeners
-    public void setController(Controller controller) {
-        this.controller = controller;
+    
+    public void setActionListener(Controller controller) {
         submitButton.addActionListener(controller);
-        //TODO: Averiguar por que leches funciona isto
-        //Actualmente o que fai é que se pulsas enter borra todos os numeros
-        for (JTextField input : userInputs) {
-            input.addActionListener(controller);
-        }
+        this.length = controller.getLength();
+        this.maxTries = controller.getMaxTries();
+        this.triesLeft = controller.getTriesLeft();
 
-        // Añadir KeyListeners a todos los JTextFields y limitar a un único dígito
-        for (JTextField textField : userInputs) {
-            textField.addKeyListener(
-                    new java.awt.event.KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent evt) {
-                    char c = evt.getKeyChar();
-                    if (!Character.isDigit(c)) { //|| textField.getText().length() >= 1) {
-                        evt.consume(); // Ignorar caracteres no numéricos
-                    } else if (textField.getText().length() >= 1) {
-                        textField.setText(""); // Si ya hay contenido en el textField, resetearlo antes de escribir el nuevo
-                    }
-                }
+    }
 
-                @Override
-                public void keyPressed(KeyEvent evt) {
-                }
-
-                @Override
-                public void keyReleased(KeyEvent evt) {
+    // El Controller le dice a la View qué mostrar y dónde
+    public void displayFeedback(int attemptNumber, String guess, String[] feedback) {
+        if (attemptNumber < this.maxTries) {
+            for (int i = 0; i < this.length; i++) {
+                previousTries[attemptNumber][i].setText(String.valueOf(guess.charAt(i)));
+                switch (feedback[i]) {
+                    case "correct" ->
+                        previousTries[attemptNumber][i].setBackground(Color.GREEN);
+                    case "partial" ->
+                        previousTries[attemptNumber][i].setBackground(Color.ORANGE);
+                    default ->
+                        previousTries[attemptNumber][i].setBackground(Color.RED);
                 }
             }
-            );
         }
+    }
 
-        // Añadir KeyListeners para pasar al siguiente JTextField al completar un dígito
-        for (int i = 0; i < userInputs.length - 1; i++) {
-            final int currentIndex = i;
-            userInputs[i].addKeyListener(new java.awt.event.KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent evt) {
-                }
-
-                @Override
-                public void keyPressed(KeyEvent evt) {
-                }
-
-                @Override
-                public void keyReleased(KeyEvent evt) {
-                    if (userInputs[currentIndex].getText().length() == 1) {
-                        userInputs[currentIndex + 1].requestFocusInWindow();
-                    }
-                }
-            });
-        }
-
-        // AL inicio el cursor en el primer textfield
-        userInputs[0].requestFocusInWindow();
-    }*/
-
-    public void setController(Controller controller) {
-        this.controller = controller;
-        submitButton.addActionListener(controller);
+    // El Controller actualiza el texto de los intentos restantes
+    public void setTriesLeftText(int triesLeft) {
+        triesLeftField.setText("Tries left: " + triesLeft);
     }
 
     // Obtener los digitos introducidos por el usuario
@@ -260,33 +202,12 @@ public class View extends javax.swing.JFrame {
         return digits.toString();
     }
 
+    //borrar digitos
     public void clearInputFields() {
         for (JTextField textField : userInputs) {
             textField.setText("");
         }
         userInputs[0].requestFocusInWindow();
-    }
-
-    public void setTriesLeftText(int triesLeft) {
-        triesLeftField.setText("Tries left: " + triesLeft);
-    }
-
-    public void displayFeedback(String guess, String[] feedback) {
-        int currentTry = this.controller.maxTries() - this.controller.model().getTriesLeft() - 1;
-        if (currentTry < this.getMaxTries()) {
-        //if (currentTry < this.maxTries) {
-            for (int i = 0; i < this.length; i++) {
-                previousTries[currentTry][i].setText(String.valueOf(guess.charAt(i)));
-                switch (feedback[i]) {
-                    case "correct" ->
-                        previousTries[currentTry][i].setBackground(Color.GREEN);
-                    case "partial" ->
-                        previousTries[currentTry][i].setBackground(Color.ORANGE);
-                    default ->
-                        previousTries[currentTry][i].setBackground(Color.RED);
-                }
-            }
-        }
     }
 
     public void disableInputs() {
@@ -295,50 +216,8 @@ public class View extends javax.swing.JFrame {
         }
         submitButton.setEnabled(false);
     }
-
-    //Volver a xogar
-    public void enableInputs() {
-        for (JTextField field : userInputs) {
-            field.setText("");  // Clear existing input
-            field.setEnabled(true);  // 🚀 Make sure users can type again
-        }
-        submitButton.setEnabled(true);
-    }
-
-    //Borrar intentos anteriores
-    public void clearPreviousTries() {
-        for (int i = 0; i < previousTries.length; i++) {
-            for (int j = 0; j < previousTries[i].length; j++) {
-                previousTries[i][j].setText(""); // Clear text
-                previousTries[i][j].setBackground(Color.WHITE); // Reset color
-            }
-        }
-    }
-
-    //Puntuaxe
-    private JLabel scoreLabel = new JLabel("Score: 0");
-
-    public void setScoreText(int score) {
-        scoreLabel.setText("Score: " + score);
-    }
-
-    //Puntuaxe Máximo Logrado
-    public void showLeaderboard(List<String> names, List<Integer> scores) {
-        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
-        for (int i = 0; i < names.size(); i++) {
-            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
-                    .append(" - ").append(scores.get(i)).append(" points\n");
-        }
-
-        JOptionPane.showMessageDialog(
-                this,
-                leaderboardText.toString(),
-                "Leaderboard",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-    }
-
     //Nome xogadores
+
     public String getPlayerName() {
         String playerName = JOptionPane.showInputDialog(
                 this,
@@ -353,6 +232,45 @@ public class View extends javax.swing.JFrame {
 
         return playerName; // Return the entered name
     }
+    //Puntuaxe Máximo Logrado
+
+    public void showLeaderboard(ArrayList<String> names, ArrayList<Integer> scores) {
+        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
+        for (int i = 0; i < names.size(); i++) {
+            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
+                    .append(" - ").append(scores.get(i)).append(" points\n");
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                leaderboardText.toString(),
+                "Leaderboard",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    public void setScoreText(int score) {
+        scoreLabel.setText("Score: " + score);
+    }
+    //Borrar intentos anteriores
+
+    public void clearPreviousTries() {
+        for (int i = 0; i < previousTries.length; i++) {
+            for (int j = 0; j < previousTries[i].length; j++) {
+                previousTries[i][j].setText(""); // Clear text
+                previousTries[i][j].setBackground(Color.WHITE); // Reset color
+            }
+        }
+    }
+    //Volver a xogar
+
+    public void enableInputs() {
+        for (JTextField field : userInputs) {
+            field.setText("");  // Clear existing input
+            field.setEnabled(true);  // 🚀 Make sure users can type again
+        }
+        submitButton.setEnabled(true);
+    }
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -360,22 +278,10 @@ public class View extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-//todo al acertar finaliza el juego
 }
