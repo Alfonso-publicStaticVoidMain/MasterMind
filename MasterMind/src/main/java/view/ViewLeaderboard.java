@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -66,10 +67,11 @@ public class ViewLeaderboard extends javax.swing.JFrame {
             for (int col = 0; col < 2; col++) {
                 scoreBoard[row][col] = new JLabel();
                 if (row == 0) scoreBoard[row][col].setText(col == 0 ? "Player" : "Score");
+                scoreBoard[row][col].setHorizontalAlignment(col == 0 ? SwingConstants.LEFT : SwingConstants.RIGHT);
                 bottomScorePanel.add(scoreBoard[row][col]);
             }
         }
-        bottomScorePanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        bottomScorePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
         add(bottomScorePanel);
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
@@ -86,22 +88,6 @@ public class ViewLeaderboard extends javax.swing.JFrame {
     public void setController(ControllerLeaderboard controller) {
         this.controller = controller;
     }
-
-    public void showLeaderboard(ArrayList<String> names, ArrayList<Integer> scores) {
-        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
-        for (int i = 0; i < names.size(); i++) {
-            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
-                    .append(" - ").append(scores.get(i)).append(" points\n");
-        }
-
-        JOptionPane.showMessageDialog(
-                this,
-                leaderboardText.toString(),
-                "Leaderboard",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-    }
-
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
