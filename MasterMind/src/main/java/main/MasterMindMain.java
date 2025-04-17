@@ -1,12 +1,12 @@
 package main;
 
-import controller.Controller;
+import controller.ControllerGame;
+import controller.ControllerIndex;
 
+import model.ModelGame;
 
-
-import model.Model;
-
-import view.View;
+import view.ViewGame;
+import view.ViewIndex;
 
 /**
  *
@@ -16,16 +16,17 @@ import view.View;
  */
 public class MasterMindMain {
 
-
     public static void main(String[] args) {
-       
-        Model model = new Model();
+
+        ModelGame model = new ModelGame();
 
         // Crear la vista, pasando la configuración inicial del modelo
-        View view = new View();
+        ViewGame view = new ViewGame();
 
         //  controlador, pasando la vista y el modelo
-        Controller controller = new Controller(view, model);
+        ControllerGame controller = new ControllerGame(view, model);
+//        ViewIndex view = new ViewIndex();
+//        ControllerIndex c = new ControllerIndex(view);
 
     }
 }

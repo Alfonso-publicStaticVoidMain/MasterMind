@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class Model {
+public class ModelGame {
     // Variables
 
     /**
@@ -42,10 +42,10 @@ public class Model {
     private ArrayList<String> playerNames = new ArrayList<>();
 
     // Constructor
-    public Model() {
+    public ModelGame() {
         this.length = 4;
         this.maxTries = 10;
-        resetGame(); // Inicializar el juego al crear el Model
+        resetGame(); // Inicializar el juego al crear el ModelGame
     }
 
     // Resetear o xogo

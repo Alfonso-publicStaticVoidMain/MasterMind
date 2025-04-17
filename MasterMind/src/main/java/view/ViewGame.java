@@ -4,7 +4,7 @@
  */
 package view;
 
-import controller.Controller;
+import controller.ControllerGame;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  *
  * @author silvia
  */
-public class View extends javax.swing.JFrame {
+public class ViewGame extends javax.swing.JFrame {
 
     //Paneles de la vista
     private  JPanel titlePanel;
@@ -55,7 +55,7 @@ public class View extends javax.swing.JFrame {
     private int triesLeft = 10;
     private JLabel scoreLabel = new JLabel("Score: 0");
 
-    public View() {
+    public ViewGame() {
 
 
     }
@@ -119,7 +119,7 @@ public class View extends javax.swing.JFrame {
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Color.PINK);
-        // A: Ese 10 debería ser o MAX_TRIES do Controller! Pero hai que mirar como facer iso ben
+        // A: Ese 10 debería ser o MAX_TRIES do ControllerGame! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
                 previousTries[i][j] = new JTextArea(1, 3);
@@ -163,7 +163,7 @@ public class View extends javax.swing.JFrame {
     }
     
     
-    public void setActionListener(Controller controller) {
+    public void setActionListener(ControllerGame controller) {
         submitButton.addActionListener(controller);
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
@@ -171,7 +171,7 @@ public class View extends javax.swing.JFrame {
 
     }
 
-    // El Controller le dice a la View qué mostrar y dónde
+    // El ControllerGame le dice a la ViewGame qué mostrar y dónde
     public void displayFeedback(int attemptNumber, String guess, String[] feedback) {
         if (attemptNumber < this.maxTries) {
             for (int i = 0; i < this.length; i++) {
@@ -188,7 +188,7 @@ public class View extends javax.swing.JFrame {
         }
     }
 
-    // El Controller actualiza el texto de los intentos restantes
+    // El ControllerGame actualiza el texto de los intentos restantes
     public void setTriesLeftText(int triesLeft) {
         triesLeftField.setText("Tries left: " + triesLeft);
     }
