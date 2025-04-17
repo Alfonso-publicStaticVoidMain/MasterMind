@@ -27,6 +27,10 @@ import javax.swing.JTextField;
  */
 public class ViewGame extends javax.swing.JFrame {
 
+   
+
+
+    
     //Paneles de la vista
     private  JPanel titlePanel;
     private  JPanel userInputPanel;
@@ -280,6 +284,10 @@ public class ViewGame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    void isVisible(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

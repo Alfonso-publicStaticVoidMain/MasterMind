@@ -26,16 +26,16 @@ public class PersonalitedButton extends JButton {
         setFocusPainted(false);
         setBorder(BorderFactory.createEmptyBorder(15, 30, 15, 30));//padding
         setUI(new javax.swing.plaf.basic.BasicButtonUI() {
-            @Override
-            public void paint(Graphics g, JComponent c) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(c.getBackground());
-                RoundRectangle2D roundedRect = new RoundRectangle2D.Double(0, 0, c.getWidth(), c.getHeight(), 30, 30);
-                g2.fillRoundRect(0, 0, c.getWidth(), c.getHeight(), 30, 30);
-                super.paint(g2, c);
-                g2.dispose();
-            }
+         @Override
+        public void paint(Graphics g, JComponent c) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(c.getBackground());
+            RoundRectangle2D roundedRect = new RoundRectangle2D.Double(0, 0, c.getWidth(), c.getHeight(), 30, 30);
+            g2.fill(roundedRect);
+            g2.dispose();
+            super.paint(g, c);
+        }
         });
 
         addMouseListener(new MouseAdapter() {

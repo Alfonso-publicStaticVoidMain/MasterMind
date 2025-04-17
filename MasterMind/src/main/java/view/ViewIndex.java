@@ -36,6 +36,7 @@ public class ViewIndex extends javax.swing.JFrame {
     private JButton difficultyButton;
     private JButton howToPlayButton;
     private JButton leaderBoardButton;
+ 
 
     public ViewIndex() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,14 +51,14 @@ public class ViewIndex extends javax.swing.JFrame {
         add(titlePanel);
         titlePanel.setPreferredSize(new Dimension(titlePanel.getWidth(), 50));
         //panel elementos
-        playButton = new PersonalitedButton("Play","play");
-       // playButton.setActionCommand("play");
-        difficultyButton = new PersonalitedButton("Difficulty","difficulty");
-       // difficultyButton.setActionCommand("difficulty");
-        howToPlayButton=new PersonalitedButton("Hoy to play","howToPlay");
-      //  howToPlayButton.setActionCommand("howToPlay");
-        leaderBoardButton=new PersonalitedButton("Leader Board","leaderBoard");
-     //   leaderBoardButton.setActionCommand("leaderBoard");
+        playButton = new JButton("Play");
+       playButton.setActionCommand("play");
+        difficultyButton = new JButton("Difficulty");
+        difficultyButton.setActionCommand("difficulty");
+        howToPlayButton=new JButton("Hoy to play");
+        howToPlayButton.setActionCommand("howToPlay");
+        leaderBoardButton=new JButton("Leader Board");
+     leaderBoardButton.setActionCommand("leaderBoard");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.pink);
         add(buttonPanel);
@@ -94,6 +95,12 @@ public class ViewIndex extends javax.swing.JFrame {
 
     }
     
+    
+//    public void jButtonActionPerformed(java.awt.event.ActionEvent evt){
+//        ViewGame viewGame= new ViewGame();
+//        viewGame.isVisible(true);
+//    }
+    
       public void setActionListener(ControllerIndex controller) {
         playButton.addActionListener(controller);
         difficultyButton.addActionListener(controller);
@@ -102,6 +109,8 @@ public class ViewIndex extends javax.swing.JFrame {
         
 
     }
+      
+      
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
