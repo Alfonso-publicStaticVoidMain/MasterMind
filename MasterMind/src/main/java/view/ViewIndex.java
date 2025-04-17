@@ -4,9 +4,13 @@
  */
 package view;
 
+import JElementos.PersonalitedButton;
 import controller.ControllerIndex;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,25 +48,41 @@ public class ViewIndex extends javax.swing.JFrame {
         titleLabel=new JLabel("MasterMind");
         titlePanel.add(titleLabel);
         add(titlePanel);
+        titlePanel.setPreferredSize(new Dimension(titlePanel.getWidth(), 50));
         //panel elementos
-        playButton = new JButton("Play");
-        playButton.setActionCommand("play");
-        difficultyButton = new JButton("Difficulty");
-        difficultyButton.setActionCommand("difficulty");
-        howToPlayButton=new JButton("Hoy to play");
-        howToPlayButton.setActionCommand("howToPlay");
-        leaderBoardButton=new JButton("Leader Board");
-        leaderBoardButton.setActionCommand("leaderBoard");
-        buttonPanel= new JPanel();
+        playButton = new PersonalitedButton("Play","play");
+       // playButton.setActionCommand("play");
+        difficultyButton = new PersonalitedButton("Difficulty","difficulty");
+       // difficultyButton.setActionCommand("difficulty");
+        howToPlayButton=new PersonalitedButton("Hoy to play","howToPlay");
+      //  howToPlayButton.setActionCommand("howToPlay");
+        leaderBoardButton=new PersonalitedButton("Leader Board","leaderBoard");
+     //   leaderBoardButton.setActionCommand("leaderBoard");
+        buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.pink);
         add(buttonPanel);
-        buttonPanel.setLayout(new FlowLayout());
+
+        
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        
+        buttonPanel.add(Box.createVerticalStrut(20)); // Espacio entre botones
         buttonPanel.add(playButton);
+        buttonPanel.add(Box.createVerticalStrut(20));
         buttonPanel.add(difficultyButton);
-         buttonPanel.add(howToPlayButton);
-          buttonPanel.add(leaderBoardButton);
-       
-          
-         
+        buttonPanel.add(Box.createVerticalStrut(20));
+        buttonPanel.add(howToPlayButton);
+        buttonPanel.add(Box.createVerticalStrut(20));
+        buttonPanel.add(leaderBoardButton);
+
+        //espaciadores 
+      
+        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.add(Box.createVerticalStrut(200)); // Espacio 
+       playButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar botones
+        difficultyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        howToPlayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
           
           
         //tamaño adaptado, contenido centrado, visible
