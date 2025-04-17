@@ -215,7 +215,7 @@ public class ModelGame {
     public void updateHighScores(String playerName) {
         scoreHistory.put(playerName, score);
         List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(scoreHistory.entrySet());
-        scoreList.sort(Map.Entry.comparingByValue());
+        scoreList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
         scoreHistory.clear();
         for (Map.Entry<String, Integer> entry : scoreList) scoreHistory.put(entry.getKey(), entry.getValue());
     }

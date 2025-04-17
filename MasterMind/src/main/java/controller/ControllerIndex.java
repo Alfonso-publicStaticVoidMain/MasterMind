@@ -45,6 +45,7 @@ public class ControllerIndex implements ActionListener {
                 view.dispose();
                 ViewLeaderboard vl = new ViewLeaderboard();
                 ControllerLeaderboard cl = new ControllerLeaderboard(vl, this.model);
+                cl.updateScores();
             }
             // TO DO... or not?
             case "exit" -> {

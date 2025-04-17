@@ -218,10 +218,10 @@ public class ViewGame extends javax.swing.JFrame {
 
     public String getPlayerName() {
         String playerName = JOptionPane.showInputDialog(
-                this,
-                "Enter your name for the leaderboard:",
-                "Player Name",
-                JOptionPane.QUESTION_MESSAGE
+            this,
+            "Enter your name for the leaderboard:",
+            "Player Name",
+            JOptionPane.QUESTION_MESSAGE
         );
 
         if (playerName == null || playerName.trim().isEmpty()) {

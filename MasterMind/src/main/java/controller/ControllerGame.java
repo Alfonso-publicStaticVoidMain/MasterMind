@@ -65,9 +65,9 @@ public class ControllerGame implements ActionListener {
         String message = won ? "You guessed correctly! Play again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!" : "Game Over";
         int choice = JOptionPane.showConfirmDialog(view, message, title, JOptionPane.YES_NO_OPTION);
-
+        resetGame();
         if (choice == JOptionPane.YES_OPTION) {
-            resetGame();
+            //resetGame();
         } else {
             //view.disableInputs();
             //showGoodbyeMessage();
