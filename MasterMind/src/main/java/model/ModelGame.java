@@ -4,8 +4,11 @@
  */
 package model;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class ModelGame {
@@ -30,16 +33,13 @@ public class ModelGame {
      */
     private int triesLeft;
     // Guardar el historial de intentos:
-    private ArrayList<String> attemptHistory = new ArrayList<>();
+    private List<String> attemptHistory = new ArrayList<>();
     private boolean gameFinished = false;
     private int score = 0;
 
     boolean[] secretUse;
 
-    // Histórico de Puntuaxe
-    private ArrayList<Integer> highScores = new ArrayList<>();
-    // Nome de xogadores
-    private ArrayList<String> playerNames = new ArrayList<>();
+    private Map<String, Integer> scoreHistory = new LinkedHashMap<>();
 
     // Constructor
     public ModelGame() {
@@ -91,6 +91,14 @@ public class ModelGame {
 
     public void finishGame() {
         this.gameFinished = true;
+    }
+
+    public Map<String, Integer> getScoreHistory() {
+        return scoreHistory;
+    }
+
+    public void setScoreHistory(Map<String, Integer> scoreHistory) {
+        this.scoreHistory = scoreHistory;
     }
 
     public String generateRandomNumber() {
@@ -184,7 +192,7 @@ public class ModelGame {
     }
 
     // Obtener el historial de intentos
-    public ArrayList<String> getAttemptsHistory() {
+    public List<String> getAttemptsHistory() {
         return attemptHistory;
     }
 
@@ -204,40 +212,12 @@ public class ModelGame {
         }
     }
 
-    public ArrayList<Integer> getHighScores() {
-        return highScores;
-    }
-
-    public ArrayList<String> getPlayerNames() {
-        return playerNames;
-    }
-
     public void updateHighScores(String playerName) {
-        playerNames.add(playerName);
-        highScores.add(score);
-
-        // Sort scores and names together
-        ArrayList<Integer> sortedScores = new ArrayList<>(highScores);
-        ArrayList<String> sortedNames = new ArrayList<>(playerNames);
-
-        // Sort scores while keeping names aligned
-        for (int i = 0; i < sortedScores.size(); i++) {
-            for (int j = i + 1; j < sortedScores.size(); j++) {
-                if (sortedScores.get(i) < sortedScores.get(j)) {
-                    Collections.swap(sortedScores, i, j);
-                    Collections.swap(sortedNames, i, j);
-                }
-            }
-        }
-
-        // Keep only top 5
-        while (sortedScores.size() > 5) {
-            sortedScores.remove(sortedScores.size() - 1);
-            sortedNames.remove(sortedNames.size() - 1);
-        }
-
-        playerNames = sortedNames;
-        highScores = sortedScores;
+        scoreHistory.put(playerName, score);
+        List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(scoreHistory.entrySet());
+        scoreList.sort(Map.Entry.comparingByValue());
+        scoreHistory.clear();
+        for (Map.Entry<String, Integer> entry : scoreList) scoreHistory.put(entry.getKey(), entry.getValue());
     }
 
     public int getLength() {

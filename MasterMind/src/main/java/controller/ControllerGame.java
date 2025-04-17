@@ -91,7 +91,6 @@ public class ControllerGame implements ActionListener {
         String playerName = view.getPlayerName();
         model.updateScore(won);
         model.updateHighScores(playerName);
-        view.showLeaderboard(model.getPlayerNames(), model.getHighScores());
         model.resetGame(); // Usar el método resetGame del ModelGame
         view.setScoreText(model.getScore());
         view.clearPreviousTries();

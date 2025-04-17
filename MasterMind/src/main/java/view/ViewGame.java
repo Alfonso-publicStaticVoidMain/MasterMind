@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.ControllerGame;
@@ -28,26 +24,26 @@ import javax.swing.JTextField;
 public class ViewGame extends javax.swing.JFrame {
 
     //Paneles de la vista
-    private  JPanel titlePanel;
-    private  JPanel userInputPanel;
-    private  JPanel previousTriesPanel;
-    private  JPanel bottomPanel;
+    private JPanel titlePanel;
+    private JPanel userInputPanel;
+    private JPanel previousTriesPanel;
+    private JPanel bottomPanel;
     //Elementos
-    private  JLabel titleLabel;
+    private JLabel titleLabel;
     /**
      * Array de 4 textfield para que el usuario escriba los 4 digitos.
      */
-    private  JTextField[] userInputs;
+    private JTextField[] userInputs;
     /**
      * Array de 4 JTextArea donde se muestran los intentos previos.
      */
-    private  JTextArea[][] previousTries;
+    private JTextArea[][] previousTries;
     /**
      * Botón para que el usuario valide su intento.
      */
-    private  JButton submitButton;
+    private JButton submitButton;
 
-    private  JTextField triesLeftField;
+    private JTextField triesLeftField;
 
     //variables para los panles
     private int length = 4;
@@ -57,9 +53,9 @@ public class ViewGame extends javax.swing.JFrame {
 
     public ViewGame() {
 
-
     }
- public void createView(int length, int maxTries) {
+
+    public void createView(int length, int maxTries) {
         this.length = length;
         this.maxTries = maxTries;
 
@@ -161,8 +157,7 @@ public class ViewGame extends javax.swing.JFrame {
         setVisible(true);
 
     }
-    
-    
+
     public void setActionListener(ControllerGame controller) {
         submitButton.addActionListener(controller);
         this.length = controller.getLength();
@@ -232,28 +227,12 @@ public class ViewGame extends javax.swing.JFrame {
 
         return playerName; // Return the entered name
     }
-    //Puntuaxe Máximo Logrado
-
-    public void showLeaderboard(ArrayList<String> names, ArrayList<Integer> scores) {
-        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
-        for (int i = 0; i < names.size(); i++) {
-            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
-                    .append(" - ").append(scores.get(i)).append(" points\n");
-        }
-
-        JOptionPane.showMessageDialog(
-                this,
-                leaderboardText.toString(),
-                "Leaderboard",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-    }
 
     public void setScoreText(int score) {
         scoreLabel.setText("Score: " + score);
     }
-    //Borrar intentos anteriores
 
+    //Borrar intentos anteriores
     public void clearPreviousTries() {
         for (int i = 0; i < previousTries.length; i++) {
             for (int j = 0; j < previousTries[i].length; j++) {
