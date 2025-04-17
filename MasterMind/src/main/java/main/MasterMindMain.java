@@ -22,7 +22,7 @@ public class MasterMindMain {
 
     public static void main(String[] args) {
 
-//        ModelGame model = new ModelGame();
+        ModelGame model = new ModelGame();
 //
 //        // Crear la vista, pasando la configuración inicial del modelo
 //        ViewGame view = new ViewGame();
@@ -30,6 +30,6 @@ public class MasterMindMain {
 //        //  controlador, pasando la vista y el modelo
 //        ControllerGame controller = new ControllerGame(view, model);
         ViewIndex view = new ViewIndex();
-        ControllerIndex c = new ControllerIndex(view);
+        ControllerIndex c = new ControllerIndex(view, model);
     }
 }

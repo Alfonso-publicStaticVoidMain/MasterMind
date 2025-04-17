@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  * @author silvia
  */
 public class ViewIndex extends javax.swing.JFrame {
-
+    
     /**
      * Paneles
      */

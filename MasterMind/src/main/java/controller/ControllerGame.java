@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.ModelGame;
 import view.ViewGame;
+import view.ViewIndex;
 
 
 /**
@@ -19,13 +20,6 @@ public class ControllerGame implements ActionListener {
     //view y model
     ViewGame view;
     ModelGame model;
-    //private int attemptsMade = 0; // Para controlar la fila en displayFeedback
-    //otras variables
-//    private int length;
-//    private int maxTries;
-//    private int triesLeft;
-//    private boolean isGameFinished;
-    
 
     public ControllerGame(ViewGame view, ModelGame model) {
         this.view = view;
@@ -37,7 +31,7 @@ public class ControllerGame implements ActionListener {
         this.view.setScoreText(this.model.getScore()); // Inicializar el score en la vista
     }
 
-      @Override
+    @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
@@ -75,8 +69,10 @@ public class ControllerGame implements ActionListener {
         if (choice == JOptionPane.YES_OPTION) {
             resetGame();
         } else {
-            view.disableInputs();
-            showGoodbyeMessage();
+            //view.disableInputs();
+            //showGoodbyeMessage();
+            ViewIndex view = new ViewIndex();
+            ControllerIndex c = new ControllerIndex(view, this.model);
         }
     }
     
@@ -111,9 +107,5 @@ public class ControllerGame implements ActionListener {
     public int getTriesLeft() {
         return model.getTriesLeft();
     }
-
-    
-    
-    
 
 }

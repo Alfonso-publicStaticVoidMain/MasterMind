@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import model.ModelGame;
 import view.ViewGame;
 import view.ViewIndex;
+import view.ViewLeaderboard;
 
 /**
  *
@@ -17,9 +18,11 @@ import view.ViewIndex;
 public class ControllerIndex implements ActionListener {
 
     private ViewIndex view;
+    private ModelGame model;
 
-    public ControllerIndex(ViewIndex view) {
+    public ControllerIndex(ViewIndex view, ModelGame model) {
         this.view = view;
+        this.model = model;
         this.view.setActionListener(this);
     }
 
@@ -30,8 +33,7 @@ public class ControllerIndex implements ActionListener {
             case "play" -> {
                 view.dispose();
                 ViewGame vg = new ViewGame();
-                ModelGame mg = new ModelGame();
-                ControllerGame cg = new ControllerGame(vg, mg);
+                ControllerGame cg = new ControllerGame(vg, this.model);
             }
             case "difficulty" -> {
             }
@@ -40,8 +42,14 @@ public class ControllerIndex implements ActionListener {
             }
 
             case "leaderBoard" -> {
+                view.dispose();
+                ViewLeaderboard vl = new ViewLeaderboard();
+                ControllerLeaderboard cl = new ControllerLeaderboard(vl, this.model);
             }
-
+            // TO DO... or not?
+            case "exit" -> {
+                view.dispose();
+            }
         }
     }
 
