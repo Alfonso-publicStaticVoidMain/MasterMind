@@ -19,11 +19,15 @@ public class ControllerIndex implements ActionListener {
 
     private ViewIndex view;
     private ModelGame model;
+    private ViewGame viewGame;
+    private ViewLeaderboard viewLeaderboard;
 
     public ControllerIndex(ViewIndex view, ModelGame model) {
         this.view = view;
         this.model = model;
         this.view.setActionListener(this);
+        this.viewGame = new ViewGame();
+        this.viewLeaderboard = new ViewLeaderboard();
     }
 
     @Override
@@ -31,9 +35,9 @@ public class ControllerIndex implements ActionListener {
         String command = e.getActionCommand();
         switch (command) {
             case "play" -> {
-                view.dispose();
-                ViewGame vg = new ViewGame();
-                ControllerGame cg = new ControllerGame(vg, this.model);
+                view.setVisible(false);
+                viewGame.setVisible(true);
+                ControllerGame cg = new ControllerGame(viewGame, model, view);
             }
             case "difficulty" -> {
             }
@@ -42,9 +46,9 @@ public class ControllerIndex implements ActionListener {
             }
 
             case "leaderBoard" -> {
-                view.dispose();
-                ViewLeaderboard vl = new ViewLeaderboard();
-                ControllerLeaderboard cl = new ControllerLeaderboard(vl, this.model);
+                view.setVisible(false);
+                viewLeaderboard.setVisible(true);
+                ControllerLeaderboard cl = new ControllerLeaderboard(viewLeaderboard, model, view);
                 cl.updateScores();
             }
             // TO DO... or not?

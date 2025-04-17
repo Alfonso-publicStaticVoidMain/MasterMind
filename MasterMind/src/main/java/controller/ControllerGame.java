@@ -20,14 +20,16 @@ public class ControllerGame implements ActionListener {
     //view y model
     ViewGame view;
     ModelGame model;
+    ViewIndex viewIndex;
 
-    public ControllerGame(ViewGame view, ModelGame model) {
+    public ControllerGame(ViewGame view, ModelGame model, ViewIndex viewIndex) {
         this.view = view;
         this.model = model;
-        model.getLength();
+        this.viewIndex = viewIndex;
         this.view.createView(this.model.getLength(), this.model.getMaxTries());
         this.view.setActionListener(this);
-        this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
+        //A: O método de abaixo está comentado porque agora faise tamén dentro de createView()
+        //this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
         this.view.setScoreText(this.model.getScore()); // Inicializar el score en la vista
     }
 
@@ -71,8 +73,8 @@ public class ControllerGame implements ActionListener {
         } else {
             //view.disableInputs();
             //showGoodbyeMessage();
-            ViewIndex view = new ViewIndex();
-            ControllerIndex c = new ControllerIndex(view, this.model);
+            view.setVisible(false);
+            viewIndex.setVisible(true);
         }
     }
     

@@ -29,11 +29,13 @@ public class ViewLeaderboard extends javax.swing.JFrame {
     //Paneles de la vista
     private JPanel topTitlePanel;
     private JPanel midTitlePanel;
-    private JPanel bottomScorePanel;
+    private JPanel scorePanel;
+    private JPanel bottomPanel;
     //Elementos
     private JLabel topTitleLabel;
     private JLabel midTitleLabel;
     private JLabel[][] scoreBoard;
+    private JButton backButton;
     
     private ControllerLeaderboard controller;
 
@@ -61,24 +63,36 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         add(midTitlePanel);
         
         // panel que contén as scores
-        bottomScorePanel = new JPanel(new GridLayout(10, 2));
+        scorePanel = new JPanel(new GridLayout(10, 2));
         scoreBoard = new JLabel[10][2];
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 2; col++) {
                 scoreBoard[row][col] = new JLabel();
                 if (row == 0) scoreBoard[row][col].setText(col == 0 ? "Player" : "Score");
                 scoreBoard[row][col].setHorizontalAlignment(col == 0 ? SwingConstants.LEFT : SwingConstants.RIGHT);
-                bottomScorePanel.add(scoreBoard[row][col]);
+                scorePanel.add(scoreBoard[row][col]);
             }
         }
-        bottomScorePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
-        add(bottomScorePanel);
+        scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+        add(scorePanel);
+        
+        // panel que contén o botón de volta atrás
+        bottomPanel = new JPanel();
+        backButton = new JButton("Back");
+        backButton.setBorderPainted(false);
+        bottomPanel.add(backButton);
+        add(bottomPanel);
+        
+        
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
         setResizable(false);//q no ca,bie el tamaño eluser
         // pack();
         setLocationRelativeTo(null);
-        setVisible(true);
+    }
+    
+    public void setActionListener(ControllerLeaderboard controller) {
+        backButton.addActionListener(controller);
     }
 
     public JLabel[][] getScoreBoard() {
