@@ -2,11 +2,15 @@ package main;
 
 import controller.ControllerGame;
 import controller.ControllerIndex;
+import controller.ControllerLeaderboard;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import model.ModelGame;
 
 import view.ViewGame;
 import view.ViewIndex;
+import view.ViewLeaderboard;
 
 /**
  *
@@ -27,6 +31,5 @@ public class MasterMindMain {
 //        ControllerGame controller = new ControllerGame(view, model);
         ViewIndex view = new ViewIndex();
         ControllerIndex c = new ControllerIndex(view);
-
     }
 }

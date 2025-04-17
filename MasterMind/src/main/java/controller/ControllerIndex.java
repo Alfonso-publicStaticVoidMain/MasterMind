@@ -21,7 +21,6 @@ public class ControllerIndex implements ActionListener {
     public ControllerIndex(ViewIndex view) {
         this.view = view;
         this.view.setActionListener(this);
-
     }
 
     @Override
@@ -29,7 +28,6 @@ public class ControllerIndex implements ActionListener {
         String command = e.getActionCommand();
         switch (command) {
             case "play" -> {
-
                 view.dispose();
                 ViewGame vg = new ViewGame();
                 ModelGame mg = new ModelGame();

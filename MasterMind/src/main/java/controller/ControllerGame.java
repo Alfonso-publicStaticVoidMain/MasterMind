@@ -19,7 +19,7 @@ public class ControllerGame implements ActionListener {
     //view y model
     ViewGame view;
     ModelGame model;
-    private int attemptsMade = 0; // Para controlar la fila en displayFeedback
+    //private int attemptsMade = 0; // Para controlar la fila en displayFeedback
     //otras variables
 //    private int length;
 //    private int maxTries;
@@ -50,9 +50,9 @@ public class ControllerGame implements ActionListener {
                 view.clearInputFields();
 
                 String[] feedbackInfo = this.model.feedbackInfo(guess);
-                view.displayFeedback(this.attemptsMade, guess, feedbackInfo); // Pasar número de intento
+                view.displayFeedback(this.getMaxTries() - this.getTriesLeft() - 1, guess, feedbackInfo); // Pasar número de intento
 
-                this.attemptsMade++; // Incrementar el contador de intentos
+                //this.attemptsMade++; // Incrementar el contador de intentos
 
                 if (this.model.hitsSamePlace(guess) == this.model.getLength()) {
                     this.finishGame(true); // El jugador ganó
@@ -91,13 +91,13 @@ public class ControllerGame implements ActionListener {
         String playerName = view.getPlayerName();
         model.updateScore(won);
         model.updateHighScores(playerName);
-        view.showLeaderboard(model.getPlayerNames(), model.getHighScores());
+        //view.showLeaderboard(model.getPlayerNames(), model.getHighScores());
         model.resetGame(); // Usar el método resetGame del ModelGame
         view.setScoreText(model.getScore());
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
         view.enableInputs();
-        this.attemptsMade = 0; // Resetear el contador de intentos
+        //this.attemptsMade = 0; // Resetear el contador de intentos
     }
 
     public int getLength() {

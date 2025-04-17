@@ -36,7 +36,6 @@ public class ViewIndex extends javax.swing.JFrame {
     private JButton difficultyButton;
     private JButton howToPlayButton;
     private JButton leaderBoardButton;
- 
 
     public ViewIndex() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,13 +51,13 @@ public class ViewIndex extends javax.swing.JFrame {
         titlePanel.setPreferredSize(new Dimension(titlePanel.getWidth(), 50));
         //panel elementos
         playButton = new JButton("Play");
-       playButton.setActionCommand("play");
+        playButton.setActionCommand("play");
         difficultyButton = new JButton("Difficulty");
         difficultyButton.setActionCommand("difficulty");
         howToPlayButton=new JButton("Hoy to play");
         howToPlayButton.setActionCommand("howToPlay");
         leaderBoardButton=new JButton("Leader Board");
-     leaderBoardButton.setActionCommand("leaderBoard");
+        leaderBoardButton.setActionCommand("leaderBoard");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.pink);
         add(buttonPanel);
@@ -80,7 +79,7 @@ public class ViewIndex extends javax.swing.JFrame {
       
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(Box.createVerticalStrut(200)); // Espacio 
-       playButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar botones
+        playButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar botones
         difficultyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         howToPlayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -95,22 +94,14 @@ public class ViewIndex extends javax.swing.JFrame {
 
     }
     
-    
-//    public void jButtonActionPerformed(java.awt.event.ActionEvent evt){
-//        ViewGame viewGame= new ViewGame();
-//        viewGame.isVisible(true);
-//    }
-    
-      public void setActionListener(ControllerIndex controller) {
+    public void setActionListener(ControllerIndex controller) {
         playButton.addActionListener(controller);
         difficultyButton.addActionListener(controller);
-         howToPlayButton.addActionListener(controller);
+        howToPlayButton.addActionListener(controller);
         leaderBoardButton.addActionListener(controller);
         
 
     }
-      
-      
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

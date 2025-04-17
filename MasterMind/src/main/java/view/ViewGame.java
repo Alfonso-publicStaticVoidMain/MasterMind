@@ -27,31 +27,27 @@ import javax.swing.JTextField;
  */
 public class ViewGame extends javax.swing.JFrame {
 
-   
-
-
-    
     //Paneles de la vista
-    private  JPanel titlePanel;
-    private  JPanel userInputPanel;
-    private  JPanel previousTriesPanel;
-    private  JPanel bottomPanel;
+    private JPanel titlePanel;
+    private JPanel userInputPanel;
+    private JPanel previousTriesPanel;
+    private JPanel bottomPanel;
     //Elementos
-    private  JLabel titleLabel;
+    private JLabel titleLabel;
     /**
      * Array de 4 textfield para que el usuario escriba los 4 digitos.
      */
-    private  JTextField[] userInputs;
+    private JTextField[] userInputs;
     /**
      * Array de 4 JTextArea donde se muestran los intentos previos.
      */
-    private  JTextArea[][] previousTries;
+    private JTextArea[][] previousTries;
     /**
      * Botón para que el usuario valide su intento.
      */
-    private  JButton submitButton;
+    private JButton submitButton;
 
-    private  JTextField triesLeftField;
+    private JTextField triesLeftField;
 
     //variables para los panles
     private int length = 4;
@@ -60,10 +56,9 @@ public class ViewGame extends javax.swing.JFrame {
     private JLabel scoreLabel = new JLabel("Score: 0");
 
     public ViewGame() {
-
-
     }
- public void createView(int length, int maxTries) {
+
+    public void createView(int length, int maxTries) {
         this.length = length;
         this.maxTries = maxTries;
 
@@ -165,8 +160,7 @@ public class ViewGame extends javax.swing.JFrame {
         setVisible(true);
 
     }
-    
-    
+
     public void setActionListener(ControllerGame controller) {
         submitButton.addActionListener(controller);
         this.length = controller.getLength();
@@ -253,11 +247,6 @@ public class ViewGame extends javax.swing.JFrame {
         );
     }
 
-    public void setScoreText(int score) {
-        scoreLabel.setText("Score: " + score);
-    }
-    //Borrar intentos anteriores
-
     public void clearPreviousTries() {
         for (int i = 0; i < previousTries.length; i++) {
             for (int j = 0; j < previousTries[i].length; j++) {
@@ -276,6 +265,9 @@ public class ViewGame extends javax.swing.JFrame {
         submitButton.setEnabled(true);
     }
 
+    public void setScoreText(int score) {
+        scoreLabel.setText("Score: " + score);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
