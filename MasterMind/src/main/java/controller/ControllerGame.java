@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -37,20 +33,18 @@ public class ControllerGame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (!this.model.isGameFinished() && command.equals("submit")) {
+        if (!model.isGameFinished() && command.equals("submit")) {
             String guess = view.getUserDigits();
 
             if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
-                this.model.consumeTry();
-                view.setTriesLeftText(this.model.getTriesLeft()); // Actualizar intentos restantes en la vista
+                model.consumeTry();
+                view.setTriesLeftText(model.getTriesLeft()); // Actualizar intentos restantes en la vista
                 view.clearInputFields();
 
-                String[] feedbackInfo = this.model.feedbackInfo(guess);
+                String[] feedbackInfo = model.feedbackInfo(guess);
                 view.displayFeedback(this.getMaxTries() - this.getTriesLeft() - 1, guess, feedbackInfo); // Pasar número de intento
 
-                //this.attemptsMade++; // Incrementar el contador de intentos
-
-                if (this.model.hitsSamePlace(guess) == this.model.getLength()) {
+                if (model.hitsSamePlace(guess) == model.getLength()) {
                     this.finishGame(true); // El jugador ganó
                 } else if (this.model.getTriesLeft() == 0) {
                     this.finishGame(false); // El jugador perdió
@@ -63,19 +57,23 @@ public class ControllerGame implements ActionListener {
     }
 
     private void finishGame(boolean won) {
-        this.model.finishGame();
+        this.model.finishGame(); // También setea la score a 0.
         String message = won ? "You guessed correctly! Play again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!" : "Game Over";
         int choice = JOptionPane.showConfirmDialog(view, message, title, JOptionPane.YES_NO_OPTION);
+        recordScore();
         resetGame();
-        if (choice == JOptionPane.YES_OPTION) {
-            //resetGame();
-        } else {
-            //view.disableInputs();
-            //showGoodbyeMessage();
+        if (choice == JOptionPane.NO_OPTION) {
             view.setVisible(false);
             viewIndex.setVisible(true);
         }
+        
+//        if (choice == JOptionPane.YES_OPTION) {
+//            resetGame();
+//        } else {
+//            view.disableInputs();
+//            showGoodbyeMessage();
+//        }
     }
     
     
@@ -84,18 +82,19 @@ public class ControllerGame implements ActionListener {
        // javax.swing.SwingUtilities.invokeLater(System::exit);
     }
 
-    public void resetGame() {
+    public void recordScore() {
         boolean won = model.isGameFinished(); // Guardar el estado del juego anterior
         String playerName = view.getPlayerName();
         model.updateScore(won);
         model.updateHighScores(playerName);
-        //view.showLeaderboard(model.getPlayerNames(), model.getHighScores());
-        model.resetGame(); // Usar el método resetGame del ModelGame
         view.setScoreText(model.getScore());
+    }
+    
+    public void resetGame() {
+        model.resetGame(); // Usar el método resetGame del ModelGame -> genera un nuevo número, triesLeft = maxTries, gameFinished = false, attemptHistoy.clear()
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
         view.enableInputs();
-        //this.attemptsMade = 0; // Resetear el contador de intentos
     }
 
     public int getLength() {

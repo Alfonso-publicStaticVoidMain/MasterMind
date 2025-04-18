@@ -65,7 +65,7 @@ public class ModelGame {
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
-        System.out.println(numberToGuess);
+        System.out.println("[DEBUG] setLength: "+numberToGuess);
     }
 
     // Recibe numero de filas
@@ -81,7 +81,7 @@ public class ModelGame {
 
     // Disminuye los intentos restantes
     public void consumeTry() {
-        this.triesLeft -= 1;
+        triesLeft--;
     }
 
     // Termina el juego
@@ -90,7 +90,8 @@ public class ModelGame {
     }
 
     public void finishGame() {
-        this.gameFinished = true;
+        gameFinished = true;
+        score = 0;
     }
 
     public Map<String, Integer> getScoreHistory() {
@@ -107,14 +108,13 @@ public class ModelGame {
         Random random = new Random();
         for (int i = 0; i < this.length; i++) {
             if (availableDigits.length() == 0) {
-                
                 break;
             }
             int numero = random.nextInt(availableDigits.length());
             str.append(availableDigits.charAt(numero));
             availableDigits.deleteCharAt(numero);
         }
-        System.out.println(str.toString());
+        System.out.println("[DEBUG] generateRandomNumber: "+str.toString());
         return str.toString();
     }
 
