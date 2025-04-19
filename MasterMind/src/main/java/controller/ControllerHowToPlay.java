@@ -22,8 +22,8 @@ public class ControllerHowToPlay implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if ("back".equals(e.getActionCommand())) {
+        System.out.println(e.getActionCommand());
+        if ("← Back".equals(e.getActionCommand())) {
             view.setVisible(false);
             viewIndex.setVisible(true); // Volver ao Index
         }
