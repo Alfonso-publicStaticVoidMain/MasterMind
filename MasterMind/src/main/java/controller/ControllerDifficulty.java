@@ -6,25 +6,27 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import model.ModelDifficulty;
 import model.ModelGame;
 import model.ModelGameDifficult;
 import view.ViewDifficulty;
 import view.ViewGame;
-import view.ViewIndex;
-import view.ViewLeaderboard;
+import view.ViewGameDifficult;
 
 /**
  *
  * @author silvia
  */
-public class ControllerIndex implements ActionListener {
+public class ControllerDifficulty implements ActionListener {
 
-    private ViewIndex view;
+    private ViewDifficulty view;
     private ModelGame model;
-   
-    public ControllerIndex(ViewIndex view, ModelGame model) {
+    private ModelGameDifficult modeld;
+
+    public ControllerDifficulty(ViewDifficulty view, ModelGame model, ModelGameDifficult modeld) {
         this.view = view;
         this.model = model;
+        this.modeld= modeld;
         this.view.setActionListener(this);
     }
 
@@ -32,24 +34,18 @@ public class ControllerIndex implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         switch (command) {
-            case "play" -> {
+            case "Easy" -> {
+                view.dispose();
+                ViewGame vg= new ViewGame();
+                ControllerGame cg = new ControllerGame(vg, this.model);
             }
-            case "difficulty" -> {
+            case "Difficul" -> {
+                view.dispose();
+                ViewGameDifficult vgd = new ViewGameDifficult();
+                ControllerGameDifficult cgd = new ControllerGameDifficult(vgd, this.modeld);
             }
 
-            case "howToPlay" -> {
-            }
-
-            case "leaderBoard" -> {
-                view.dispose();
-                ViewLeaderboard vl = new ViewLeaderboard();
-                ControllerLeaderboard cl = new ControllerLeaderboard(vl, this.model);
-            }
-            // TO DO... or not?
-            case "exit" -> {
-                view.dispose();
-            }
         }
-    }
 
+    }
 }

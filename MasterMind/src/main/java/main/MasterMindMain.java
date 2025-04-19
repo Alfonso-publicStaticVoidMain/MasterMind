@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import model.ModelGame;
+import model.ModelGameDifficult;
 
 import view.ViewGame;
 import view.ViewIndex;
