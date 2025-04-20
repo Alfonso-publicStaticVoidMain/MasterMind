@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -22,9 +18,10 @@ public class ControllerDifficulty implements ActionListener {
     private ViewIndex viewIndex;
     private ViewGame viewGame;
 
-    public ControllerDifficulty(ViewDifficulty viewDifficulty, ModelGame model) {
+    public ControllerDifficulty(ViewDifficulty viewDifficulty, ModelGame model, ViewIndex viewIndex) {
         this.viewDifficulty = viewDifficulty;
         this.model = model;
+        this.viewIndex = viewIndex;
         this.viewDifficulty.setActionListener(this);
     }
 
@@ -35,19 +32,17 @@ public class ControllerDifficulty implements ActionListener {
             case "Easy" -> {
                 viewDifficulty.setVisible(false);
                 viewGame = new ViewGame();
-                viewIndex = new ViewIndex();
                 viewGame.setVisible(true);
-                viewGame.createView(4, 10);
                 viewIndex.setVisible(false);
                 ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
             }
             case "Difficult" -> {
-                  viewDifficulty.setVisible(false);
+                viewDifficulty.setVisible(false);
                 viewGame = new ViewGame();
-                viewIndex = new ViewIndex();
                 viewGame.setVisible(true);
-                viewGame.createView(5, 5);
                 viewIndex.setVisible(false);
+                model.setLength(5);
+                model.setMaxTries(5);
                 ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
             }
 

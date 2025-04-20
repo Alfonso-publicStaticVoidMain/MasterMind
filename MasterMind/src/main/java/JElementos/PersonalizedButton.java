@@ -14,9 +14,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
-public class PersonalitedButton extends JButton {
+public class PersonalizedButton extends JButton {
 
-    public PersonalitedButton(String text, String actionCommand) {
+    public PersonalizedButton(String text, String actionCommand) {
         super(text);
         setActionCommand(actionCommand);
         setFont(new Font("Arial", Font.BOLD, 16));

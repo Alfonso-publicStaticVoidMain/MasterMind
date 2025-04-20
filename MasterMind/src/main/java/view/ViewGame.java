@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
+import JElementos.Colors;
 import controller.ControllerGame;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -69,7 +66,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         //panel titulo
         titlePanel = new JPanel();
-        titlePanel.setBackground(Color.pink);
+        titlePanel.setBackground(Colors.BACKGROUND);
 
         titleLabel = new JLabel("Mastermind");
         //titleLabel.setFont(); 
@@ -79,7 +76,7 @@ public class ViewGame extends javax.swing.JFrame {
         //Panel para el usuario
         userInputs = new JTextField[this.length];
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        userInputPanel.setBackground(Color.pink);
+        userInputPanel.setBackground(Colors.BACKGROUND);
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
         titlePanel.add(scoreLabel); // 🚀 Show score next to the game title
@@ -117,7 +114,7 @@ public class ViewGame extends javax.swing.JFrame {
         //ultimos 10 10para añadir espacio entre celdas
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        previousTriesPanel.setBackground(Color.PINK);
+        previousTriesPanel.setBackground(Colors.BACKGROUND);
         // A: Ese 10 debería ser o MAX_TRIES do ControllerGame! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
@@ -133,6 +130,8 @@ public class ViewGame extends javax.swing.JFrame {
         // Submit button & tries left display
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
+        submitButton.setBackground(Colors.BUTTON);
+        submitButton.setForeground(Colors.BACKGROUND);
         //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
         //previousTriesText.setEditable(false);//intentos previos
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);

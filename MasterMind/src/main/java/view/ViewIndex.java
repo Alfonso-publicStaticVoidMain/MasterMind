@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
-import JElementos.PersonalitedButton;
+import JElementos.PersonalizedButton;
 import controller.ControllerIndex;
 import java.awt.Color;
 import java.awt.Component;
@@ -33,7 +29,6 @@ public class ViewIndex extends javax.swing.JFrame {
      */
     private JLabel titleLabel;
     private JButton playButton;
-    private JButton difficultyButton;
     private JButton howToPlayButton;
     private JButton leaderBoardButton;
 
@@ -52,9 +47,7 @@ public class ViewIndex extends javax.swing.JFrame {
         //panel elementos
         playButton = new JButton("Play");
         playButton.setActionCommand("play");
-        difficultyButton = new JButton("Difficulty");
-        difficultyButton.setActionCommand("difficulty");
-        howToPlayButton=new JButton("Hoy to play");
+        howToPlayButton=new JButton("How to play");
         howToPlayButton.setActionCommand("howToPlay");
         leaderBoardButton=new JButton("Leader Board");
         leaderBoardButton.setActionCommand("leaderBoard");
@@ -66,7 +59,6 @@ public class ViewIndex extends javax.swing.JFrame {
         buttonPanel.add(Box.createVerticalStrut(20)); // Espacio entre botones
         buttonPanel.add(playButton);
         buttonPanel.add(Box.createVerticalStrut(20));
-        buttonPanel.add(difficultyButton);
         buttonPanel.add(Box.createVerticalStrut(20));
         buttonPanel.add(howToPlayButton);
         buttonPanel.add(Box.createVerticalStrut(20));
@@ -76,7 +68,6 @@ public class ViewIndex extends javax.swing.JFrame {
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(Box.createVerticalStrut(200)); // Espacio 
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar botones
-        difficultyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         howToPlayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
           
@@ -92,11 +83,8 @@ public class ViewIndex extends javax.swing.JFrame {
     
     public void setActionListener(ControllerIndex controller) {
         playButton.addActionListener(controller);
-        difficultyButton.addActionListener(controller);
         howToPlayButton.addActionListener(controller);
         leaderBoardButton.addActionListener(controller);
-        
-
     }
 
 
