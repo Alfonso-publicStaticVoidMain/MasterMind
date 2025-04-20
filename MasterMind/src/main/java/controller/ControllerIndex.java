@@ -18,8 +18,8 @@ public class ControllerIndex implements ActionListener {
 
     private ViewIndex view;
     private ModelGame model;
-
     private ViewGame viewGame;
+    private ViewLeaderboard viewLeaderboard;
     private ViewHowToPlay viewHowToPlay;
 
     private ControllerHowToPlay controllerHowToPlay;
@@ -38,6 +38,9 @@ public class ControllerIndex implements ActionListener {
 
         // O xogo comeza ca vista
         this.view.setVisible(true);
+        
+        // Leaderboard
+        this.viewLeaderboard = new ViewLeaderboard();
     }
 
     @Override
@@ -48,9 +51,11 @@ public class ControllerIndex implements ActionListener {
 
         switch (command) {
             case "play" -> {
-                view.dispose();
-                ViewGame vg = new ViewGame();
-                ControllerGame cg = new ControllerGame(vg, this.model);
+                view.setVisible(false);
+                viewGame = new ViewGame();
+                viewGame.setVisible(true);
+                ControllerGame cg = new ControllerGame(viewGame, model, view);
+                
             }
 
             case "howToPlay" -> {
@@ -65,9 +70,10 @@ public class ControllerIndex implements ActionListener {
             }
 
             case "leaderBoard" -> {
-                view.dispose();
-                ViewLeaderboard vl = new ViewLeaderboard();
-                ControllerLeaderboard cl = new ControllerLeaderboard(vl, this.model);
+                view.setVisible(false);
+                viewLeaderboard.setVisible(true);
+                ControllerLeaderboard cl = new ControllerLeaderboard(viewLeaderboard, model, view);
+                cl.updateScores();
             }
 
             case "exit" -> {

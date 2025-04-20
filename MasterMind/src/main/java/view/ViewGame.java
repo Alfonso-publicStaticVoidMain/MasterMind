@@ -86,7 +86,7 @@ public class ViewGame extends javax.swing.JFrame {
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 18)); // Bigger, clearer text
         scoreLabel.setForeground(new Color(41, 128, 185)); // Stylish blue color
         scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Space around label
-
+        
         for (int i = 0; i < userInputs.length; i++) {
             userInputs[i] = new JTextField(3);//ancho para un digito
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
@@ -137,6 +137,7 @@ public class ViewGame extends javax.swing.JFrame {
         //previousTriesText.setEditable(false);//intentos previos
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
+        setTriesLeftText(maxTries);
 
         bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
@@ -166,7 +167,6 @@ public class ViewGame extends javax.swing.JFrame {
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
         this.triesLeft = controller.getTriesLeft();
-
     }
 
     // El ControllerGame le dice a la ViewGame qué mostrar y dónde
@@ -218,10 +218,10 @@ public class ViewGame extends javax.swing.JFrame {
 
     public String getPlayerName() {
         String playerName = JOptionPane.showInputDialog(
-                this,
-                "Enter your name for the leaderboard:",
-                "Player Name",
-                JOptionPane.QUESTION_MESSAGE
+            this,
+            "Enter your name for the leaderboard:",
+            "Player Name",
+            JOptionPane.QUESTION_MESSAGE
         );
 
         if (playerName == null || playerName.trim().isEmpty()) {
