@@ -7,10 +7,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.ModelGame;
-import model.ModelGameDifficult;
 import view.ViewDifficulty;
 import view.ViewGame;
-import view.ViewGameDifficult;
 import view.ViewIndex;
 
 /**
