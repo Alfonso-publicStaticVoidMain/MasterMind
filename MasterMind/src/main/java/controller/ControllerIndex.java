@@ -1,8 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.ModelGame;
+import model.ModelGameDifficult;
+import view.ViewDifficulty;
 import view.ViewGame;
 import view.ViewHowToPlay;
 import view.ViewIndex;
@@ -19,6 +25,7 @@ public class ControllerIndex implements ActionListener {
     private ViewIndex view;
     private ModelGame model;
     private ViewGame viewGame;
+    private ViewDifficulty viewDifficulty;
     private ViewLeaderboard viewLeaderboard;
     private ViewHowToPlay viewHowToPlay;
 
@@ -52,10 +59,12 @@ public class ControllerIndex implements ActionListener {
         switch (command) {
             case "play" -> {
                 view.setVisible(false);
-                viewGame = new ViewGame();
-                viewGame.setVisible(true);
-                ControllerGame cg = new ControllerGame(viewGame, model, view);
+                viewDifficulty = new ViewDifficulty();
+                viewDifficulty.setVisible(true);
+                ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model);
                 
+            }
+            case "difficulty" -> {
             }
 
             case "howToPlay" -> {
