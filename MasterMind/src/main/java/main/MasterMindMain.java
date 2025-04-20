@@ -23,9 +23,7 @@ public class MasterMindMain {
     public static void main(String[] args) {
 
         ModelGame model = new ModelGame();
-
         ViewIndex view = new ViewIndex();
-
         ControllerIndex c = new ControllerIndex(view, model);
     }
 }

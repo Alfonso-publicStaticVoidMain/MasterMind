@@ -25,6 +25,7 @@ public class ControllerIndex implements ActionListener {
     private ViewIndex view;
     private ModelGame model;
     private ViewGame viewGame;
+    private ViewDifficulty viewDifficulty;
     private ViewLeaderboard viewLeaderboard;
     private ViewHowToPlay viewHowToPlay;
 
@@ -58,9 +59,9 @@ public class ControllerIndex implements ActionListener {
         switch (command) {
             case "play" -> {
                 view.setVisible(false);
-                viewGame = new ViewGame();
-                viewGame.setVisible(true);
-                ControllerGame cg = new ControllerGame(viewGame, model, view);
+                viewDifficulty = new ViewDifficulty();
+                viewDifficulty.setVisible(true);
+                ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model);
                 
             }
             case "difficulty" -> {

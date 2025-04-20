@@ -6,12 +6,12 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import model.ModelDifficulty;
 import model.ModelGame;
 import model.ModelGameDifficult;
 import view.ViewDifficulty;
 import view.ViewGame;
 import view.ViewGameDifficult;
+import view.ViewIndex;
 
 /**
  *
@@ -19,15 +19,15 @@ import view.ViewGameDifficult;
  */
 public class ControllerDifficulty implements ActionListener {
 
-    private ViewDifficulty view;
+    private ViewDifficulty viewDifficulty;
     private ModelGame model;
-    private ModelGameDifficult modeld;
+    private ViewIndex viewIndex;
+    private ViewGame viewGame;
 
-    public ControllerDifficulty(ViewDifficulty view, ModelGame model, ModelGameDifficult modeld) {
-        this.view = view;
+    public ControllerDifficulty(ViewDifficulty viewDifficulty, ModelGame model) {
+        this.viewDifficulty = viewDifficulty;
         this.model = model;
-        this.modeld= modeld;
-        this.view.setActionListener(this);
+        this.viewDifficulty.setActionListener(this);
     }
 
     @Override
@@ -35,14 +35,22 @@ public class ControllerDifficulty implements ActionListener {
         String command = e.getActionCommand();
         switch (command) {
             case "Easy" -> {
-                view.dispose();
-                ViewGame vg= new ViewGame();
-                ControllerGame cg = new ControllerGame(vg, this.model);
+                viewDifficulty.setVisible(false);
+                viewGame = new ViewGame();
+                viewIndex = new ViewIndex();
+                viewGame.setVisible(true);
+                viewGame.createView(4, 10);
+                viewIndex.setVisible(false);
+                ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
             }
-            case "Difficul" -> {
-                view.dispose();
-                ViewGameDifficult vgd = new ViewGameDifficult();
-                ControllerGameDifficult cgd = new ControllerGameDifficult(vgd, this.modeld);
+            case "Difficult" -> {
+                  viewDifficulty.setVisible(false);
+                viewGame = new ViewGame();
+                viewIndex = new ViewIndex();
+                viewGame.setVisible(true);
+                viewGame.createView(5, 5);
+                viewIndex.setVisible(false);
+                ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
             }
 
         }
