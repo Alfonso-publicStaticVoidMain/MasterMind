@@ -1,6 +1,7 @@
 package main;
 
 import controller.ControllerIndex;
+import javax.swing.UIManager;
 
 import model.ModelGame;
 
@@ -15,6 +16,12 @@ import view.ViewIndex;
 public class MasterMindMain {
 
     public static void main(String[] args) {
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         ModelGame model = new ModelGame();
         ViewIndex view = new ViewIndex();
