@@ -28,22 +28,22 @@ public class ControllerDifficulty implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+
         switch (command) {
             case "Easy" -> {
-                viewDifficulty.setVisible(false);
+                viewDifficulty.dispose();
                 viewGame = new ViewGame();
-                viewGame.setVisible(true);
-                viewIndex.setVisible(false);
+                model.setLength(4);
+                model.setMaxTries(10);
                 ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
             }
             case "Difficult" -> {
-                viewDifficulty.setVisible(false);
+                viewDifficulty.dispose();
                 viewGame = new ViewGame();
-                viewGame.setVisible(true);
-                viewIndex.setVisible(false);
                 model.setLength(5);
                 model.setMaxTries(5);
                 ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
+
             }
 
         }

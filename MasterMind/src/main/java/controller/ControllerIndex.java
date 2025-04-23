@@ -64,9 +64,7 @@ public class ControllerIndex implements ActionListener {
                 ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model, view);
                 
             }
-            case "difficulty" -> {
-            }
-
+           
             case "howToPlay" -> {
                 view.setVisible(false);
 
