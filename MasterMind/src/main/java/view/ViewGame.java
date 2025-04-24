@@ -81,7 +81,7 @@ public class ViewGame extends javax.swing.JFrame {
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
         titlePanel.setPreferredSize(new Dimension(50, 50)); // Establece un tamaño preferido inicial
 
-        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
+        titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
 
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
