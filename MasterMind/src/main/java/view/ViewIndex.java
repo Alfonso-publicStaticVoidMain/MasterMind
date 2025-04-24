@@ -1,17 +1,23 @@
 package view;
 
+import JElementos.Colors;
 import JElementos.PersonalizedButton;
 import controller.ControllerIndex;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Image;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -31,47 +37,57 @@ public class ViewIndex extends javax.swing.JFrame {
     private JButton playButton;
     private JButton howToPlayButton;
     private JButton leaderBoardButton;
+    private ImageIcon titleImage;
 
     public ViewIndex() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
 
-        //panel titulo
+          // panel titulo
         titlePanel = new JPanel();
-        titlePanel.setBackground(Color.pink);
-        titleLabel=new JLabel("MasterMind");
-        titlePanel.add(titleLabel);
+        titlePanel.setBackground(Colors.BACKGROUND);
+        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
+        titlePanel.setPreferredSize(new Dimension(200, 200)); // Establece un tamaño preferido inicial
+
+        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
+
+        if (titleImage != null) {
+            // Escala la imagen al tamaño PREFERIDO del panel
+            Image imagenEscalada = titleImage.getImage().getScaledInstance(
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
+            );
+            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
+            titleLabel = new JLabel(tituloImagenEscalada);
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        } else {
+            titleLabel = new JLabel("¡Imagen no encontrada!");
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        }
+
         add(titlePanel);
-        titlePanel.setPreferredSize(new Dimension(titlePanel.getWidth(), 50));
+     
+       
+
         //panel elementos
-        playButton = new JButton("Play");
+        playButton = new PersonalizedButton("Play",15);
         playButton.setActionCommand("play");
-        howToPlayButton=new JButton("How to play");
+        howToPlayButton=new PersonalizedButton("How to play",15);
         howToPlayButton.setActionCommand("howToPlay");
-        leaderBoardButton=new JButton("Leader Board");
+        leaderBoardButton=new PersonalizedButton("Leader Board",15);
         leaderBoardButton.setActionCommand("leaderBoard");
         buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.pink);
+        buttonPanel.setBackground(Colors.BACKGROUND);
+        buttonPanel.setPreferredSize(new Dimension(160,440));
         add(buttonPanel);
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
-        buttonPanel.add(Box.createVerticalStrut(20)); // Espacio entre botones
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.add(playButton);
-        buttonPanel.add(Box.createVerticalStrut(20));
-        buttonPanel.add(Box.createVerticalStrut(20));
         buttonPanel.add(howToPlayButton);
-        buttonPanel.add(Box.createVerticalStrut(20));
-        buttonPanel.add(leaderBoardButton);
-
-        //espaciadores 
-        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttonPanel.add(Box.createVerticalStrut(200)); // Espacio 
-        playButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar botones
-        howToPlayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-          
-          
+        buttonPanel.add(leaderBoardButton);        
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
         setResizable(false);//q no ca,bie el tamaño eluser

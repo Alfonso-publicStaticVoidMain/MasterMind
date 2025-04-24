@@ -4,16 +4,23 @@
  */
 package view;
 
+import JElementos.Colors;
+import JElementos.PersonalizedButton;
 import controller.ControllerDifficulty;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Image;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -33,34 +40,56 @@ public class ViewDifficulty extends javax.swing.JFrame {
     private JLabel titleLabel;
     private JButton easyButton;
     private JButton difficultButton;
+    private ImageIcon titleImage;
 
     public ViewDifficulty() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
-        getContentPane().setBackground(Color.pink);
-
-        //panel titulo
+        getContentPane().setBackground(Colors.BACKGROUND);
         titlePanel = new JPanel();
-        titlePanel.setBackground(Color.pink);
-        titleLabel = new JLabel("Choose the difficulty");
-        titlePanel.add(titleLabel);
+        titlePanel.setBackground(Colors.BACKGROUND);
+        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
+        titlePanel.setPreferredSize(new Dimension(200, 200)); // Establece un tamaño preferido inicial
+
+        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
+
+        if (titleImage != null) {
+            // Escala la imagen al tamaño PREFERIDO del panel
+            Image imagenEscalada = titleImage.getImage().getScaledInstance(
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
+            );
+            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
+            titleLabel = new JLabel(tituloImagenEscalada);
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        } else {
+            titleLabel = new JLabel("¡Imagen no encontrada!");
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        }
+
         add(titlePanel);
-        titlePanel.setPreferredSize(new Dimension(titlePanel.getWidth(), 50));
+
         //panel elementos
-        easyButton = new JButton("Easy");
+        easyButton = new PersonalizedButton("Easy", 15);
         easyButton.setActionCommand("Easy");
-        difficultButton = new JButton("Difficult");
+        difficultButton = new PersonalizedButton("Difficult", 15);
         difficultButton.setActionCommand("Difficult");
         buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.pink);
+        buttonPanel.setBackground(Colors.BACKGROUND);
         add(buttonPanel, BorderLayout.CENTER);
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+       // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Centrar horizontalmente, espacio vertical
         buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(easyButton);
         buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(difficultButton);
-        buttonPanel.setBackground(Color.pink);
+        buttonPanel.setBackground(Colors.BACKGROUND);
+        buttonPanel.setPreferredSize(new Dimension(160,440));
+
 
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
