@@ -41,6 +41,7 @@ public class ModelGame {
     public ModelGame() {
         this.length = 4;
         this.maxTries = 10;
+        this.scoreHistory = ScoreFileHandler.loadScores(); //Guardar puntuaciones
         resetGame(); // Inicializar el juego al crear el ModelGame
     }
 
@@ -61,7 +62,7 @@ public class ModelGame {
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
-        System.out.println("[DEBUG] setLength: "+numberToGuess);
+        System.out.println("[DEBUG] setLength: " + numberToGuess);
     }
 
     // Recibe numero de filas
@@ -110,7 +111,7 @@ public class ModelGame {
             str.append(availableDigits.charAt(numero));
             availableDigits.deleteCharAt(numero);
         }
-        System.out.println("[DEBUG] generateRandomNumber: "+str.toString());
+        System.out.println("[DEBUG] generateRandomNumber: " + str.toString());
         return str.toString();
     }
 
@@ -213,7 +214,16 @@ public class ModelGame {
         List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(scoreHistory.entrySet());
         scoreList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
         scoreHistory.clear();
-        for (Map.Entry<String, Integer> entry : scoreList) scoreHistory.put(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, Integer> entry : scoreList) {
+            scoreHistory.put(entry.getKey(), entry.getValue());
+        }
+
+        // Gardar puntiacións
+        ScoreFileHandler.saveScores(scoreHistory);
+    }
+
+    public void saveScoresOnExit() {
+        ScoreFileHandler.saveScores(scoreHistory);
     }
 
     public int getLength() {
