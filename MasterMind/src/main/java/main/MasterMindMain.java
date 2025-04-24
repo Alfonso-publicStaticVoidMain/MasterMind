@@ -22,10 +22,11 @@ public class MasterMindMain {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        ModelGame model = new ModelGame();
-        ViewIndex view = new ViewIndex();
-        ControllerIndex c = new ControllerIndex(view, model);
+        SwingUtilities.invokeLater( () -> {
+            ModelGame model = new ModelGame();
+            ViewIndex view = new ViewIndex();
+            ControllerIndex c = new ControllerIndex(view, model);
+        });
     }
 
 }
