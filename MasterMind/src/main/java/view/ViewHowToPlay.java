@@ -6,16 +6,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class ViewHowToPlay extends javax.swing.JFrame {
 
@@ -28,6 +31,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
     private JButton backButton;
     private JTextArea instructions;
     private JButton darkModeButton;
+    private ImageIcon titleImage;
 
     // Esquemas de color
     private final Color LIGHT_BG = new Color(255, 230, 230); // Fondo rosa claro
@@ -54,13 +58,38 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         mainContentPanel.setBackground(LIGHT_BG);
         add(mainContentPanel, BorderLayout.CENTER);
 
-        // Panel del título (centrado)
+        //  Panel del título (centrado)
         titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBackground(LIGHT_BG);
         titleLabel = new JLabel("MasterMind", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
         titlePanel.add(titleLabel, BorderLayout.CENTER);
         mainContentPanel.add(titlePanel);
+//        titlePanel = new JPanel();
+//        titlePanel.setBackground(Color.white);
+//        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
+//        titlePanel.setPreferredSize(new Dimension(100, 100)); // Establece un tamaño preferido inicial
+//
+//        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
+//
+//        if (titleImage != null) {
+//            // Escala la imagen al tamaño PREFERIDO del panel
+//            Image imagenEscalada = titleImage.getImage().getScaledInstance(
+//                    titlePanel.getPreferredSize().width,
+//                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+//                    Image.SCALE_SMOOTH
+//            );
+//            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
+//            titleLabel = new JLabel(tituloImagenEscalada);
+//            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//            titlePanel.add(titleLabel);
+//        } else {
+//            titleLabel = new JLabel("¡Imagen no encontrada!");
+//            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//            titlePanel.add(titleLabel);
+//        }
+//
+//        add(titlePanel);
 
         // Espaciado entre componentes
         mainContentPanel.add(Box.createRigidArea(new Dimension(0, 20)));

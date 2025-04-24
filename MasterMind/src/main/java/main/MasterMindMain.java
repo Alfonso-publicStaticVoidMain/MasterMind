@@ -27,4 +27,5 @@ public class MasterMindMain {
         ViewIndex view = new ViewIndex();
         ControllerIndex c = new ControllerIndex(view, model);
     }
+
 }

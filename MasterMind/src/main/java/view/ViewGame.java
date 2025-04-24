@@ -1,15 +1,19 @@
 package view;
 
 import JElementos.Colors;
+import JElementos.PersonalizedButton;
 import controller.ControllerGame;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -26,6 +32,7 @@ public class ViewGame extends javax.swing.JFrame {
 
     //Paneles de la vista
     private JPanel titlePanel;
+    private JPanel scorePanel;
     private JPanel userInputPanel;
     private JPanel previousTriesPanel;
     private JPanel bottomPanel;
@@ -43,7 +50,6 @@ public class ViewGame extends javax.swing.JFrame {
      * Botón para que el usuario valide su intento.
      */
     private JButton submitButton;
-
     private JTextField triesLeftField;
 
     //variables para los panles
@@ -51,6 +57,8 @@ public class ViewGame extends javax.swing.JFrame {
     private int maxTries = 10;
     private int triesLeft = 10;
     private JLabel scoreLabel = new JLabel("Score: 0");
+    private ImageIcon titleImage;
+
 
     public ViewGame() {
     }
@@ -65,25 +73,49 @@ public class ViewGame extends javax.swing.JFrame {
         setTitle("Mastermind");
 
         //panel titulo
+//        titlePanel = new JPanel();
+//        titlePanel.setBackground(Colors.BACKGROUND);
+ // panel titulo
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
+        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
+        titlePanel.setPreferredSize(new Dimension(50, 50)); // Establece un tamaño preferido inicial
 
-        titleLabel = new JLabel("Mastermind");
-        //titleLabel.setFont(); 
-        titleLabel.setForeground(new Color(41, 128, 185));
-        titlePanel.add(titleLabel);
+        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
 
-        //Panel para el usuario
-        userInputs = new JTextField[this.length];
-        userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        userInputPanel.setBackground(Colors.BACKGROUND);
-        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+        if (titleImage != null) {
+            // Escala la imagen al tamaño PREFERIDO del panel
+            Image imagenEscalada = titleImage.getImage().getScaledInstance(
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
+            );
+            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
+            titleLabel = new JLabel(tituloImagenEscalada);
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        } else {
+            titleLabel = new JLabel("¡Imagen no encontrada!");
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        }
 
-        titlePanel.add(scoreLabel); // 🚀 Show score next to the game title
+        add(titlePanel);
+        //panel score
+        scorePanel= new JPanel();
+        scorePanel.setBackground(Colors.BACKGROUND);
+        scorePanel.setPreferredSize(new Dimension(50, 50));
+        scorePanel.add(scoreLabel); 
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 18)); // Bigger, clearer text
         scoreLabel.setForeground(new Color(41, 128, 185)); // Stylish blue color
-        scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Space around label
+        scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Space around label 
+        //Panel para el usuario
+        userInputs = new JTextField[this.length];
         
+        userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
+        userInputPanel.setBackground(Colors.BACKGROUND);
+        userInputPanel.setPreferredSize(new Dimension(360, 50));
+        userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));     
         for (int i = 0; i < userInputs.length; i++) {
             userInputs[i] = new JTextField(3);//ancho para un digito
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
@@ -115,6 +147,7 @@ public class ViewGame extends javax.swing.JFrame {
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Colors.BACKGROUND);
+        previousTriesPanel.setPreferredSize(new Dimension(360, 400));
         // A: Ese 10 debería ser o MAX_TRIES do ControllerGame! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
@@ -128,7 +161,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         //panel boton  inferior
         // Submit button & tries left display
-        submitButton = new JButton("Submit");
+        submitButton = new PersonalizedButton("Submit",15);
         submitButton.setActionCommand("submit");
         submitButton.setBackground(Colors.BUTTON);
         submitButton.setForeground(Colors.BACKGROUND);
@@ -139,6 +172,7 @@ public class ViewGame extends javax.swing.JFrame {
         setTriesLeftText(maxTries);
 
         bottomPanel = new JPanel(new FlowLayout());
+        bottomPanel.setPreferredSize(new Dimension(360, 90));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
 
         submitButton.setBorderPainted(false);
@@ -148,6 +182,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         //se añaden los paneles al contenedor   
         add(titlePanel, 0); // Añadir  parte superior
+        add(scorePanel);
         add(userInputPanel);
         add(previousTriesPanel);
         add(bottomPanel);

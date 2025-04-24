@@ -12,44 +12,43 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class PersonalizedButton extends JButton {
 
-    public PersonalizedButton(String text, String actionCommand) {
+    private int borderRadius;
+
+    public PersonalizedButton(String text, int radius) {
         super(text);
-        setActionCommand(actionCommand);
-        setFont(new Font("Arial", Font.BOLD, 16));
-        setForeground(Color.WHITE);
-        setBackground(new Color(46, 134, 193));
-        setBorderPainted(false);
+        this.borderRadius = radius;
+        setContentAreaFilled(false);
         setFocusPainted(false);
-        setBorder(BorderFactory.createEmptyBorder(15, 30, 15, 30));//padding
-        setUI(new javax.swing.plaf.basic.BasicButtonUI() {
-         @Override
-        public void paint(Graphics g, JComponent c) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(c.getBackground());
-            RoundRectangle2D roundedRect = new RoundRectangle2D.Double(0, 0, c.getWidth(), c.getHeight(), 30, 30);
-            g2.fill(roundedRect);
-            g2.dispose();
-            super.paint(g, c);
-        }
-        });
-
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent evt) {
-                setBackground(new Color(52, 152, 219));
-                setForeground(Color.WHITE);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                setBackground(new Color(46, 134, 193));
-                setForeground(Color.WHITE);
-            }
-        });
+        setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        setPreferredSize(new Dimension(200, 50));
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(Colors.BUTTON); 
+        g2.fill(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, borderRadius, borderRadius));
+
+        g2.setColor(Color.WHITE); 
+        FontMetrics fm = g2.getFontMetrics();
+        Rectangle2D r = fm.getStringBounds(getText(), g2);
+        int x = (getWidth() - (int) r.getWidth()) / 2;
+        int y = (getHeight() - (int) r.getHeight()) / 2 + fm.getAscent();
+        g2.drawString(getText(), x, y);
+
+        g2.dispose();
+    }
+
+    @Override
+    protected void paintBorder(Graphics g) {
+        // No pintar el borde estándar
+    }
+
 }
