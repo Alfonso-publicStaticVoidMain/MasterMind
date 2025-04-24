@@ -4,21 +4,18 @@ import controller.ControllerHowToPlay;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import JElementos.Colors;
 
 public class ViewHowToPlay extends javax.swing.JFrame {
 
@@ -31,12 +28,13 @@ public class ViewHowToPlay extends javax.swing.JFrame {
     private JButton backButton;
     private JTextArea instructions;
     private JButton darkModeButton;
-    private ImageIcon titleImage;
 
-    // Esquemas de color
-    private final Color LIGHT_BG = new Color(255, 230, 230); // Fondo rosa claro
-    private final Color LIGHT_TEXT = new Color(60, 60, 60);  // Texto gris oscuro
-    private final Color LIGHT_PANEL = new Color(245, 245, 245); // Panel blanco
+    // Color scheme from Colors class
+    private final Color LIGHT_BG = Colors.BACKGROUND;
+    private final Color LIGHT_TEXT = Colors.TEXT;
+    private final Color LIGHT_PANEL = Color.WHITE;
+    private final Color BUTTON_COLOR = Colors.BUTTON;
+    private final Color TITLE_COLOR = Colors.TITLE;
 
     private final Color DARK_BG = new Color(40, 40, 50);     // Fondo azul oscuro
     private final Color DARK_TEXT = new Color(230, 230, 230); // Texto blanco
@@ -58,59 +56,40 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         mainContentPanel.setBackground(LIGHT_BG);
         add(mainContentPanel, BorderLayout.CENTER);
 
-        //  Panel del título (centrado)
+        // Panel del título (centrado)
         titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBackground(LIGHT_BG);
         titleLabel = new JLabel("MasterMind", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        titleLabel.setForeground(TITLE_COLOR);
         titlePanel.add(titleLabel, BorderLayout.CENTER);
         mainContentPanel.add(titlePanel);
-//        titlePanel = new JPanel();
-//        titlePanel.setBackground(Color.white);
-//        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-//        titlePanel.setPreferredSize(new Dimension(100, 100)); // Establece un tamaño preferido inicial
-//
-//        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
-//
-//        if (titleImage != null) {
-//            // Escala la imagen al tamaño PREFERIDO del panel
-//            Image imagenEscalada = titleImage.getImage().getScaledInstance(
-//                    titlePanel.getPreferredSize().width,
-//                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
-//                    Image.SCALE_SMOOTH
-//            );
-//            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
-//            titleLabel = new JLabel(tituloImagenEscalada);
-//            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//            titlePanel.add(titleLabel);
-//        } else {
-//            titleLabel = new JLabel("¡Imagen no encontrada!");
-//            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//            titlePanel.add(titleLabel);
-//        }
-//
-//        add(titlePanel);
 
-        // Espaciado entre componentes
-        mainContentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        // Small spacing after title
+        mainContentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // Panel de botones (FlowLayout para alinear a la izquierda y derecha)
+        // Panel de botones (now smaller)
         buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setBackground(LIGHT_BG);
+        buttonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // Limit height
 
-        // Configurar botón Back 
+        // Configurar botón Back (smaller size)
         backButton = new JButton("← Back");
-        backButton.setFont(new Font("Arial", Font.BOLD, 16));
-        backButton.setPreferredSize(new Dimension(100, 20));
-        backButton.setContentAreaFilled(false);
+        backButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        backButton.setPreferredSize(new Dimension(80, 30)); // Smaller size
+        backButton.setBackground(BUTTON_COLOR);
+        backButton.setForeground(Color.WHITE);
         backButton.setOpaque(true);
         backButton.setFocusPainted(false);
+        backButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        // Configurar botón Dark Mode (a la derecha)
+        // Configurar botón Dark Mode (smaller size)
         darkModeButton = new JButton(darkMode ? "☀ Light" : "☾ Dark");
         darkModeButton.setFont(new Font("Arial", Font.PLAIN, 12));
-        darkModeButton.setContentAreaFilled(false);
-        darkModeButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        darkModeButton.setBackground(BUTTON_COLOR);
+        darkModeButton.setForeground(Color.WHITE);
+        darkModeButton.setOpaque(true);
+        darkModeButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         darkModeButton.setFocusPainted(false);
         darkModeButton.addActionListener(e -> toggleDarkMode());
 
@@ -120,13 +99,16 @@ public class ViewHowToPlay extends javax.swing.JFrame {
 
         mainContentPanel.add(buttonPanel);
 
-        // Más espaciado
-        mainContentPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        // Small spacing before instructions
+        mainContentPanel.add(Box.createRigidArea(new Dimension(0, 15)));
 
-        // Texto de instrucciones
+        // Texto de instrucciones (now with more space)
         descriptionPanel = new JPanel(new BorderLayout());
         descriptionPanel.setBackground(LIGHT_PANEL);
-        descriptionPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
+        descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Colors.GREY, 1),
+                BorderFactory.createEmptyBorder(15, 20, 20, 20)
+        ));
 
         instructions = new JTextArea(
                 "How to Play:\n\n"
@@ -134,23 +116,29 @@ public class ViewHowToPlay extends javax.swing.JFrame {
                 + "- Correct digits in wrong position: orange\n"
                 + "- Incorrect digits: red\n"
                 + "- Limited attempts to solve it!");
-        instructions.setFont(new Font("Arial", Font.ITALIC, 18));
+        instructions.setFont(new Font("Arial", Font.PLAIN, 18));
         instructions.setEditable(false);
         instructions.setLineWrap(true);
         instructions.setWrapStyleWord(true);
         instructions.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        instructions.setBackground(LIGHT_BG);
+        instructions.setBackground(LIGHT_PANEL);
+        instructions.setForeground(LIGHT_TEXT);
 
         descriptionPanel.add(instructions, BorderLayout.CENTER);
-        mainContentPanel.add(descriptionPanel);
+
+        // Make the description panel take most of the space
+        JPanel contentWrapper = new JPanel(new BorderLayout());
+        contentWrapper.setBackground(LIGHT_BG);
+        contentWrapper.add(descriptionPanel, BorderLayout.CENTER);
+        mainContentPanel.add(contentWrapper);
 
         // Aplicar esquema de colores inicial
         applyColorScheme();
 
         // Configuración final de la ventana
-        setSize(450, 650);
-        setMinimumSize(new Dimension(400, 500));
-        setResizable(true);
+        setSize(360, 640); // Same size as ViewIndex
+        setMinimumSize(new Dimension(360, 640)); // Fixed size like ViewIndex
+        setResizable(false); // Not resizable like ViewIndex
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -168,28 +156,29 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         Color textColor = darkMode ? DARK_TEXT : LIGHT_TEXT;
         Color panelColor = darkMode ? DARK_PANEL : LIGHT_PANEL;
 
-        backButton.setBackground(darkMode ? new Color(60, 60, 70) : new Color(220, 230, 250));
-        backButton.setForeground(darkMode ? Color.WHITE : new Color(40, 40, 40));
-        backButton.setBorder(BorderFactory.createLineBorder(darkMode ? new Color(120, 120, 130) : new Color(180, 200, 230), 2));
-        backButton.repaint();
-
         // Aplicar los cambios
         getContentPane().setBackground(bgColor);
         titlePanel.setBackground(bgColor);
         buttonPanel.setBackground(bgColor);
-        titleLabel.setForeground(textColor);
+        titleLabel.setForeground(darkMode ? DARK_TEXT : TITLE_COLOR);
 
-        backButton.setForeground(textColor);
-        darkModeButton.setForeground(textColor);
+        backButton.setBackground(darkMode ? new Color(80, 80, 90) : BUTTON_COLOR);
+        backButton.setForeground(darkMode ? DARK_TEXT : Color.WHITE);
+
+        darkModeButton.setBackground(darkMode ? new Color(80, 80, 90) : BUTTON_COLOR);
+        darkModeButton.setForeground(darkMode ? DARK_TEXT : Color.WHITE);
 
         descriptionPanel.setBackground(panelColor);
+        descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(darkMode ? new Color(100, 100, 110) : Colors.GREY, 1),
+                BorderFactory.createEmptyBorder(15, 20, 20, 20)
+        ));
+
         instructions.setForeground(textColor);
         instructions.setBackground(panelColor);
 
-        getContentPane().setBackground(bgColor);
         getContentPane().revalidate();
         getContentPane().repaint();
-
     }
 
     public void setActionListener(ControllerHowToPlay controller) {
