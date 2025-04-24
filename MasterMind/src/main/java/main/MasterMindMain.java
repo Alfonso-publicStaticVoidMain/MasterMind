@@ -2,7 +2,7 @@ package main;
 
 import controller.ControllerIndex;
 import javax.swing.UIManager;
-
+import javax.swing.SwingUtilities;
 import model.ModelGame;
 
 import view.ViewIndex;
