@@ -6,6 +6,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
+
 import model.ModelGame;
 import view.ViewIndex;
 import view.ViewLeaderboard;
@@ -25,6 +27,7 @@ public class MasterMindMain {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         // 2. Creación del modelo y las vistas
         ModelGame model = new ModelGame();
@@ -48,5 +51,6 @@ public class MasterMindMain {
         });
         // 6. Mostrar la ventana principal
         viewIndex.setVisible(true);
+
     }
 }

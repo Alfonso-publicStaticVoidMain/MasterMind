@@ -22,7 +22,7 @@ public class ControllerGame implements ActionListener {
         this.view = view;
         this.model = model;
         this.viewIndex = viewIndex;
-        this.view.createView(5, 10);
+        this.view.createView(model.getLength(), model.getMaxTries());
         this.view.setActionListener(this);
         //A: O método de abaixo está comentado porque agora faise tamén dentro de createView()
         //this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
