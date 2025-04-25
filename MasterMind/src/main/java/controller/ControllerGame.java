@@ -54,11 +54,15 @@ public class ControllerGame implements ActionListener {
     }
 
     private void finishGame(boolean won) {
-        this.model.finishGame(); // También setea la score a 0.
-        String message = won ? "You guessed correctly! Play again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
+        this.model.finishGame();
+        model.updateScore(won);
+        String message = won ? "You guessed correctly!\nYou got a score of "+model.getScore()+"\nPlay again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!" : "Game Over";
         boolean continuePlaying = view.playerChoice(title, message);
-        if (model.getLength() == 5) recordScore();
+        if (model.getLength() == 5) {
+            String playerName = view.getPlayerName();       
+            model.updateHighScores(playerName);
+        }
         resetGame();
         if (!continuePlaying) {
             view.setVisible(false);
@@ -77,13 +81,6 @@ public class ControllerGame implements ActionListener {
     private void showGoodbyeMessage() {
         JOptionPane.showMessageDialog(view, "Thank you for playing Mastermind! See you soon. 👋", "Goodbye!", JOptionPane.INFORMATION_MESSAGE);
        // javax.swing.SwingUtilities.invokeLater(System::exit);
-    }
-
-    public void recordScore() {
-        boolean won = model.isGameFinished(); // Guardar el estado del juego anterior
-        String playerName = view.getPlayerName(); // Abre unha xanela emerxente para preguntar o nome
-        model.updateScore(won);
-        model.updateHighScores(playerName);
     }
     
     public void resetGame() {

@@ -51,6 +51,7 @@ public class ModelGame {
         this.triesLeft = this.maxTries;
         this.gameFinished = false;
         this.attemptHistory.clear(); // Limpiar el historial al resetear
+        this.score = 0;
     }
 
     // Novo xogo
@@ -88,7 +89,6 @@ public class ModelGame {
 
     public void finishGame() {
         gameFinished = true;
-        score = 0;
     }
 
     public Map<String, Integer> getScoreHistory() {
