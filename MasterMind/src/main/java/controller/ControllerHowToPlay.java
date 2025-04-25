@@ -24,18 +24,13 @@ public class ControllerHowToPlay implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println(e.getActionCommand());
-//        if ("← Back".equals(e.getActionCommand())) {
-//            view.setVisible(false);
-//            viewIndex.setVisible(true); // Volver ao Index
-//        }
         String command = e.getActionCommand();
         switch (command) {
             case "back" -> {
                 view.dispose();
-                ControllerIndex cg = new ControllerIndex(viewIndex, model);
+                viewIndex.setVisible(true);
             }
         }
     }
-}
 
+}
