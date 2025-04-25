@@ -45,7 +45,7 @@ public class ControllerIndex implements ActionListener {
 
         // O xogo comeza ca vista
         this.view.setVisible(true);
-        
+
         // Leaderboard
         this.viewLeaderboard = new ViewLeaderboard();
     }
@@ -62,17 +62,16 @@ public class ControllerIndex implements ActionListener {
                 viewDifficulty = new ViewDifficulty();
                 viewDifficulty.setVisible(true);
                 ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model, view);
-                
-            }
-           
-            case "howToPlay" -> {
-                view.setVisible(false);
 
-                if (viewHowToPlay == null) {
+            }
+
+            case "howToPlay" -> {
+                if (viewHowToPlay == null || !viewHowToPlay.isDisplayable()) { // 👈 si es null o ya fue cerrada
                     viewHowToPlay = new ViewHowToPlay();
                     controllerHowToPlay = new ControllerHowToPlay(viewHowToPlay, view);
                 }
 
+                view.setVisible(false);
                 viewHowToPlay.setVisible(true);
             }
 

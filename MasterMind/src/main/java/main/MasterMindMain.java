@@ -1,16 +1,10 @@
 package main;
 
 import controller.ControllerIndex;
-import controller.ControllerLeaderboard;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-
 import model.ModelGame;
 import view.ViewIndex;
-import view.ViewLeaderboard;
 
 /**
  *
