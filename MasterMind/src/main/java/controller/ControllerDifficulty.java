@@ -17,6 +17,7 @@ public class ControllerDifficulty implements ActionListener {
     private ModelGame model;
     private ViewIndex viewIndex;
     private ViewGame viewGame;
+    
 
     public ControllerDifficulty(ViewDifficulty viewDifficulty, ModelGame model, ViewIndex viewIndex) {
         this.viewDifficulty = viewDifficulty;
@@ -28,21 +29,25 @@ public class ControllerDifficulty implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-
         switch (command) {
-            case "Easy" -> {
+            case "practice" -> {
                 viewDifficulty.dispose();
                 viewGame = new ViewGame();
                 model.setLength(4);
                 model.setMaxTries(10);
                 ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
             }
-            case "Difficult" -> {
+            case "play" -> {
                 viewDifficulty.dispose();
                 viewGame = new ViewGame();
                 model.setLength(5);
                 model.setMaxTries(5);
                 ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
+
+            }
+            case "back" -> {
+                viewDifficulty.dispose();  
+                ControllerIndex cg = new ControllerIndex(viewIndex, model);
 
             }
 

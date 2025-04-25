@@ -74,8 +74,8 @@ public class ViewIndex extends javax.swing.JFrame {
        
 
         //panel elementos
-        playButton = new PersonalizedButton("Play",15);
-        playButton.setActionCommand("play");
+        playButton = new PersonalizedButton("Game",15);
+        playButton.setActionCommand("game");
         howToPlayButton=new PersonalizedButton("How to play",15);
         howToPlayButton.setActionCommand("howToPlay");
         leaderBoardButton=new PersonalizedButton("Leader Board",15);

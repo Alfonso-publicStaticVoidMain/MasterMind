@@ -16,14 +16,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import JElementos.Colors;
+import JElementos.PersonalizedButton;
 
 public class ViewHowToPlay extends javax.swing.JFrame {
 
     // Componentes de la interfaz
     private JPanel mainContentPanel;
     private JPanel titlePanel;
-    private JPanel buttonPanel;
+   // private JPanel buttonPanel;
     private JPanel descriptionPanel;
+    private JPanel backPanel;
     private JLabel titleLabel;
     private JButton backButton;
     private JTextArea instructions;
@@ -59,6 +61,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         // Panel del título (centrado)
         titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBackground(LIGHT_BG);
+        titlePanel.setPreferredSize(new Dimension(200,200));
         titleLabel = new JLabel("MasterMind", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
         titleLabel.setForeground(TITLE_COLOR);
@@ -69,35 +72,29 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         mainContentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         // Panel de botones (now smaller)
-        buttonPanel = new JPanel(new BorderLayout());
-        buttonPanel.setBackground(LIGHT_BG);
-        buttonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // Limit height
+//        buttonPanel = new JPanel(new BorderLayout());
+//        buttonPanel.setBackground(LIGHT_BG);
+//        buttonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40)); // Limit height
 
-        // Configurar botón Back (smaller size)
-        backButton = new JButton("← Back");
-        backButton.setFont(new Font("Arial", Font.PLAIN, 14));
-        backButton.setPreferredSize(new Dimension(80, 30)); // Smaller size
-        backButton.setBackground(BUTTON_COLOR);
-        backButton.setForeground(Color.WHITE);
-        backButton.setOpaque(true);
-        backButton.setFocusPainted(false);
-        backButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        // Configurar botón Back 
+        backButton = new PersonalizedButton("← Back",15);
+        backButton.setActionCommand("back");
+        backButton.setPreferredSize(new Dimension(100, 50));
 
         // Configurar botón Dark Mode (smaller size)
-        darkModeButton = new JButton(darkMode ? "☀ Light" : "☾ Dark");
-        darkModeButton.setFont(new Font("Arial", Font.PLAIN, 12));
-        darkModeButton.setBackground(BUTTON_COLOR);
-        darkModeButton.setForeground(Color.WHITE);
-        darkModeButton.setOpaque(true);
-        darkModeButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        darkModeButton.setFocusPainted(false);
-        darkModeButton.addActionListener(e -> toggleDarkMode());
+//        darkModeButton = new JButton(darkMode ? "☀ Light" : "☾ Dark");
+//        darkModeButton.setFont(new Font("Arial", Font.PLAIN, 12));
+//        darkModeButton.setBackground(BUTTON_COLOR);
+//        darkModeButton.setForeground(Color.WHITE);
+//        darkModeButton.setOpaque(true);
+//        darkModeButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+//        darkModeButton.setFocusPainted(false);
+//        darkModeButton.addActionListener(e -> toggleDarkMode());
 
         // Añadir botones al panel
-        buttonPanel.add(backButton, BorderLayout.WEST);
-        buttonPanel.add(darkModeButton, BorderLayout.EAST);
-
-        mainContentPanel.add(buttonPanel);
+        //buttonPanel.add(backButton);
+       // backButton.setPreferredSize(new Dimension(100, 50));
+       // buttonPanel.add(darkModeButton, BorderLayout.EAST);
 
         // Small spacing before instructions
         mainContentPanel.add(Box.createRigidArea(new Dimension(0, 15)));
@@ -131,6 +128,11 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         contentWrapper.setBackground(LIGHT_BG);
         contentWrapper.add(descriptionPanel, BorderLayout.CENTER);
         mainContentPanel.add(contentWrapper);
+        backPanel= new JPanel();
+        backPanel.setBackground(Colors.BACKGROUND);
+        backPanel.setPreferredSize(new Dimension(160,180));
+        backPanel.add(backButton);  
+        mainContentPanel.add(backPanel);
 
         // Aplicar esquema de colores inicial
         applyColorScheme();
@@ -143,31 +145,21 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    // MÉTODOS PARA EL MODO OSCURO
-    private void toggleDarkMode() {
-        darkMode = !darkMode;
-        applyColorScheme();
-        darkModeButton.setText(darkMode ? "☀ Light" : "☾ Dark");
-    }
-
+//    // MÉTODOS PARA EL MODO OSCURO
+//    private void toggleDarkMode() {
+//        darkMode = !darkMode;
+//        applyColorScheme();
+//        darkModeButton.setText(darkMode ? "☀ Light" : "☾ Dark");
+//    }
     private void applyColorScheme() {
         // Seleccionar colores según el modo actual
         Color bgColor = darkMode ? DARK_BG : LIGHT_BG;
         Color textColor = darkMode ? DARK_TEXT : LIGHT_TEXT;
         Color panelColor = darkMode ? DARK_PANEL : LIGHT_PANEL;
-
         // Aplicar los cambios
         getContentPane().setBackground(bgColor);
         titlePanel.setBackground(bgColor);
-        buttonPanel.setBackground(bgColor);
         titleLabel.setForeground(darkMode ? DARK_TEXT : TITLE_COLOR);
-
-        backButton.setBackground(darkMode ? new Color(80, 80, 90) : BUTTON_COLOR);
-        backButton.setForeground(darkMode ? DARK_TEXT : Color.WHITE);
-
-        darkModeButton.setBackground(darkMode ? new Color(80, 80, 90) : BUTTON_COLOR);
-        darkModeButton.setForeground(darkMode ? DARK_TEXT : Color.WHITE);
-
         descriptionPanel.setBackground(panelColor);
         descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(darkMode ? new Color(100, 100, 110) : Colors.GREY, 1),

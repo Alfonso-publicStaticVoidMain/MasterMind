@@ -45,6 +45,7 @@ public class PersonalizedButton extends JButton {
 
         g2.dispose();
     }
+    
 
     @Override
     protected void paintBorder(Graphics g) {
