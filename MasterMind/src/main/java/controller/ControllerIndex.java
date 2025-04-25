@@ -57,7 +57,7 @@ public class ControllerIndex implements ActionListener {
         System.out.println("Action received: " + command);
 
         switch (command) {
-            case "play" -> {
+            case "game" -> {
                 view.setVisible(false);
                 viewDifficulty = new ViewDifficulty();
                 viewDifficulty.setVisible(true);

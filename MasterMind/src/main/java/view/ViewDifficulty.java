@@ -11,7 +11,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -33,6 +35,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
      */
     private JPanel titlePanel;
     private JPanel buttonPanel;
+    private JPanel backPanel;
 
     /**
      * Elementos
@@ -41,6 +44,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
     private JButton easyButton;
     private JButton difficultButton;
     private ImageIcon titleImage;
+    private JButton backButton;
 
     public ViewDifficulty() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +54,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(200, 200)); // Establece un tamaño preferido inicial
+        titlePanel.setPreferredSize(new Dimension(200, 230)); // Establece un tamaño preferido inicial
 
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
 
@@ -74,10 +78,10 @@ public class ViewDifficulty extends javax.swing.JFrame {
         add(titlePanel);
 
         //panel elementos
-        easyButton = new PersonalizedButton("Easy", 15);
-        easyButton.setActionCommand("Easy");
-        difficultButton = new PersonalizedButton("Difficult", 15);
-        difficultButton.setActionCommand("Difficult");
+        easyButton = new PersonalizedButton("Practice", 15);
+        easyButton.setActionCommand("practice");
+        difficultButton = new PersonalizedButton("Play", 15);
+        difficultButton.setActionCommand("play");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colors.BACKGROUND);
         add(buttonPanel, BorderLayout.CENTER);
@@ -88,8 +92,17 @@ public class ViewDifficulty extends javax.swing.JFrame {
         buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(difficultButton);
         buttonPanel.setBackground(Colors.BACKGROUND);
-        buttonPanel.setPreferredSize(new Dimension(160,440));
+        buttonPanel.setPreferredSize(new Dimension(160,230));
 
+         // banel boton detras
+        backButton = new PersonalizedButton("← Back",15);
+        backButton.setActionCommand("back");
+        backButton.setPreferredSize(new Dimension(100, 50));
+        backPanel= new JPanel();
+        backPanel.setBackground(Colors.BACKGROUND);
+        backPanel.add(backButton);
+        backPanel.setPreferredSize(new Dimension(160,180));
+        add(backPanel);
 
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
@@ -102,7 +115,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
     public void setActionListener(ControllerDifficulty controller) {
         easyButton.addActionListener(controller);
         difficultButton.addActionListener(controller);
-
+        backButton.addActionListener(controller);
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
