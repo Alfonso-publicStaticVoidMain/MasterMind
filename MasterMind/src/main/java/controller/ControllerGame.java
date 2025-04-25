@@ -24,9 +24,6 @@ public class ControllerGame implements ActionListener {
         this.viewIndex = viewIndex;
         this.view.createView(model.getLength(), model.getMaxTries());
         this.view.setActionListener(this);
-        //A: O método de abaixo está comentado porque agora faise tamén dentro de createView()
-        //this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
-        this.view.setScoreText(this.model.getScore()); // Inicializar el score en la vista
     }
 
     @Override
@@ -60,10 +57,10 @@ public class ControllerGame implements ActionListener {
         this.model.finishGame(); // También setea la score a 0.
         String message = won ? "You guessed correctly! Play again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!" : "Game Over";
-        int choice = JOptionPane.showConfirmDialog(view, message, title, JOptionPane.YES_NO_OPTION);
-        recordScore();
+        boolean continuePlaying = view.playerChoice(title, message);
+        if (model.getLength() == 5) recordScore();
         resetGame();
-        if (choice == JOptionPane.NO_OPTION) {
+        if (!continuePlaying) {
             view.setVisible(false);
             viewIndex.setVisible(true);
         }
@@ -84,10 +81,9 @@ public class ControllerGame implements ActionListener {
 
     public void recordScore() {
         boolean won = model.isGameFinished(); // Guardar el estado del juego anterior
-        String playerName = view.getPlayerName();
+        String playerName = view.getPlayerName(); // Abre unha xanela emerxente para preguntar o nome
         model.updateScore(won);
         model.updateHighScores(playerName);
-        view.setScoreText(model.getScore());
     }
     
     public void resetGame() {
