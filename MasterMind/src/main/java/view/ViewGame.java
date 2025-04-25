@@ -1,5 +1,5 @@
 package view;
-
+import JElementos.RoundedTextField;
 import JElementos.Colors;
 import JElementos.PersonalizedButton;
 import controller.ControllerGame;
@@ -41,7 +41,7 @@ public class ViewGame extends javax.swing.JFrame {
     /**
      * Array de 4 textfield para que el usuario escriba los 4 digitos.
      */
-    private JTextField[] userInputs;
+    private RoundedTextField[] userInputs;
     /**
      * Array de 4 JTextArea donde se muestran los intentos previos.
      */
@@ -105,14 +105,14 @@ public class ViewGame extends javax.swing.JFrame {
         triesLeftPanel.add(triesLeftField);
         
         //Panel para el usuario
-        userInputs = new JTextField[this.length];
+        userInputs = new RoundedTextField[this.length];
 
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         userInputPanel.setBackground(Colors.BACKGROUND);
         userInputPanel.setPreferredSize(new Dimension(360, 50));
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         for (int i = 0; i < userInputs.length; i++) {
-            userInputs[i] = new JTextField(3);//ancho para un digito
+            userInputs[i] = new RoundedTextField(3);//ancho para un digito
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
             userInputPanel.add(userInputs[i]);//añades al panel
@@ -164,6 +164,7 @@ public class ViewGame extends javax.swing.JFrame {
         //previousTriesText.setEditable(false);//intentos previos
 
         bottomPanel = new JPanel(new FlowLayout());
+        bottomPanel.setBackground(Colors.BACKGROUND);
         bottomPanel.setPreferredSize(new Dimension(360, 90));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
 
