@@ -1,16 +1,21 @@
 package view;
 
+import JElementos.Colors;
+import JElementos.PersonalizedButton;
 import controller.ControllerLeaderboard;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -19,15 +24,16 @@ import javax.swing.SwingConstants;
 public class ViewLeaderboard extends javax.swing.JFrame {
 
     //Paneles de la vista
-    private JPanel topTitlePanel;
+    private JPanel titlePanel;
     private JPanel midTitlePanel;
     private JPanel scorePanel;
-    private JPanel bottomPanel;
+    private JPanel backPanel;
     //Elementos
-    private JLabel topTitleLabel;
+    private JLabel titleLabel;
     private JLabel midTitleLabel;
     private JLabel[][] scoreBoard;
     private JButton backButton;
+    private ImageIcon titleImage;
 
     private ControllerLeaderboard controller;
 
@@ -46,25 +52,44 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         setTitle("Mastermind");
 
         // panel do título "Mastermind" e seu label
-        topTitlePanel = new JPanel();
-        topTitlePanel.setBackground(Color.pink);
-        topTitleLabel = new JLabel("Mastermind");
-        topTitleLabel.setForeground(new Color(41, 128, 185));
-        topTitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        topTitlePanel.add(topTitleLabel);
-        add(topTitlePanel);
+        titlePanel = new JPanel();
+        titlePanel.setBackground(Colors.BACKGROUND);
+        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
+        titlePanel.setPreferredSize(new Dimension(200, 200)); // Establece un tamaño preferido inicial
+
+        titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
+
+        if (titleImage != null) {
+            // Escala la imagen al tamaño PREFERIDO del panel
+            Image imagenEscalada = titleImage.getImage().getScaledInstance(
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
+            );
+            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
+            titleLabel = new JLabel(tituloImagenEscalada);
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        } else {
+            titleLabel = new JLabel("¡Imagen no encontrada!");
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            titlePanel.add(titleLabel);
+        }
+
+        add(titlePanel);
 
         // panel do título "Scoreboard" e seu label
         midTitlePanel = new JPanel();
-        midTitlePanel.setBackground(Color.pink);
         midTitleLabel = new JLabel("Scoreboard");
         midTitleLabel.setForeground(new Color(41, 128, 185));
         midTitlePanel.add(midTitleLabel);
+        midTitlePanel.setBackground(Colors.BACKGROUND);
         midTitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         add(midTitlePanel);
 
         // panel que contén as scores
         scorePanel = new JPanel(new GridLayout(10, 2));
+        scorePanel.setBackground(Colors.BACKGROUND);
         scoreBoard = new JLabel[10][2];
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 2; col++) {
@@ -79,12 +104,15 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
         add(scorePanel);
 
-        // panel que contén o botón de volta atrás
-        bottomPanel = new JPanel();
-        backButton = new JButton("Back");
-        backButton.setBorderPainted(false);
-        bottomPanel.add(backButton);
-        add(bottomPanel);
+         // banel boton detras
+        backButton = new PersonalizedButton("← Back",15);
+        backButton.setActionCommand("back");
+        backButton.setPreferredSize(new Dimension(100, 50));
+        backPanel= new JPanel();
+        backPanel.setBackground(Colors.BACKGROUND);
+        backPanel.add(backButton);
+        backPanel.setPreferredSize(new Dimension(160,180));
+        add(backPanel);
 
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
