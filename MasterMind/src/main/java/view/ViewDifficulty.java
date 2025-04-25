@@ -55,9 +55,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
         titlePanel.setPreferredSize(new Dimension(200, 230)); // Establece un tamaño preferido inicial
-
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
-
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
