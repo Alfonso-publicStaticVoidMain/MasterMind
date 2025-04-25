@@ -104,7 +104,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
         add(scorePanel);
 
-         // banel boton detras
+        // panel boton detras
         backButton = new PersonalizedButton("← Back",15);
         backButton.setActionCommand("back");
         backButton.setPreferredSize(new Dimension(100, 50));

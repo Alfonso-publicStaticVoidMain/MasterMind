@@ -58,7 +58,7 @@ public class ControllerIndex implements ActionListener {
 
         switch (command) {
             case "game" -> {
-                view.setVisible(false);
+                view.dispose();
                 viewDifficulty = new ViewDifficulty();
                 viewDifficulty.setVisible(true);
                 ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model, view);
@@ -76,7 +76,7 @@ public class ControllerIndex implements ActionListener {
             }
 
             case "leaderBoard" -> {
-                view.setVisible(false);
+                view.dispose();
                 viewLeaderboard.setVisible(true);
                 ControllerLeaderboard cl = new ControllerLeaderboard(viewLeaderboard, model, view);
                 cl.updateScores();

@@ -46,7 +46,7 @@ public class ControllerLeaderboard implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == view.getBackButton()) {
-            view.setVisible(false);
+            view.dispose();
             viewIndex.setVisible(true);
         }
     }
