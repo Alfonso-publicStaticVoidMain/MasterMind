@@ -5,6 +5,7 @@ import JElementos.PersonalizedButton;
 import controller.ControllerLeaderboard;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -81,7 +82,8 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         // panel do título "Scoreboard" e seu label
         midTitlePanel = new JPanel();
         midTitleLabel = new JLabel("Scoreboard");
-        midTitleLabel.setForeground(new Color(41, 128, 185));
+        midTitleLabel.setForeground(Colors.TEXT);
+        midTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         midTitlePanel.add(midTitleLabel);
         midTitlePanel.setBackground(Colors.BACKGROUND);
         midTitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
@@ -98,10 +100,15 @@ public class ViewLeaderboard extends javax.swing.JFrame {
                     scoreBoard[row][col].setText(col == 0 ? "Player" : "Score");
                 }
                 scoreBoard[row][col].setHorizontalAlignment(col == 0 ? SwingConstants.LEFT : SwingConstants.RIGHT);
+                if (row == 0) {
+                    scoreBoard[row][col].setFont(new Font("Arial", Font.BOLD, 20));
+                } else {
+                    scoreBoard[row][col].setFont(new Font("Arial", Font.PLAIN, 18));
+                }
                 scorePanel.add(scoreBoard[row][col]);
             }
         }
-        scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+        scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
         add(scorePanel);
 
         // panel boton detras
