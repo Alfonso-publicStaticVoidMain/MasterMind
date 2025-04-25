@@ -35,7 +35,7 @@ public class ModelGame {
 
     boolean[] secretUse;
 
-    private Map<String, Integer> scoreHistory = new LinkedHashMap<>();
+    private Map<String, Integer> scoreHistory;
 
     // Constructor
     public ModelGame() {
@@ -51,6 +51,7 @@ public class ModelGame {
         this.triesLeft = this.maxTries;
         this.gameFinished = false;
         this.attemptHistory.clear(); // Limpiar el historial al resetear
+        this.score = 0;
     }
 
     // Novo xogo
@@ -88,7 +89,6 @@ public class ModelGame {
 
     public void finishGame() {
         gameFinished = true;
-        score = 0;
     }
 
     public Map<String, Integer> getScoreHistory() {
@@ -210,16 +210,18 @@ public class ModelGame {
     }
 
     public void updateHighScores(String playerName) {
-        scoreHistory.put(playerName, score);
-        List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(scoreHistory.entrySet());
-        scoreList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        scoreHistory.clear();
-        for (Map.Entry<String, Integer> entry : scoreList) {
-            scoreHistory.put(entry.getKey(), entry.getValue());
-        }
+        if ((scoreHistory.containsKey(playerName) && scoreHistory.get(playerName) < score) || !scoreHistory.containsKey(playerName)) {
+            scoreHistory.put(playerName, score);
+            List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(scoreHistory.entrySet());
+            scoreList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
+            scoreHistory.clear();
+            for (Map.Entry<String, Integer> entry : scoreList) {
+                scoreHistory.put(entry.getKey(), entry.getValue());
+            }
 
-        // Gardar puntiacións
-        ScoreFileHandler.saveScores(scoreHistory);
+            // Gardar puntuacións
+            ScoreFileHandler.saveScores(scoreHistory);
+        }
     }
 
     public void saveScoresOnExit() {

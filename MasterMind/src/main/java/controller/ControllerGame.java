@@ -24,9 +24,6 @@ public class ControllerGame implements ActionListener {
         this.viewIndex = viewIndex;
         this.view.createView(model.getLength(), model.getMaxTries());
         this.view.setActionListener(this);
-        //A: O método de abaixo está comentado porque agora faise tamén dentro de createView()
-        //this.view.setTriesLeftText(this.model.getMaxTries()); // Inicializar intentos en la vista
-        this.view.setScoreText(this.model.getScore()); // Inicializar el score en la vista
     }
 
     @Override
@@ -57,13 +54,17 @@ public class ControllerGame implements ActionListener {
     }
 
     private void finishGame(boolean won) {
-        this.model.finishGame(); // También setea la score a 0.
-        String message = won ? "You guessed correctly! Play again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
+        this.model.finishGame();
+        model.updateScore(won);
+        String message = won ? "You guessed correctly!\nYou got a score of "+model.getScore()+"\nPlay again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!" : "Game Over";
-        int choice = JOptionPane.showConfirmDialog(view, message, title, JOptionPane.YES_NO_OPTION);
-        recordScore();
+        boolean continuePlaying = view.playerChoice(title, message);
+        if (model.getLength() == 5) {
+            String playerName = view.getPlayerName();       
+            model.updateHighScores(playerName);
+        }
         resetGame();
-        if (choice == JOptionPane.NO_OPTION) {
+        if (!continuePlaying) {
             view.setVisible(false);
             viewIndex.setVisible(true);
         }
@@ -80,14 +81,6 @@ public class ControllerGame implements ActionListener {
     private void showGoodbyeMessage() {
         JOptionPane.showMessageDialog(view, "Thank you for playing Mastermind! See you soon. 👋", "Goodbye!", JOptionPane.INFORMATION_MESSAGE);
        // javax.swing.SwingUtilities.invokeLater(System::exit);
-    }
-
-    public void recordScore() {
-        boolean won = model.isGameFinished(); // Guardar el estado del juego anterior
-        String playerName = view.getPlayerName();
-        model.updateScore(won);
-        model.updateHighScores(playerName);
-        view.setScoreText(model.getScore());
     }
     
     public void resetGame() {
