@@ -45,6 +45,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
     private JButton difficultButton;
     private ImageIcon titleImage;
     private JButton backButton;
+    
 
     public ViewDifficulty() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +91,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
         buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(difficultButton);
         buttonPanel.setBackground(Colors.BACKGROUND);
-        buttonPanel.setPreferredSize(new Dimension(160,230));
+        buttonPanel.setPreferredSize(new Dimension(160,100));
 
          // banel boton detras
         backButton = new PersonalizedButton("← Back",15);
@@ -99,7 +100,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
         backPanel= new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        backPanel.setPreferredSize(new Dimension(160,180));
+        backPanel.setPreferredSize(new Dimension(160,100));
         add(backPanel);
 
         //tamaño adaptado, contenido centrado, visible

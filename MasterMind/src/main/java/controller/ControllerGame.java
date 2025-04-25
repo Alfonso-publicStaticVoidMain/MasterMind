@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.ModelGame;
+import view.ViewDifficulty;
 import view.ViewGame;
 import view.ViewIndex;
 
@@ -15,6 +16,7 @@ import view.ViewIndex;
 public class ControllerGame implements ActionListener {
     //view y model
     ViewGame view;
+    ViewDifficulty viewDifficulty;
     ModelGame model;
     ViewIndex viewIndex;
 
@@ -29,6 +31,14 @@ public class ControllerGame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        switch (command) {
+            case "back" -> {
+                view.dispose();  
+                ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model,viewIndex);
+
+            }
+
+        }
 
         if (!model.isGameFinished() && command.equals("submit")) {
             String guess = view.getUserDigits();
