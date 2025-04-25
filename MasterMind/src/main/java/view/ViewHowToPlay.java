@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import JElementos.Colors;
 import JElementos.PersonalizedButton;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -48,6 +50,8 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         // Configuración básica de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Mastermind");
+        Image customIcon = Toolkit.getDefaultToolkit().getImage("src" + File.separator + "main" + File.separator + "resources" + File.separator + "LogoSinTitulo.png");
+        setIconImage(customIcon);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().setBackground(LIGHT_BG);
         // Panel principal con márgenes
@@ -122,10 +126,10 @@ public class ViewHowToPlay extends javax.swing.JFrame {
 
         // Crear el JScrollPane que envuelve el JEditorPane
         JScrollPane scrollPane = new JScrollPane(instructions);
-        scrollPane.setPreferredSize(new Dimension(250, 350)); // ajusta el tamaño a tu layout
+        scrollPane.setPreferredSize(new Dimension(250, 350)); 
         scrollPane.setBorder(null);
         scrollPane.setBackground(LIGHT_PANEL);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // suaviza el scroll
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         // Añadir el scrollPane al descriptionPanel en lugar de instructions directamente
         descriptionPanel = new JPanel(new BorderLayout());
