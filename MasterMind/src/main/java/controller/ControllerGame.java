@@ -65,7 +65,7 @@ public class ControllerGame implements ActionListener {
         }
         resetGame();
         if (!continuePlaying) {
-            view.setVisible(false);
+            view.dispose();
             viewIndex.setVisible(true);
         }
         
