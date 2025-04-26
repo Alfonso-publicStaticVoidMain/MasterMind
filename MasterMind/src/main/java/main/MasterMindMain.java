@@ -3,7 +3,6 @@ package main;
 import controller.ControllerIndex;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import model.ModelGame;
 import view.ViewIndex;
 
 /**
@@ -15,7 +14,7 @@ import view.ViewIndex;
 public class MasterMindMain {
 
     public static void main(String[] args) {
-        // 1. Configuración inicial de la interfaz gráfica
+        // Configuración inicial de la interfaz gráfica
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {

@@ -23,12 +23,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ViewGame extends javax.swing.JFrame {
 
@@ -79,6 +80,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        //titulo
         setTitle("Mastermind");
 
         // Tittle Panel.
@@ -106,6 +108,7 @@ public class ViewGame extends javax.swing.JFrame {
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
             titlePanel.add(titleLabel);
         }
+
         add(titlePanel);
 
         //Remaining attempts Panel
@@ -121,10 +124,8 @@ public class ViewGame extends javax.swing.JFrame {
         triesLeftField.setForeground(Colors.TITLE);
         triesLeftField.setFont(boldLargeFont);
         triesLeftField.setEditable(false);
-        triesLeftField.setBorder(null);
         triesLeftField.setBackground(Colors.BACKGROUND);
         triesLeftPanel.add(triesLeftField);
-
         //Panel para el usuario
         userInputs = new RoundedTextField[this.length];
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
@@ -167,35 +168,25 @@ public class ViewGame extends javax.swing.JFrame {
                         evt.consume(); // Prevent extra characters
                     }
                 }
-
-                @Override
-                public void keyPressed(KeyEvent evt) {
-                    if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                        if (userInputs[currentIndex].getText().isEmpty() && currentIndex > 0) {
-                            userInputs[currentIndex - 1].requestFocusInWindow(); // Move focus to previous field
-                        } else if (userInputs[currentIndex].getText().length() == 1) {
-                            userInputs[currentIndex].setText(""); // Clear the current field
-                        }
-                    }
-                }
-
             });
-
+            
         }
 
-        //Previous tries user Panel.
+        //Panel para intentos de usuario:
         previousTries = new JTextArea[this.maxTries][this.length];
-        previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10)); //10, 10 adds space between cells
-        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 35, 20, 35));
+        //ultimos 10 10para añadir espacio entre celdas
+        previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
+        previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 40, 20, 40));
         if (maxTries == 10) {
             previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 5));
-            previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(15, 50, 0, 50));
+            previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(15, 40, 0, 40));
         }
         previousTriesPanel.setBackground(Colors.BACKGROUND);
-        previousTriesPanel.setPreferredSize(new Dimension(200, 300));
+        previousTriesPanel.setPreferredSize(new Dimension(200, 200));
         if (maxTries == 10) {
             previousTriesPanel.setPreferredSize(new Dimension(200, 360));
         }
+        // A: Ese 10 debería ser o MAX_TRIES do ControllerGame! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
                 previousTries[i][j] = new JTextArea(1, 3);
@@ -206,8 +197,12 @@ public class ViewGame extends javax.swing.JFrame {
             }
         }
 
-        // Submit button Pane.
+        //panel boton  inferior
+        // Submit button & tries left display
         submitButton = PersonalizedButton.slimButton("Submit", "submit");
+        //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
+        //previousTriesText.setEditable(false);//intentos previos
+
         bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setBackground(Colors.BACKGROUND);
         bottomPanel.setPreferredSize(new Dimension(360, 40));
@@ -217,46 +212,45 @@ public class ViewGame extends javax.swing.JFrame {
             bottomPanel.setPreferredSize(new Dimension(360, 25));
         }
         submitButton.setBorderPainted(false);
+
         bottomPanel.add(submitButton);
 
-        //Back Button Panel.
+        //panel hacia atras
+        // banel boton detras
         backButton = PersonalizedButton.slimBackButton;
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        if (maxTries == 10) {
-            backPanel.setPreferredSize(new Dimension(100, 25));
-        } else {
-            backPanel.setPreferredSize(new Dimension(360, 40));
-        }
+        if (maxTries == 10) backPanel.setPreferredSize(new Dimension(100, 25));
+        else backPanel.setPreferredSize(new Dimension(360, 40));
 
-        //Add panels.
-        add(titlePanel, 0);
+        //se añaden los paneles al contenedor   
+        add(titlePanel, 0); // Añadir  parte superior
         add(triesLeftPanel);
         add(userInputPanel);
         add(previousTriesPanel);
         add(bottomPanel);
         add(backPanel);
 
-        //Size adapted, content centered, visible.
+        //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
         setResizable(false);//q no ca,bie el tamaño eluser
+        // pack();
         setLocationRelativeTo(null);
         setVisible(true);
         userInputs[0].requestFocusInWindow();
     }
 
     public void setActionListener(ControllerGame controller) {
-        if (submitButton.getActionListeners().length == 0) {
-            submitButton.addActionListener(controller);
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
         }
-        if (backButton.getActionListeners().length == 0) {
-            backButton.addActionListener(controller);
-        }
+        backButton.addActionListener(controller);
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
     }
 
+    // El ControllerGame le dice a la ViewGame qué mostrar y dónde
     public void displayFeedback(int attemptNumber, String guess, String[] feedback) {
         if (attemptNumber < this.maxTries) {
             for (int i = 0; i < this.length; i++) {
@@ -273,12 +267,12 @@ public class ViewGame extends javax.swing.JFrame {
         }
     }
 
-    // Update left tries.
+    // El ControllerGame actualiza el texto de los intentos restantes
     public void setTriesLeftText(int triesLeft) {
         triesLeftField.setText("Tries left: " + triesLeft);
     }
 
-    // Get User Digits.
+    // Obtener los digitos introducidos por el usuario
     public String getUserDigits() {
         StringBuilder digits = new StringBuilder();
         for (JTextField textField : userInputs) {
@@ -287,7 +281,7 @@ public class ViewGame extends javax.swing.JFrame {
         return digits.toString();
     }
 
-    //Drop digits.
+    //borrar digitos
     public void clearInputFields() {
         for (JTextField textField : userInputs) {
             textField.setText("");
@@ -301,6 +295,7 @@ public class ViewGame extends javax.swing.JFrame {
         }
         submitButton.setEnabled(false);
     }
+ 
 
     //Name users.
     public String getPlayerName() {
@@ -310,9 +305,11 @@ public class ViewGame extends javax.swing.JFrame {
                 "Player Name",
                 JOptionPane.QUESTION_MESSAGE
         );
+
         if (playerName == null || playerName.trim().isEmpty()) {
             playerName = "Player"; // Default name if user cancels
         }
+
         return playerName; // Return the entered name
     }
 
@@ -323,6 +320,7 @@ public class ViewGame extends javax.swing.JFrame {
             leaderboardText.append((i + 1)).append(". ").append(names.get(i))
                     .append(" - ").append(scores.get(i)).append(" points\n");
         }
+
         JOptionPane.showMessageDialog(
                 this,
                 leaderboardText.toString(),
