@@ -75,9 +75,9 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         }
         mainContentPanel.add(titlePanel);
 
-        backButton = new PersonalizedButton("← Back", 15);
-        backButton.setActionCommand("back");
-        backButton.setPreferredSize(new Dimension(100, 50));
+        backButton = PersonalizedButton.midButton("← Back", "back");
+//        backButton.setActionCommand("back");
+//        backButton.setPreferredSize(new Dimension(100, 50));
 
         // Texto de instrucciones (now with more space)
         descriptionPanel = new JPanel(new BorderLayout());
@@ -125,8 +125,8 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         descriptionPanel = new JPanel(new BorderLayout());
         descriptionPanel.setBackground(LIGHT_PANEL);
         descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Colors.GREY, 1),
-                BorderFactory.createEmptyBorder(15, 20, 20, 20)
+            BorderFactory.createLineBorder(Colors.GREY, 1),
+            BorderFactory.createEmptyBorder(15, 20, 20, 20)
         ));
 
         descriptionPanel.add(scrollPane, BorderLayout.CENTER);

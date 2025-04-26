@@ -6,6 +6,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
 import model.ModelGame;
 import model.ModelGameDifficult;
 import view.ViewDifficulty;
@@ -23,63 +24,40 @@ import view.ViewLeaderboard;
 public class ControllerIndex implements ActionListener {
 
     private ViewIndex view;
-    private ModelGame model;
-    private ViewGame viewGame;
-    private ViewDifficulty viewDifficulty;
-    private ViewLeaderboard viewLeaderboard;
-    private ViewHowToPlay viewHowToPlay;
 
-    private ControllerHowToPlay controllerHowToPlay;
-
-    public ControllerIndex(ViewIndex view, ModelGame model) {
+    public ControllerIndex(ViewIndex view) {
         this.view = view;
-        this.model = model;
         this.view.setActionListener(this);
-
-        //Game
-        this.viewGame = new ViewGame();
-
-        //How to Play
-        this.viewHowToPlay = null;
-        this.controllerHowToPlay = null;
 
         // O xogo comeza ca vista
         this.view.setVisible(true);
-
-        // Leaderboard
-        this.viewLeaderboard = new ViewLeaderboard();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-
-        System.out.println("Action received: " + command);
+        System.out.println("Action received: "+command);
 
         switch (command) {
             case "game" -> {
-                view.dispose();
-                viewDifficulty = new ViewDifficulty();
-                viewDifficulty.setVisible(true);
-                ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model, view);
-
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty()); 
+                });
             }
 
             case "howToPlay" -> {
-                if (viewHowToPlay == null || !viewHowToPlay.isDisplayable()) { // 👈 si es null o ya fue cerrada
-                    viewHowToPlay = new ViewHowToPlay();
-                    controllerHowToPlay = new ControllerHowToPlay(viewHowToPlay, view);
-                }
-
-                view.setVisible(false);
-                viewHowToPlay.setVisible(true);
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerHowToPlay controllerHowToPlay = new ControllerHowToPlay(new ViewHowToPlay());
+                });
             }
 
             case "leaderBoard" -> {
-                view.dispose();
-                viewLeaderboard.setVisible(true);
-                ControllerLeaderboard cl = new ControllerLeaderboard(viewLeaderboard, model, view);
-                cl.updateScores();
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerLeaderboard controllerLeaderboard = new ControllerLeaderboard(new ViewLeaderboard());
+                });
             }
 
             case "exit" -> {

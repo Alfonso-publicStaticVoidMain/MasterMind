@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package JElementos;
 
 /**
@@ -10,14 +6,16 @@ package JElementos;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class PersonalizedButton extends JButton {
 
     private int borderRadius;
+    
+    public static final JButton slimBackButton = slimButton("← Back", "back");
+    public static final JButton midBackButton = midButton("← Back", "back");
+    public static final JButton bigBackButton = bigButton("← Back", "back");
 
     public PersonalizedButton(String text, int radius) {
         super(text);
@@ -25,7 +23,41 @@ public class PersonalizedButton extends JButton {
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-        setPreferredSize(new Dimension(200, 50));
+        setBackground(Colors.BUTTON);
+        setForeground(Colors.BACKGROUND);
+    }
+    
+    public static JButton bigButton(String label, String actionCommand) {
+        JButton result = new PersonalizedButton(label, 15);
+        result.setActionCommand(actionCommand);
+        result.setPreferredSize(new Dimension(200, 50));
+        return result;
+    }
+    
+    public static JButton bigButton(String label) {
+        return bigButton(label, label.toLowerCase());
+    }
+    
+    public static JButton midButton(String label, String actionCommand) {
+        JButton result = new PersonalizedButton(label, 15);
+        result.setActionCommand(actionCommand);
+        result.setPreferredSize(new Dimension(100, 50));
+        return result;
+    }
+    
+    public static JButton midButton(String label) {
+        return midButton(label, label.toLowerCase());
+    }
+    
+    public static JButton slimButton(String label, String actionCommand) {
+        JButton result = new PersonalizedButton(label, 15);
+        result.setActionCommand(actionCommand);
+        result.setPreferredSize(new Dimension(100, 20));
+        return result;
+    }
+    
+    public static JButton slimButton(String label) {
+        return slimButton(label, label.toLowerCase());
     }
 
     @Override

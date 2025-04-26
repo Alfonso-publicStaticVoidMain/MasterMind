@@ -78,12 +78,12 @@ public class ViewIndex extends javax.swing.JFrame {
        
 
         //panel elementos
-        playButton = new PersonalizedButton("Game",15);
-        playButton.setActionCommand("game");
-        howToPlayButton=new PersonalizedButton("How to play",15);
-        howToPlayButton.setActionCommand("howToPlay");
-        leaderBoardButton=new PersonalizedButton("Leader Board",15);
-        leaderBoardButton.setActionCommand("leaderBoard");
+        playButton = PersonalizedButton.bigButton("Game", "game");
+//        playButton.setActionCommand("game");
+        howToPlayButton = PersonalizedButton.bigButton("How to play", "howToPlay");
+//        howToPlayButton.setActionCommand("howToPlay");
+        leaderBoardButton = PersonalizedButton.bigButton("Leader Board", "leaderBoard");
+//        leaderBoardButton.setActionCommand("leaderBoard");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colors.BACKGROUND);
         buttonPanel.setPreferredSize(new Dimension(160,440));
