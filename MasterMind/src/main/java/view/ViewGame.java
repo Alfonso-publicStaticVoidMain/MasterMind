@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -81,22 +83,44 @@ public class ViewGame extends javax.swing.JFrame {
         //titulo
         setTitle("Mastermind");
 
-        // Tittle Panel.
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
-        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(150, 85));  // Establece un tamaño preferido inicial
+        titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); 
+        titlePanel.setPreferredSize(new Dimension(150, 85)); 
+
         if (maxTries == 10) {
             titlePanel.setPreferredSize(new Dimension(120, 65));
         }
+
         titleImage = new ImageIcon(getClass().getResource("/widTitle.png"));
         if (titleImage != null) {
-            // Scales the image to the preferred size of the panel.
+            // Obtiene las dimensiones originales de la imagen
+            int originalWidth = titleImage.getIconWidth();
+            int originalHeight = titleImage.getIconHeight();
+
+            // Obtiene el tamaño del panel
+            int panelWidth = titlePanel.getPreferredSize().width;
+            int panelHeight = titlePanel.getPreferredSize().height;
+
+            // Calcula la relación de aspecto de la imagen
+            float aspectRatio = (float) originalWidth / originalHeight;
+
+            // Ajusta la imagen para que ocupe todo el ancho del panel
+            int newWidth = panelWidth;
+            int newHeight = (int) (panelWidth / aspectRatio);
+
+            if (newHeight < panelHeight) {
+                newHeight = panelHeight;
+                newWidth = (int) (panelHeight * aspectRatio);
+            }
+
+            // Escala la imagen al nuevo tamaño
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
-                    titlePanel.getPreferredSize().width,
-                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    newWidth,
+                    newHeight,
                     Image.SCALE_SMOOTH
             );
+
             ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
             titleLabel = new JLabel(tituloImagenEscalada);
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -167,7 +191,7 @@ public class ViewGame extends javax.swing.JFrame {
                     }
                 }
             });
-            
+
         }
 
         //Panel para intentos de usuario:
@@ -219,8 +243,11 @@ public class ViewGame extends javax.swing.JFrame {
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        if (maxTries == 10) backPanel.setPreferredSize(new Dimension(100, 25));
-        else backPanel.setPreferredSize(new Dimension(360, 40));
+        if (maxTries == 10) {
+            backPanel.setPreferredSize(new Dimension(100, 25));
+        } else {
+            backPanel.setPreferredSize(new Dimension(360, 40));
+        }
 
         //se añaden los paneles al contenedor   
         add(titlePanel, 0); // Añadir  parte superior
@@ -296,7 +323,6 @@ public class ViewGame extends javax.swing.JFrame {
         }
         submitButton.setEnabled(false);
     }
- 
 
     //Name users.
     public String getPlayerName() {
