@@ -147,7 +147,6 @@ public class ViewGame extends javax.swing.JFrame {
                     }
                 }
             });
-            
         }
 
         //Panel para intentos de usuario:
