@@ -129,11 +129,6 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    //Añadir botón para ir para atrás
-    public JButton getBackButton() {
-        return backButton;
-    }
-
     public void setActionListener(ControllerLeaderboard controller) {
         backButton.addActionListener(controller);
     }
