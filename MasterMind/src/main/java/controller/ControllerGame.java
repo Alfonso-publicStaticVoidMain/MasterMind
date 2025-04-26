@@ -44,11 +44,11 @@ public class ControllerGame implements ActionListener {
 
             if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
                 model.consumeTry();
-                view.setTriesLeftText(model.getTriesLeft()); // Actualizar intentos restantes en la vista
+                view.setTriesLeftText(model.getTriesLeft()); 
                 view.clearInputFields();
 
                 String[] feedbackInfo = model.feedbackInfo(guess);
-                view.displayFeedback(this.getMaxTries() - this.getTriesLeft() - 1, guess, feedbackInfo); // Pasar número de intento
+                view.displayFeedback(this.getMaxTries() - this.getTriesLeft() - 1, guess, feedbackInfo); 
 
                 if (model.hitsSamePlace(guess) == model.getLength()) {
                     this.finishGame(true); // El jugador ganó
