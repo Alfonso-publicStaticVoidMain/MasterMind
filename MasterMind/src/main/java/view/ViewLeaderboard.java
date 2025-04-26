@@ -39,16 +39,16 @@ public class ViewLeaderboard extends javax.swing.JFrame {
     private ControllerLeaderboard controller;
 
     public ViewLeaderboard() {
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (controller != null) {
-                    controller.onExit();
-                }
-                System.exit(0);
-            }
-        });
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+//                if (controller != null) {
+//                    controller.onExit();
+//                }
+//                System.exit(0);
+//            }
+//        });
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
 
@@ -63,9 +63,9 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
-                    titlePanel.getPreferredSize().width,
-                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
-                    Image.SCALE_SMOOTH
+                titlePanel.getPreferredSize().width,
+                titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                Image.SCALE_SMOOTH
             );
             ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
             titleLabel = new JLabel(tituloImagenEscalada);
@@ -112,9 +112,9 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         add(scorePanel);
 
         // panel boton detras
-        backButton = new PersonalizedButton("← Back",15);
-        backButton.setActionCommand("back");
-        backButton.setPreferredSize(new Dimension(100, 50));
+        backButton = PersonalizedButton.midBackButton;
+//        backButton.setActionCommand("back");
+//        backButton.setPreferredSize(new Dimension(100, 50));
         backPanel= new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
@@ -126,7 +126,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         setResizable(false);//q no ca,bie el tamaño eluser
         // pack();
         setLocationRelativeTo(null);
-
+        setVisible(true);
     }
 
     //Añadir botón para ir para atrás

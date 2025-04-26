@@ -29,7 +29,6 @@ public class ModelGame {
      */
     private int triesLeft;
     // Guardar el historial de intentos:
-    private List<String> attemptHistory = new ArrayList<>();
     private boolean gameFinished = false;
     private int score = 0;
 
@@ -44,13 +43,19 @@ public class ModelGame {
         this.scoreHistory = ScoreFileHandler.loadScores(); //Guardar puntuaciones
         resetGame(); // Inicializar el juego al crear el ModelGame
     }
+    
+    public ModelGame(int length, int maxTries) {
+        this.length = length;
+        this.maxTries = maxTries;
+        this.scoreHistory = ScoreFileHandler.loadScores(); //Guardar puntuaciones
+        resetGame(); // Inicializar el juego al crear el ModelGame
+    }
 
     // Resetear o xogo
     public void resetGame() {
         this.numberToGuess = generateRandomNumber();
         this.triesLeft = this.maxTries;
         this.gameFinished = false;
-        this.attemptHistory.clear(); // Limpiar el historial al resetear
         this.score = 0;
     }
 
@@ -181,16 +186,6 @@ public class ModelGame {
             }
         }
         return cont;
-    }
-
-    // Guardar el historial de intentos
-    public void addAttempt(String attempt) {
-        this.attemptHistory.add(attempt);
-    }
-
-    // Obtener el historial de intentos
-    public List<String> getAttemptsHistory() {
-        return attemptHistory;
     }
 
     // Puntuaje

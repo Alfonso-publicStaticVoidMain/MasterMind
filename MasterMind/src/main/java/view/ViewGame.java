@@ -90,9 +90,9 @@ public class ViewGame extends javax.swing.JFrame {
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
-                    titlePanel.getPreferredSize().width,
-                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
-                    Image.SCALE_SMOOTH
+                titlePanel.getPreferredSize().width,
+                titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                Image.SCALE_SMOOTH
             );
             ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
             titleLabel = new JLabel(tituloImagenEscalada);
@@ -176,7 +176,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         //panel boton  inferior
         // Submit button & tries left display
-        submitButton = PersonalizedButton.standardSubmitButton;
+        submitButton = PersonalizedButton.slimButton("Submit", "submit");
         //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
         //previousTriesText.setEditable(false);//intentos previos
 
@@ -194,7 +194,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         //panel hacia atras
         // banel boton detras
-        backButton = PersonalizedButton.standardBackButton;
+        backButton = PersonalizedButton.slimBackButton;
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);

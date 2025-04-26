@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
 import model.ModelGame;
 import view.ViewDifficulty;
 import view.ViewGame;
@@ -13,42 +14,37 @@ import view.ViewIndex;
  */
 public class ControllerDifficulty implements ActionListener {
 
-    private ViewDifficulty viewDifficulty;
-    private ModelGame model;
-    private ViewIndex viewIndex;
-    private ViewGame viewGame;
+    private ViewDifficulty view;
     
 
-    public ControllerDifficulty(ViewDifficulty viewDifficulty, ModelGame model, ViewIndex viewIndex) {
-        this.viewDifficulty = viewDifficulty;
-        this.model = model;
-        this.viewIndex = viewIndex;
-        this.viewDifficulty.setActionListener(this);
+    public ControllerDifficulty(ViewDifficulty view) {
+        this.view = view;
+        this.view.setActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        System.out.println("Action received: "+command);
+        
         switch (command) {
             case "practice" -> {
-                viewDifficulty.dispose();
-                viewGame = new ViewGame();
-                model.setLength(4);
-                model.setMaxTries(10);
-                ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerGame controllerGame = new ControllerGame(new ViewGame(), new ModelGame(4, 10));
+                });
             }
             case "play" -> {
-                viewDifficulty.dispose();
-                viewGame = new ViewGame();
-                model.setLength(5);
-                model.setMaxTries(5);
-                ControllerGame cg = new ControllerGame(viewGame, model, viewIndex);
-
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerGame controllerGame = new ControllerGame(new ViewGame(), new ModelGame(5, 5));
+                });
             }
             case "back" -> {
-                viewDifficulty.dispose();  
-                ControllerIndex cg = new ControllerIndex(viewIndex, model);
-
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+                });
             }
 
         }

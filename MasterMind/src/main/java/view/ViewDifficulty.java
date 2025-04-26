@@ -77,10 +77,10 @@ public class ViewDifficulty extends javax.swing.JFrame {
         add(titlePanel);
 
         //panel elementos
-        easyButton = new PersonalizedButton("Practice", 15);
-        easyButton.setActionCommand("practice");
-        difficultButton = new PersonalizedButton("Play", 15);
-        difficultButton.setActionCommand("play");
+        easyButton = PersonalizedButton.bigButton("Practice", "practice");
+//        easyButton.setActionCommand("practice");
+        difficultButton = PersonalizedButton.bigButton("Play", "play");
+//        difficultButton.setActionCommand("play");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colors.BACKGROUND);
         add(buttonPanel, BorderLayout.CENTER);
@@ -94,10 +94,10 @@ public class ViewDifficulty extends javax.swing.JFrame {
         buttonPanel.setPreferredSize(new Dimension(160,100));
 
          // banel boton detras
-        backButton = new PersonalizedButton("← Back",15);
-        backButton.setActionCommand("back");
-        backButton.setPreferredSize(new Dimension(100, 50));
-        backPanel= new JPanel();
+        backButton = PersonalizedButton.bigBackButton;
+//        backButton.setActionCommand("back");
+//        backButton.setPreferredSize(new Dimension(100, 50));
+        backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
         backPanel.setPreferredSize(new Dimension(160,100));

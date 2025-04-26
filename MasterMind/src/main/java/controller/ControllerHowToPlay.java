@@ -2,7 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import model.ModelGame;
+import javax.swing.SwingUtilities;
 import view.ViewHowToPlay;
 import view.ViewIndex;
 
@@ -13,23 +13,22 @@ import view.ViewIndex;
 public class ControllerHowToPlay implements ActionListener {
 
     private ViewHowToPlay view;
-    private ViewIndex viewIndex;
-    ModelGame model = new ModelGame();
 
-    public ControllerHowToPlay(ViewHowToPlay view, ViewIndex viewIndex) {
+    public ControllerHowToPlay(ViewHowToPlay view) {
         this.view = view;
-        this.viewIndex = viewIndex;
         this.view.setActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        switch (command) {
-            case "back" -> {
+        System.out.println("Action received: "+command);
+        
+        if (command.equals("back")) {
+            SwingUtilities.invokeLater( () -> {
                 view.dispose();
-                viewIndex.setVisible(true);
-            }
+                ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+            });
         }
     }
 

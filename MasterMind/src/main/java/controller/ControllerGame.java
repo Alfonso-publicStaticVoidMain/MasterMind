@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import model.ModelGame;
 import view.ViewDifficulty;
 import view.ViewGame;
@@ -16,14 +17,11 @@ import view.ViewIndex;
 public class ControllerGame implements ActionListener {
     //view y model
     ViewGame view;
-    ViewDifficulty viewDifficulty;
     ModelGame model;
-    ViewIndex viewIndex;
 
-    public ControllerGame(ViewGame view, ModelGame model, ViewIndex viewIndex) {
+    public ControllerGame(ViewGame view, ModelGame model) {
         this.view = view;
         this.model = model;
-        this.viewIndex = viewIndex;
         this.view.createView(model.getLength(), model.getMaxTries());
         this.view.setActionListener(this);
     }
@@ -31,14 +29,13 @@ public class ControllerGame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        switch (command) {
-            case "back" -> {
+        System.out.println("Action received: "+command);
+        
+        if (command.equals("back")) {
+            SwingUtilities.invokeLater( () -> {
                 view.dispose();  
-                viewDifficulty= new ViewDifficulty();
-                ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model,viewIndex);
-
-            }
-
+                ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty());
+            });
         }
 
         if (!model.isGameFinished() && command.equals("submit")) {
@@ -76,8 +73,10 @@ public class ControllerGame implements ActionListener {
         }
         resetGame();
         if (!continuePlaying) {
-            view.dispose();
-            viewIndex.setVisible(true);
+            SwingUtilities.invokeLater( () -> {
+                view.dispose();
+            ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+            });
         }
         
 //        if (choice == JOptionPane.YES_OPTION) {

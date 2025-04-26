@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 import model.ModelGame;
+import model.ScoreFileHandler;
 import view.ViewIndex;
 import view.ViewLeaderboard;
 
@@ -16,21 +18,18 @@ import view.ViewLeaderboard;
 public class ControllerLeaderboard implements ActionListener {
 
     private ViewLeaderboard view;
-    private ModelGame modelGame;
-    private ViewIndex viewIndex;
 
-    public ControllerLeaderboard(ViewLeaderboard view, ModelGame modelGame, ViewIndex viewIndex) {
+    public ControllerLeaderboard(ViewLeaderboard view) {
         this.view = view;
-        this.modelGame = modelGame;
-        this.viewIndex = viewIndex;
         this.view.setActionListener(this);
+        this.displayScores();
     }
 
     public Map<String, Integer> getScores() {
-        return this.modelGame.getScoreHistory();
+        return ScoreFileHandler.loadScores();
     }
 
-    public void updateScores() {
+    public void displayScores() {
         List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(this.getScores().entrySet());
         int row = 1;
         for (Map.Entry entry : scoreList) {
@@ -45,14 +44,19 @@ public class ControllerLeaderboard implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == view.getBackButton()) {
-            view.dispose();
-            viewIndex.setVisible(true);
+        String command = e.getActionCommand();
+        System.out.println("Action received: "+command);
+        
+        if (command.equals("back")) {
+            SwingUtilities.invokeLater( () -> {
+                view.dispose();
+                ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+            });
         }
     }
 
     // Add this method to be called when exiting the application
-    public void onExit() {
-        modelGame.saveScoresOnExit();
-    }
+//    public void onExit() {
+//        model.saveScoresOnExit();
+//    }
 }

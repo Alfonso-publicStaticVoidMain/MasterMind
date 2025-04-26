@@ -22,9 +22,7 @@ public class MasterMindMain {
             e.printStackTrace();
         }
         SwingUtilities.invokeLater(() -> {
-            ViewIndex view = new ViewIndex();
-            ModelGame model = new ModelGame();
-            ControllerIndex controller = new ControllerIndex(view, model);
+            ControllerIndex controller = new ControllerIndex(new ViewIndex());
         });
 
     }
