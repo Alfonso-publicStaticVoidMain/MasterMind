@@ -1,19 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import JElementos.Colors;
 import JElementos.PersonalizedButton;
 import controller.ControllerDifficulty;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Image;
-import javax.swing.BorderFactory;
+import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -26,7 +20,9 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ViewDifficulty extends javax.swing.JFrame {
 
@@ -45,7 +41,6 @@ public class ViewDifficulty extends javax.swing.JFrame {
     private JButton difficultButton;
     private ImageIcon titleImage;
     private JButton backButton;
-    
 
     public ViewDifficulty() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,23 +79,23 @@ public class ViewDifficulty extends javax.swing.JFrame {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colors.BACKGROUND);
         add(buttonPanel, BorderLayout.CENTER);
-       // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Centrar horizontalmente, espacio vertical
         buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(easyButton);
         buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(difficultButton);
         buttonPanel.setBackground(Colors.BACKGROUND);
-        buttonPanel.setPreferredSize(new Dimension(160,100));
+        buttonPanel.setPreferredSize(new Dimension(160, 100));
 
-         // banel boton detras
+        // banel boton detras
         backButton = PersonalizedButton.bigBackButton;
 //        backButton.setActionCommand("back");
 //        backButton.setPreferredSize(new Dimension(100, 50));
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        backPanel.setPreferredSize(new Dimension(160,100));
+        backPanel.setPreferredSize(new Dimension(160, 100));
         add(backPanel);
 
         //tamaño adaptado, contenido centrado, visible
@@ -112,11 +107,20 @@ public class ViewDifficulty extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerDifficulty controller) {
-        if (easyButton.getActionListeners().length == 0) easyButton.addActionListener(controller);
-        if (difficultButton.getActionListeners().length == 0) difficultButton.addActionListener(controller);
-        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
+        for (ActionListener al : easyButton.getActionListeners()) {
+            easyButton.removeActionListener(al);
+        }
+        easyButton.addActionListener(controller);
+        for (ActionListener al : difficultButton.getActionListeners()) {
+            difficultButton.removeActionListener(al);
+        }
+        difficultButton.addActionListener(controller);
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
+        }
+        backButton.addActionListener(controller);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
