@@ -36,6 +36,7 @@ public class ViewGame extends javax.swing.JFrame {
     private JPanel userInputPanel;
     private JPanel previousTriesPanel;
     private JPanel bottomPanel;
+    private JPanel backPanel;
     //Elementos
     private JLabel titleLabel;
     /**
@@ -51,11 +52,18 @@ public class ViewGame extends javax.swing.JFrame {
      */
     private JButton submitButton;
     private JTextField triesLeftField;
-
+    /**
+     * Logo
+     */
+    private ImageIcon titleImage;
+    /**
+     * Boton hacia atras
+     */
+    private JButton backButton;
+    
     //variables para los panles
     private int length = 4;
     private int maxTries = 10;
-    private ImageIcon titleImage;
 
     public ViewGame() {
     }
@@ -73,19 +81,17 @@ public class ViewGame extends javax.swing.JFrame {
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(50, 50)); // Establece un tamaño preferido inicial
-
-        titleImage = new ImageIcon(getClass().getResource("/titleimage.png"));
-
+        titlePanel.setPreferredSize(new Dimension(150, 100)); // Establece un tamaño preferido inicial
+        titleImage = new ImageIcon(getClass().getResource("/title.png"));
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
-            Image scaledImage = titleImage.getImage().getScaledInstance(
-                titlePanel.getPreferredSize().width,
-                titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
-                Image.SCALE_SMOOTH
+            Image imagenEscalada = titleImage.getImage().getScaledInstance(
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
             );
-            ImageIcon scaledImageTitle = new ImageIcon(scaledImage);
-            titleLabel = new JLabel(scaledImageTitle);
+            ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
+            titleLabel = new JLabel(tituloImagenEscalada);
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
             titlePanel.add(titleLabel);
         } else {
@@ -93,12 +99,13 @@ public class ViewGame extends javax.swing.JFrame {
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
             titlePanel.add(titleLabel);
         }
+
         add(titlePanel);
         
         //panel score
         triesLeftPanel = new JPanel();
         triesLeftPanel.setBackground(Colors.BACKGROUND);
-        triesLeftPanel.setPreferredSize(new Dimension(50, 50));       
+        triesLeftPanel.setPreferredSize(new Dimension(160, 100));       
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
         triesLeftField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));      
@@ -112,7 +119,7 @@ public class ViewGame extends javax.swing.JFrame {
         userInputPanel.setPreferredSize(new Dimension(360, 50));
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         for (int i = 0; i < userInputs.length; i++) {
-            userInputs[i] = new RoundedTextField(3);//ancho para un digito
+            userInputs[i] = new RoundedTextField(25);
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
             userInputPanel.add(userInputs[i]);//añades al panel
@@ -142,7 +149,7 @@ public class ViewGame extends javax.swing.JFrame {
         previousTriesPanel = new JPanel(new GridLayout(this.maxTries, this.length, 10, 10));
         previousTriesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         previousTriesPanel.setBackground(Colors.BACKGROUND);
-        previousTriesPanel.setPreferredSize(new Dimension(360, 400));
+        previousTriesPanel.setPreferredSize(new Dimension(360, 200));
         // A: Ese 10 debería ser o MAX_TRIES do ControllerGame! Pero hai que mirar como facer iso ben
         for (int i = 0; i < maxTries; i++) {
             for (int j = 0; j < length; j++) {
@@ -165,12 +172,24 @@ public class ViewGame extends javax.swing.JFrame {
 
         bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setBackground(Colors.BACKGROUND);
-        bottomPanel.setPreferredSize(new Dimension(360, 90));
+        bottomPanel.setPreferredSize(new Dimension(360, 50));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
 
         submitButton.setBorderPainted(false);
 
         bottomPanel.add(submitButton);
+        
+        //panel hacia atras
+        // banel boton detras
+        backButton = new PersonalizedButton("← Back",15);
+        backButton.setActionCommand("back");
+        backButton.setPreferredSize(new Dimension(100, 50));
+        backPanel= new JPanel();
+        backPanel.setBackground(Colors.BACKGROUND);
+        backPanel.add(backButton);
+        backPanel.setPreferredSize(new Dimension(160,100));
+        
+
 
         //se añaden los paneles al contenedor   
         add(titlePanel, 0); // Añadir  parte superior
@@ -178,6 +197,7 @@ public class ViewGame extends javax.swing.JFrame {
         add(userInputPanel);
         add(previousTriesPanel);
         add(bottomPanel);
+        add(backPanel);
 
         //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
@@ -190,6 +210,7 @@ public class ViewGame extends javax.swing.JFrame {
 
     public void setActionListener(ControllerGame controller) {
         submitButton.addActionListener(controller);
+        backButton.addActionListener(controller);
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
     }
