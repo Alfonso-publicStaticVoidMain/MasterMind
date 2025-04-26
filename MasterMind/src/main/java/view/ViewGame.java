@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -27,7 +28,9 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ViewGame extends javax.swing.JFrame {
 
@@ -90,9 +93,9 @@ public class ViewGame extends javax.swing.JFrame {
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
-                titlePanel.getPreferredSize().width,
-                titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
-                Image.SCALE_SMOOTH
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
             );
             ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
             titleLabel = new JLabel(tituloImagenEscalada);
@@ -109,8 +112,11 @@ public class ViewGame extends javax.swing.JFrame {
         //panel score
         triesLeftPanel = new JPanel();
         triesLeftPanel.setBackground(Colors.BACKGROUND);
-        if (maxTries == 10) triesLeftPanel.setPreferredSize(new Dimension(360, 17));
-        else triesLeftPanel.setPreferredSize(new Dimension(360, 5));
+        if (maxTries == 10) {
+            triesLeftPanel.setPreferredSize(new Dimension(360, 17));
+        } else {
+            triesLeftPanel.setPreferredSize(new Dimension(360, 5));
+        }
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
         triesLeftField.setBackground(Colors.BACKGROUND);
@@ -119,13 +125,19 @@ public class ViewGame extends javax.swing.JFrame {
         userInputs = new RoundedTextField[this.length];
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         userInputPanel.setBackground(Colors.BACKGROUND);
-        if (maxTries > 10) userInputPanel.setPreferredSize(new Dimension(360, 70));
-        else userInputPanel.setPreferredSize(new Dimension(360, 60));
+        if (maxTries > 10) {
+            userInputPanel.setPreferredSize(new Dimension(360, 70));
+        } else {
+            userInputPanel.setPreferredSize(new Dimension(360, 60));
+        }
         for (int i = 0; i < userInputs.length; i++) {
 
-            if (maxTries == 10) userInputs[i] = new RoundedTextField(10);
-            else userInputs[i] = new RoundedTextField(2);
-            
+            if (maxTries == 10) {
+                userInputs[i] = new RoundedTextField(10);
+            } else {
+                userInputs[i] = new RoundedTextField(2);
+            }
+
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
             userInputPanel.add(userInputs[i]);//añades al panel
@@ -147,7 +159,7 @@ public class ViewGame extends javax.swing.JFrame {
                     }
                 }
             });
-            
+
         }
 
         //Panel para intentos de usuario:
@@ -199,8 +211,11 @@ public class ViewGame extends javax.swing.JFrame {
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        if (maxTries == 10) backPanel.setPreferredSize(new Dimension(100, 25));
-        else backPanel.setPreferredSize(new Dimension(360, 40));
+        if (maxTries == 10) {
+            backPanel.setPreferredSize(new Dimension(100, 25));
+        } else {
+            backPanel.setPreferredSize(new Dimension(360, 40));
+        }
 
         //se añaden los paneles al contenedor   
         add(titlePanel, 0); // Añadir  parte superior
@@ -220,8 +235,10 @@ public class ViewGame extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerGame controller) {
-        if (submitButton.getActionListeners().length == 0) submitButton.addActionListener(controller);
-        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
+        }
+        backButton.addActionListener(controller);
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
     }

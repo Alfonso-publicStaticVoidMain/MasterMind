@@ -4,9 +4,7 @@ import controller.ControllerHowToPlay;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,12 +15,19 @@ import JElementos.Colors;
 import JElementos.PersonalizedButton;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+/**
+ *
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
+ */
 public class ViewHowToPlay extends javax.swing.JFrame {
 
     // Componentes de la interfaz
@@ -37,7 +42,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
     private ImageIcon titleImage;
     private final Color LIGHT_PANEL = Color.WHITE;
     private final Color LIGHT_BG = Colors.BACKGROUND;
-   
+
     public ViewHowToPlay() {
         // Configuración básica de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,7 +121,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
 
         // Crear el JScrollPane que envuelve el JEditorPane
         JScrollPane scrollPane = new JScrollPane(instructions);
-        scrollPane.setPreferredSize(new Dimension(220, 350)); 
+        scrollPane.setPreferredSize(new Dimension(220, 350));
         scrollPane.setBorder(null);
         scrollPane.setBackground(LIGHT_PANEL);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -125,8 +130,8 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         descriptionPanel = new JPanel(new BorderLayout());
         descriptionPanel.setBackground(LIGHT_PANEL);
         descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Colors.GREY, 1),
-            BorderFactory.createEmptyBorder(15, 20, 20, 20)
+                BorderFactory.createLineBorder(Colors.GREY, 1),
+                BorderFactory.createEmptyBorder(15, 20, 20, 20)
         ));
 
         descriptionPanel.add(scrollPane, BorderLayout.CENTER);
@@ -142,7 +147,6 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         backPanel.add(backButton);
         mainContentPanel.add(backPanel);
 
-        
         // Configuración final de la ventana
         setSize(360, 640);
         setMinimumSize(new Dimension(360, 640));
@@ -152,7 +156,10 @@ public class ViewHowToPlay extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerHowToPlay controller) {
-        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
+        }
+        backButton.addActionListener(controller);
     }
 
     /**
@@ -177,37 +184,27 @@ public class ViewHowToPlay extends javax.swing.JFrame {
      * Dimension(100, 50)); buttonPanel.add(darkModeButton, BorderLayout.EAST);
      * * MÉTODOS PARA EL MODO OSCURO private void toggleDarkMode() { darkMode =
      * !darkMode; applyColorScheme(); darkModeButton.setText(darkMode ? "☀
-     * Light" : "☾ Dark");}
-     ** Función para aplicar o Esquema de Colores
-     *  private void applyColorScheme() {
-        // Seleccionar colores según el modo actual
-        Color bgColor = darkMode ? DARK_BG : LIGHT_BG;
-        Color textColor = darkMode ? DARK_TEXT : LIGHT_TEXT;
-        Color panelColor = darkMode ? DARK_PANEL : LIGHT_PANEL;
-        // Aplicar los cambios
-        getContentPane().setBackground(bgColor);
-        titlePanel.setBackground(bgColor);
-        titleLabel.setForeground(darkMode ? DARK_TEXT : TITLE_COLOR);
-        descriptionPanel.setBackground(panelColor);
-        descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(darkMode ? new Color(100, 100, 110) : Colors.GREY, 1),
-                BorderFactory.createEmptyBorder(15, 20, 20, 20)
-        ));
-
-        getContentPane().revalidate();
-        getContentPane().repaint();
-    }
-    ** Aplicar esquema de colores inicial
-    * applyColorScheme();
-    ** Color scheme from Colors class
-    * private final Color LIGHT_TEXT = Colors.TEXT;
-    * private final Color BUTTON_COLOR = Colors.BUTTON;
-    * private final Color TITLE_COLOR = Colors.TITLE;
-    * private final Color DARK_BG = new Color(40, 40, 50);
-    * private final Color DARK_TEXT = new Color(230, 230, 230);
-    * private final Color DARK_PANEL = new Color(60, 60, 70);
-    * private boolean darkMode = false;
-    */
+     * Light" : "☾ Dark");} * Función para aplicar o Esquema de Colores private
+     * void applyColorScheme() { // Seleccionar colores según el modo actual
+     * Color bgColor = darkMode ? DARK_BG : LIGHT_BG; Color textColor = darkMode
+     * ? DARK_TEXT : LIGHT_TEXT; Color panelColor = darkMode ? DARK_PANEL :
+     * LIGHT_PANEL; // Aplicar los cambios
+     * getContentPane().setBackground(bgColor);
+     * titlePanel.setBackground(bgColor); titleLabel.setForeground(darkMode ?
+     * DARK_TEXT : TITLE_COLOR); descriptionPanel.setBackground(panelColor);
+     * descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
+     * BorderFactory.createLineBorder(darkMode ? new Color(100, 100, 110) :
+     * Colors.GREY, 1), BorderFactory.createEmptyBorder(15, 20, 20, 20) ));
+     *
+     * getContentPane().revalidate(); getContentPane().repaint(); } * Aplicar
+     * esquema de colores inicial applyColorScheme(); * Color scheme from Colors
+     * class private final Color LIGHT_TEXT = Colors.TEXT; private final Color
+     * BUTTON_COLOR = Colors.BUTTON; private final Color TITLE_COLOR =
+     * Colors.TITLE; private final Color DARK_BG = new Color(40, 40, 50);
+     * private final Color DARK_TEXT = new Color(230, 230, 230); private final
+     * Color DARK_PANEL = new Color(60, 60, 70); private boolean darkMode =
+     * false;
+     */
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
