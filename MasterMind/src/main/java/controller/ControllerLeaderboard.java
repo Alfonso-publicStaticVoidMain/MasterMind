@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -44,7 +45,9 @@ public class ControllerLeaderboard implements ActionListener {
             } else {
                 playerName = "    " + playerName; 
             }
-
+            
+            // Cambiar la fuente del JLabel que contiene los símbolos
+            this.view.getScoreBoard()[row][0].setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
             this.view.getScoreBoard()[row][0].setText(playerName);
             this.view.getScoreBoard()[row][1].setText(Integer.toString(score));
             row++;
