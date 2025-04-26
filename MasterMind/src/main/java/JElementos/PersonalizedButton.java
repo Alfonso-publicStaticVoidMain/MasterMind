@@ -18,6 +18,9 @@ import java.awt.geom.RoundRectangle2D;
 public class PersonalizedButton extends JButton {
 
     private int borderRadius;
+    
+    public static final PersonalizedButton standardSubmitButton = standardSubmitButton();
+    public static final PersonalizedButton standardBackButton = standardBackButton();
 
     public PersonalizedButton(String text, int radius) {
         super(text);
@@ -26,6 +29,21 @@ public class PersonalizedButton extends JButton {
         setFocusPainted(false);
         setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         setPreferredSize(new Dimension(200, 50));
+    }
+    
+    private static PersonalizedButton standardSubmitButton() {
+        PersonalizedButton submitButton = new PersonalizedButton("Submit", 15);
+        submitButton.setActionCommand("submit");
+        submitButton.setBackground(Colors.BUTTON);
+        submitButton.setForeground(Colors.BACKGROUND);
+        return submitButton;
+    }
+    
+    private static PersonalizedButton standardBackButton() {
+        PersonalizedButton backButton = new PersonalizedButton("← Back", 15);
+        backButton.setActionCommand("back");
+        backButton.setPreferredSize(new Dimension(100, 20));
+        return backButton;
     }
 
     @Override

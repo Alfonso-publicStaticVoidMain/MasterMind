@@ -109,10 +109,8 @@ public class ViewGame extends javax.swing.JFrame {
         //panel score
         triesLeftPanel = new JPanel();
         triesLeftPanel.setBackground(Colors.BACKGROUND);
-        triesLeftPanel.setPreferredSize(new Dimension(360, 5));
-        if (maxTries == 10) {
-            triesLeftPanel.setPreferredSize(new Dimension(360, 17));
-        }
+        if (maxTries == 10) triesLeftPanel.setPreferredSize(new Dimension(360, 17));
+        else triesLeftPanel.setPreferredSize(new Dimension(360, 5));
         triesLeftField = new JTextField("Intentos restantes: " + this.maxTries);
         triesLeftField.setEditable(false);
         triesLeftField.setBackground(Colors.BACKGROUND);
@@ -121,17 +119,13 @@ public class ViewGame extends javax.swing.JFrame {
         userInputs = new RoundedTextField[this.length];
         userInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 20));
         userInputPanel.setBackground(Colors.BACKGROUND);
-        userInputPanel.setPreferredSize(new Dimension(360, 60));
-        if (maxTries > 10) {
-            userInputPanel.setPreferredSize(new Dimension(360, 70));
-        }
+        if (maxTries > 10) userInputPanel.setPreferredSize(new Dimension(360, 70));
+        else userInputPanel.setPreferredSize(new Dimension(360, 60));
         for (int i = 0; i < userInputs.length; i++) {
 
-            if (maxTries == 10) {
-                userInputs[i] = new RoundedTextField(10);
-            } else {
-                userInputs[i] = new RoundedTextField(15);
-            }
+            if (maxTries == 10) userInputs[i] = new RoundedTextField(10);
+            else userInputs[i] = new RoundedTextField(15);
+            
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
             userInputPanel.add(userInputs[i]);//añades al panel
@@ -182,10 +176,7 @@ public class ViewGame extends javax.swing.JFrame {
 
         //panel boton  inferior
         // Submit button & tries left display
-        submitButton = new PersonalizedButton("Submit", 15);
-        submitButton.setActionCommand("submit");
-        submitButton.setBackground(Colors.BUTTON);
-        submitButton.setForeground(Colors.BACKGROUND);
+        submitButton = PersonalizedButton.standardSubmitButton;
         //previousTriesText = new JTextField(" ");//todo meter dentro de un scroll
         //previousTriesText.setEditable(false);//intentos previos
 
@@ -203,17 +194,12 @@ public class ViewGame extends javax.swing.JFrame {
 
         //panel hacia atras
         // banel boton detras
-        backButton = new PersonalizedButton("← Back", 15);
-        backButton.setActionCommand("back");
-        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton = PersonalizedButton.standardBackButton;
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        backPanel.setPreferredSize(new Dimension(360, 40));
-        if (maxTries == 10) {
-            backButton.setPreferredSize(new Dimension(120, 20));
-            backPanel.setPreferredSize(new Dimension(100, 25));
-        }
+        if (maxTries == 10) backPanel.setPreferredSize(new Dimension(100, 25));
+        else backPanel.setPreferredSize(new Dimension(360, 40));
 
         //se añaden los paneles al contenedor   
         add(titlePanel, 0); // Añadir  parte superior
