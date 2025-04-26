@@ -216,7 +216,7 @@ public class ViewGame extends javax.swing.JFrame {
         // pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
+        userInputs[0].requestFocusInWindow();
     }
 
     public void setActionListener(ControllerGame controller) {
