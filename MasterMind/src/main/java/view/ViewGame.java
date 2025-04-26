@@ -28,9 +28,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Silvia García Bouza
- * @author Nuria Calo Mosquera
- * @author Alfonso Gallego Fernández
+ * @author silvia
  */
 public class ViewGame extends javax.swing.JFrame {
 
@@ -235,12 +233,15 @@ public class ViewGame extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerGame controller) {
+        if (submitButton.getActionListeners().length == 0) {
+            submitButton.addActionListener(controller);
+        }
+        this.length = controller.getLength();
+        this.maxTries = controller.getMaxTries();
         for (ActionListener al : backButton.getActionListeners()) {
             backButton.removeActionListener(al);
         }
         backButton.addActionListener(controller);
-        this.length = controller.getLength();
-        this.maxTries = controller.getMaxTries();
     }
 
     // El ControllerGame le dice a la ViewGame qué mostrar y dónde
