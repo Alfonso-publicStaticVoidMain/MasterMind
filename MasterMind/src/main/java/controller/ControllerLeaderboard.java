@@ -1,12 +1,12 @@
 package controller;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.SwingUtilities;
-import model.ModelGame;
 import model.ScoreFileHandler;
 import view.ViewIndex;
 import view.ViewLeaderboard;
@@ -32,9 +32,24 @@ public class ControllerLeaderboard implements ActionListener {
     public void displayScores() {
         List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(this.getScores().entrySet());
         int row = 1;
-        for (Map.Entry entry : scoreList) {
-            this.view.getScoreBoard()[row][0].setText((String) entry.getKey());
-            this.view.getScoreBoard()[row][1].setText(Integer.toString((Integer) entry.getValue()));
+        for (Map.Entry<String, Integer> entry : scoreList) {
+            String playerName = entry.getKey();
+            int score = entry.getValue();
+
+            if (row == 1) {
+                playerName = "🥇 " + playerName;
+            } else if (row == 2) {
+                playerName = "🥈 " + playerName;
+            } else if (row == 3) {
+                playerName = "🥉 " + playerName;
+            } else {
+                playerName = "    " + playerName; 
+            }
+            
+            // Cambiar la fuente del JLabel que contiene los símbolos
+            this.view.getScoreBoard()[row][0].setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+            this.view.getScoreBoard()[row][0].setText(playerName);
+            this.view.getScoreBoard()[row][1].setText(Integer.toString(score));
             row++;
             if (row > 10) {
                 break;
@@ -45,11 +60,11 @@ public class ControllerLeaderboard implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        System.out.println(this.getClass().getSimpleName()+" action received: "+command);
-        
+        System.out.println(this.getClass().getSimpleName() + " action received: " + command);
+
         switch (command) {
             case "back" -> {
-                SwingUtilities.invokeLater( () -> {
+                SwingUtilities.invokeLater(() -> {
                     view.dispose();
                     ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
                 });

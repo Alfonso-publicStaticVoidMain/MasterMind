@@ -29,9 +29,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Silvia García Bouza
- * @author Nuria Calo Mosquera
- * @author Alfonso Gallego Fernández
+ * @author silvia
  */
 public class ViewGame extends javax.swing.JFrame {
 
@@ -83,22 +81,44 @@ public class ViewGame extends javax.swing.JFrame {
         //titulo
         setTitle("Mastermind");
 
-        // Tittle Panel.
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
         titlePanel.setPreferredSize(new Dimension(150, 110));  // Establece un tamaño preferido inicial
+
         if (maxTries == 10) {
             titlePanel.setPreferredSize(new Dimension(120, 65));
         }
+
         titleImage = new ImageIcon(getClass().getResource("/widTitle.png"));
         if (titleImage != null) {
-            // Scales the image to the preferred size of the panel.
+            // Obtiene las dimensiones originales de la imagen
+            int originalWidth = titleImage.getIconWidth();
+            int originalHeight = titleImage.getIconHeight();
+
+            // Obtiene el tamaño del panel
+            int panelWidth = titlePanel.getPreferredSize().width;
+            int panelHeight = titlePanel.getPreferredSize().height;
+
+            // Calcula la relación de aspecto de la imagen
+            float aspectRatio = (float) originalWidth / originalHeight;
+
+            // Ajusta la imagen para que ocupe todo el ancho del panel
+            int newWidth = panelWidth;
+            int newHeight = (int) (panelWidth / aspectRatio);
+
+            if (newHeight < panelHeight) {
+                newHeight = panelHeight;
+                newWidth = (int) (panelHeight * aspectRatio);
+            }
+
+            // Escala la imagen al nuevo tamaño
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
-                    titlePanel.getPreferredSize().width,
-                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    newWidth,
+                    newHeight,
                     Image.SCALE_SMOOTH
             );
+
             ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
             titleLabel = new JLabel(tituloImagenEscalada);
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -250,12 +270,15 @@ public class ViewGame extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerGame controller) {
+        if (submitButton.getActionListeners().length == 0) {
+            submitButton.addActionListener(controller);
+        }
+        this.length = controller.getLength();
+        this.maxTries = controller.getMaxTries();
         for (ActionListener al : backButton.getActionListeners()) {
             backButton.removeActionListener(al);
         }
         backButton.addActionListener(controller);
-        this.length = controller.getLength();
-        this.maxTries = controller.getMaxTries();
     }
 
     // The ControllerGame tells the ViewGame what to display and where to display it.
