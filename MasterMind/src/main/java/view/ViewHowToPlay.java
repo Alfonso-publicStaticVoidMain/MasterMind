@@ -75,7 +75,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         }
         mainContentPanel.add(titlePanel);
 
-        backButton = PersonalizedButton.midButton("← Back", "back");
+        backButton = PersonalizedButton.midBackButton;
 //        backButton.setActionCommand("back");
 //        backButton.setPreferredSize(new Dimension(100, 50));
 
@@ -152,11 +152,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerHowToPlay controller) {
-        backButton.addActionListener(controller);
-    }
-
-    public void setActionListener(ActionListener listener) {
-        backButton.addActionListener(listener);
+        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
     }
 
     /**

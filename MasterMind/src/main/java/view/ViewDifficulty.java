@@ -112,10 +112,11 @@ public class ViewDifficulty extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerDifficulty controller) {
-        easyButton.addActionListener(controller);
-        difficultButton.addActionListener(controller);
-        backButton.addActionListener(controller);
+        if (easyButton.getActionListeners().length == 0) easyButton.addActionListener(controller);
+        if (difficultButton.getActionListeners().length == 0) difficultButton.addActionListener(controller);
+        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
     }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

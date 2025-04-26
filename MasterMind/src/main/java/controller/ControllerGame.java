@@ -32,10 +32,10 @@ public class ControllerGame implements ActionListener {
         System.out.println("Action received: "+command);
         
         if (command.equals("back")) {
-            SwingUtilities.invokeLater( () -> {
-                view.dispose();  
-                ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty());
-            });
+            // TO DO confirmación
+            
+            view.dispose();
+            ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty());
         }
 
         if (!model.isGameFinished() && command.equals("submit")) {

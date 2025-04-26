@@ -124,7 +124,7 @@ public class ViewGame extends javax.swing.JFrame {
         for (int i = 0; i < userInputs.length; i++) {
 
             if (maxTries == 10) userInputs[i] = new RoundedTextField(10);
-            else userInputs[i] = new RoundedTextField(15);
+            else userInputs[i] = new RoundedTextField(2);
             
             userInputs[i].setHorizontalAlignment(JTextField.CENTER);//horiz
             userInputs[i].setFont(new Font("Poppins", Font.PLAIN, 18)); // Fuente Poppins
@@ -147,6 +147,7 @@ public class ViewGame extends javax.swing.JFrame {
                     }
                 }
             });
+            
         }
 
         //Panel para intentos de usuario:
@@ -219,8 +220,8 @@ public class ViewGame extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerGame controller) {
-        submitButton.addActionListener(controller);
-        backButton.addActionListener(controller);
+        if (submitButton.getActionListeners().length == 0) submitButton.addActionListener(controller);
+        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
     }
