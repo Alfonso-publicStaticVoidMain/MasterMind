@@ -3,12 +3,12 @@ package view;
 import JElementos.Colors;
 import JElementos.PersonalizedButton;
 import controller.ControllerLeaderboard;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,7 +22,9 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ViewLeaderboard extends javax.swing.JFrame {
 
@@ -42,7 +44,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
 
     public ViewLeaderboard() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Image customIcon = Toolkit.getDefaultToolkit().getImage("src"+File.separator+"main"+File.separator+"resources"+File.separator+"LogoSinTitulo.png");
+        Image customIcon = Toolkit.getDefaultToolkit().getImage("src" + File.separator + "main" + File.separator + "resources" + File.separator + "LogoSinTitulo.png");
         setIconImage(customIcon);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
@@ -58,9 +60,9 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         if (titleImage != null) {
             // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
-                titlePanel.getPreferredSize().width,
-                titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
-                Image.SCALE_SMOOTH
+                    titlePanel.getPreferredSize().width,
+                    titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
+                    Image.SCALE_SMOOTH
             );
             ImageIcon tituloImagenEscalada = new ImageIcon(imagenEscalada);
             titleLabel = new JLabel(tituloImagenEscalada);
@@ -76,7 +78,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
 
         // panel do título "Scoreboard" e seu label
         midTitlePanel = new JPanel();
-        midTitleLabel = new JLabel("Scoreboard");
+        midTitleLabel = new JLabel("Scoreboard 🏆");
         midTitleLabel.setForeground(Colors.TEXT);
         midTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         midTitlePanel.add(midTitleLabel);
@@ -103,6 +105,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
                 scorePanel.add(scoreBoard[row][col]);
             }
         }
+        
         scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
         add(scorePanel);
 
@@ -110,10 +113,10 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         backButton = PersonalizedButton.midBackButton;
 //        backButton.setActionCommand("back");
 //        backButton.setPreferredSize(new Dimension(100, 50));
-        backPanel= new JPanel();
+        backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        backPanel.setPreferredSize(new Dimension(160,180));
+        backPanel.setPreferredSize(new Dimension(160, 180));
         add(backPanel);
 
         //tamaño adaptado, contenido centrado, visible
@@ -125,7 +128,10 @@ public class ViewLeaderboard extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerLeaderboard controller) {
-        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
+        }
+        backButton.addActionListener(controller);
     }
 
     public JLabel[][] getScoreBoard() {

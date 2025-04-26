@@ -66,8 +66,8 @@ public class ControllerGame implements ActionListener {
     private void finishGame(boolean won) {
         model.finishGame();
         model.updateScore(won);
-        String message = won ? "You guessed correctly!\nYou got a score of "+model.getScore()+"\nPlay again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
-        String title = won ? "Congratulations!" : "Game Over";
+        String message = won ? "You guessed correctly!👏 \nYou got a score of "+model.getScore()+"\nPlay again?" : "You ran out of tries!😢😢 The number was " + model.getNumberToGuess() + ". Play again?";
+        String title = won ? "Congratulations!🎉🎉🎉" : "Game Over";
         boolean continuePlaying = view.playerChoice(title, message);
         if (model.getLength() == 5) {
             String playerName = view.getPlayerName();       
