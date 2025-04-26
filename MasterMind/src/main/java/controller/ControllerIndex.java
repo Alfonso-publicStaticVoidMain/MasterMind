@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -36,13 +32,13 @@ public class ControllerIndex implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        System.out.println("Action received: "+command);
+        System.out.println(this.getClass().getSimpleName()+" action received: "+command);
 
         switch (command) {
             case "game" -> {
                 SwingUtilities.invokeLater( () -> {
                     view.dispose();
-                    ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty()); 
+                    ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty());
                 });
             }
 

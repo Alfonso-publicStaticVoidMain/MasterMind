@@ -10,12 +10,13 @@ import view.ViewIndex;
 
 /**
  *
- * @author silvia
+ * @author Silvia
+ * @author Alfonso
+ * @author Nuria
  */
 public class ControllerDifficulty implements ActionListener {
 
-    private ViewDifficulty view;
-    
+    private ViewDifficulty view;  
 
     public ControllerDifficulty(ViewDifficulty view) {
         this.view = view;
@@ -25,7 +26,7 @@ public class ControllerDifficulty implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        System.out.println("Action received: "+command);
+        System.out.println(this.getClass().getSimpleName()+" action received: "+command);
         
         switch (command) {
             case "practice" -> {

@@ -62,7 +62,7 @@ public class ControllerGame implements ActionListener {
     }
 
     private void finishGame(boolean won) {
-        this.model.finishGame();
+        model.finishGame();
         model.updateScore(won);
         String message = won ? "You guessed correctly!\nYou got a score of "+model.getScore()+"\nPlay again?" : "You ran out of tries! The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!" : "Game Over";
@@ -78,13 +78,6 @@ public class ControllerGame implements ActionListener {
             ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
             });
         }
-        
-//        if (choice == JOptionPane.YES_OPTION) {
-//            resetGame();
-//        } else {
-//            view.disableInputs();
-//            showGoodbyeMessage();
-//        }
     }
     
     

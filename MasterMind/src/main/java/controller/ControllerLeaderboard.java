@@ -45,13 +45,15 @@ public class ControllerLeaderboard implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        System.out.println("Action received: "+command);
+        System.out.println(this.getClass().getSimpleName()+" action received: "+command);
         
-        if (command.equals("back")) {
-            SwingUtilities.invokeLater( () -> {
-                view.dispose();
-                ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
-            });
+        switch (command) {
+            case "back" -> {
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+                });
+            }
         }
     }
 

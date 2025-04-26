@@ -8,7 +8,9 @@ import view.ViewIndex;
 
 /**
  *
- * @author nuriacalo
+ * @author Silvia
+ * @author Alfonso
+ * @author Nuria
  */
 public class ControllerHowToPlay implements ActionListener {
 
@@ -22,13 +24,15 @@ public class ControllerHowToPlay implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        System.out.println("Action received: "+command);
+        System.out.println(this.getClass().getSimpleName()+" action received: "+command);
         
-        if (command.equals("back")) {
-            SwingUtilities.invokeLater( () -> {
-                view.dispose();
-                ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
-            });
+        switch (command) {
+            case "back" -> {
+                SwingUtilities.invokeLater( () -> {
+                    view.dispose();
+                    ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+                });
+            }
         }
     }
 
