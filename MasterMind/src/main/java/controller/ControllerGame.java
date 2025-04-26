@@ -34,6 +34,7 @@ public class ControllerGame implements ActionListener {
         switch (command) {
             case "back" -> {
                 view.dispose();  
+                viewDifficulty= new ViewDifficulty();
                 ControllerDifficulty cg = new ControllerDifficulty(viewDifficulty, model,viewIndex);
 
             }
