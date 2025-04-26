@@ -102,9 +102,9 @@ public class ViewIndex extends javax.swing.JFrame {
     }
     
     public void setActionListener(ControllerIndex controller) {
-        playButton.addActionListener(controller);
-        howToPlayButton.addActionListener(controller);
-        leaderBoardButton.addActionListener(controller);
+        if (playButton.getActionListeners().length == 0) playButton.addActionListener(controller);
+        if (howToPlayButton.getActionListeners().length == 0) howToPlayButton.addActionListener(controller);
+        if (leaderBoardButton.getActionListeners().length == 0) leaderBoardButton.addActionListener(controller);
     }
 
 

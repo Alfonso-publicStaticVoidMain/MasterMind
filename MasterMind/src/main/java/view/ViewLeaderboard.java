@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -40,15 +42,8 @@ public class ViewLeaderboard extends javax.swing.JFrame {
 
     public ViewLeaderboard() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        addWindowListener(new java.awt.event.WindowAdapter() {
-//            @Override
-//            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-//                if (controller != null) {
-//                    controller.onExit();
-//                }
-//                System.exit(0);
-//            }
-//        });
+        Image customIcon = Toolkit.getDefaultToolkit().getImage("src"+File.separator+"main"+File.separator+"resources"+File.separator+"LogoSinTitulo.png");
+        setIconImage(customIcon);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
 
@@ -130,7 +125,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
     }
 
     public void setActionListener(ControllerLeaderboard controller) {
-        backButton.addActionListener(controller);
+        if (backButton.getActionListeners().length == 0) backButton.addActionListener(controller);
     }
 
     public JLabel[][] getScoreBoard() {
