@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -300,10 +302,10 @@ public class ViewGame extends javax.swing.JFrame {
     //Name users.
     public String getPlayerName() {
         String playerName = JOptionPane.showInputDialog(
-                this,
-                "Enter your name for the leaderboard:",
-                "Player Name",
-                JOptionPane.QUESTION_MESSAGE
+            this,
+            "Enter your name for the leaderboard:",
+            "Player Name",
+            JOptionPane.QUESTION_MESSAGE
         );
 
         if (playerName == null || playerName.trim().isEmpty()) {
@@ -311,22 +313,6 @@ public class ViewGame extends javax.swing.JFrame {
         }
 
         return playerName; // Return the entered name
-    }
-
-    //LeaderBoard.
-    public void showLeaderboard(ArrayList<String> names, ArrayList<Integer> scores) {
-        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
-        for (int i = 0; i < names.size(); i++) {
-            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
-                    .append(" - ").append(scores.get(i)).append(" points\n");
-        }
-
-        JOptionPane.showMessageDialog(
-                this,
-                leaderboardText.toString(),
-                "Leaderboard",
-                JOptionPane.INFORMATION_MESSAGE
-        );
     }
 
     public void clearPreviousTries() {
@@ -341,18 +327,18 @@ public class ViewGame extends javax.swing.JFrame {
     //New Game again.
     public void enableInputs() {
         for (JTextField field : userInputs) {
-            field.setText("");  // Clear existing input
-            field.setEnabled(true);  // 🚀 Make sure users can type again
+            field.setText("");
+            field.setEnabled(true); 
         }
         submitButton.setEnabled(true);
     }
 
     public boolean playerChoice(String title, String message) {
         return JOptionPane.showConfirmDialog(
-                this,
-                message,
-                title,
-                JOptionPane.YES_NO_OPTION
+            this,
+            message,
+            title,
+            JOptionPane.YES_NO_OPTION
         ) == JOptionPane.YES_OPTION;
     }
 
