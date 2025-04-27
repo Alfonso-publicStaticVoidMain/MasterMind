@@ -79,6 +79,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center horizontal. Apace Vertica.
         buttonPanel.add(Box.createHorizontalStrut(20)); // Spaces between buttons
         buttonPanel.add(easyButton);
+        buttonPanel.add(Box.createHorizontalStrut(20)); // Spaces between buttons
         buttonPanel.add(difficultButton);
         buttonPanel.setBackground(Colors.BACKGROUND);
         buttonPanel.setPreferredSize(new Dimension(160, 100));

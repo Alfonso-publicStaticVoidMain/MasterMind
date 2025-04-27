@@ -27,12 +27,13 @@ import javax.swing.border.EmptyBorder;
  * @author Alfonso Gallego Fernández
  */
 public class ViewLeaderboard extends javax.swing.JFrame {
-
+    
     //Panels.
     private JPanel titlePanel;
     private JPanel midTitlePanel;
     private JPanel scorePanel;
     private JPanel backPanel;
+    
     //Elements.
     private JLabel titleLabel;
     private JLabel midTitleLabel;
@@ -53,7 +54,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(200, 200)); 
+        titlePanel.setPreferredSize(new Dimension(150, 150)); 
 
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
 
@@ -83,12 +84,14 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         midTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         midTitlePanel.add(midTitleLabel);
         midTitlePanel.setBackground(Colors.BACKGROUND);
+        midTitlePanel.setPreferredSize(new Dimension(360, 50));
         midTitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         add(midTitlePanel);
 
         // Score panel.
         scorePanel = new JPanel(new GridLayout(10, 2));
         scorePanel.setBackground(Colors.BACKGROUND);
+        scorePanel.setPreferredSize(new Dimension(360, 300));
         scoreBoard = new JLabel[10][2];
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 2; col++) {
@@ -114,7 +117,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
-        backPanel.setPreferredSize(new Dimension(160, 180));
+        backPanel.setPreferredSize(new Dimension(160, 150));
         add(backPanel);
 
         setSize(360, 640);
