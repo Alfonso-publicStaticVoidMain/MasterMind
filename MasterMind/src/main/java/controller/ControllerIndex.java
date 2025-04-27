@@ -21,8 +21,6 @@ public class ControllerIndex implements ActionListener {
     public ControllerIndex(ViewIndex view) {
         this.view = view;
         this.view.setActionListener(this);
-
-        // O xogo comeza ca vista
         this.view.setVisible(true);
     }
 

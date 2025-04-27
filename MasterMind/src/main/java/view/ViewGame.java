@@ -34,14 +34,14 @@ import javax.swing.border.EmptyBorder;
  */
 public class ViewGame extends javax.swing.JFrame {
 
-    //Paneles de la vista
+    //View Panels.
     private JPanel titlePanel;
     private JPanel triesLeftPanel;
     private JPanel userInputPanel;
     private JPanel previousTriesPanel;
     private JPanel bottomPanel;
     private JPanel backPanel;
-    //Elementos
+    //Elements.
     private JLabel titleLabel;
     /**
      * Array of 4 textfields for the user to type the 4 digits.
@@ -85,7 +85,7 @@ public class ViewGame extends javax.swing.JFrame {
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(150, 110));  // Establece un tamaño preferido inicial
+        titlePanel.setPreferredSize(new Dimension(150, 110)); 
 
         if (maxTries == 10) {
             titlePanel.setPreferredSize(new Dimension(120, 65));
@@ -93,18 +93,18 @@ public class ViewGame extends javax.swing.JFrame {
 
         titleImage = new ImageIcon(getClass().getResource("/widTitle.png"));
         if (titleImage != null) {
-            // Obtiene las dimensiones originales de la imagen
+            // Obtains the original dimensions of the image
             int originalWidth = titleImage.getIconWidth();
             int originalHeight = titleImage.getIconHeight();
 
-            // Obtiene el tamaño del panel
+            // Gets the size of the panel
             int panelWidth = titlePanel.getPreferredSize().width;
             int panelHeight = titlePanel.getPreferredSize().height;
 
-            // Calcula la relación de aspecto de la imagen
+            // Calculates the aspect ratio of the image
             float aspectRatio = (float) originalWidth / originalHeight;
 
-            // Ajusta la imagen para que ocupe todo el ancho del panel
+            // Adjusts the image to fill the entire width of the panel
             int newWidth = panelWidth;
             int newHeight = (int) (panelWidth / aspectRatio);
 
@@ -113,7 +113,7 @@ public class ViewGame extends javax.swing.JFrame {
                 newWidth = (int) (panelHeight * aspectRatio);
             }
 
-            // Escala la imagen al nuevo tamaño
+            // Scales the image to the new size.
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
                     newWidth,
                     newHeight,

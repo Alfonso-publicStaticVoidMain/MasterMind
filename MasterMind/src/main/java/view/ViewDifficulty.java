@@ -27,14 +27,14 @@ import javax.swing.border.EmptyBorder;
 public class ViewDifficulty extends javax.swing.JFrame {
 
     /**
-     * Paneles
+     * Panels
      */
     private JPanel titlePanel;
     private JPanel buttonPanel;
     private JPanel backPanel;
 
     /**
-     * Elementos
+     * Elements
      */
     private JLabel titleLabel;
     private JButton easyButton;
@@ -50,10 +50,9 @@ public class ViewDifficulty extends javax.swing.JFrame {
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(200, 230)); // Establece un tamaño preferido inicial
+        titlePanel.setPreferredSize(new Dimension(200, 230)); 
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
         if (titleImage != null) {
-            // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
                     titlePanel.getPreferredSize().width,
                     titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
@@ -71,37 +70,29 @@ public class ViewDifficulty extends javax.swing.JFrame {
 
         add(titlePanel);
 
-        //panel elementos
+        //Button panel.
         easyButton = PersonalizedButton.bigButton("Practice", "practice");
-//        easyButton.setActionCommand("practice");
         difficultButton = PersonalizedButton.bigButton("Play", "play");
-//        difficultButton.setActionCommand("play");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colors.BACKGROUND);
         add(buttonPanel, BorderLayout.CENTER);
-        // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Centrar horizontalmente, espacio vertical
-        buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center horizontal. Apace Vertica.
+        buttonPanel.add(Box.createHorizontalStrut(20)); // Spaces between buttons
         buttonPanel.add(easyButton);
-        buttonPanel.add(Box.createHorizontalStrut(20)); // Espacio entre botones
         buttonPanel.add(difficultButton);
         buttonPanel.setBackground(Colors.BACKGROUND);
         buttonPanel.setPreferredSize(new Dimension(160, 100));
 
-        // banel boton detras
+        // Back button panel.
         backButton = PersonalizedButton.bigBackButton;
-//        backButton.setActionCommand("back");
-//        backButton.setPreferredSize(new Dimension(100, 50));
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
         backPanel.setPreferredSize(new Dimension(160, 100));
         add(backPanel);
 
-        //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
-        setResizable(false);//q no ca,bie el tamaño eluser
-        // pack();
+        setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
     }

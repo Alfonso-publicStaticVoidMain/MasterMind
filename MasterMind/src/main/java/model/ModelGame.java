@@ -16,21 +16,21 @@ public class ModelGame {
     // Variables
 
     /**
-     * Número aleatorio que el usuario tiene que adivinar. Se almacena en una
-     * String para mayor comodidad de uso. Tiene por defecto 4 cifras sin
-     * repeticiones.
+     * Random number that the user has to guess. It is stored in a
+    * String for convenience of use. It defaults to 4 digits without
+    * repetitions..
      */
     private String numberToGuess;
     /**
-     * Longitud del número aleatorio a generar.
+     * Length of the random number to be generated.
      */
     private int length;
     /**
-     * Número máximo de intentos.
+     * Maximum number of attempts.
      */
     private int maxTries;
     /**
-     * Número de intentos restantes.
+     * Number of remaining attempts.
      */
     private int triesLeft;
     private boolean gameFinished = false;
@@ -39,19 +39,18 @@ public class ModelGame {
 
     private Map<String, Integer> scoreHistory;
 
-    // Constructor
     public ModelGame() {
         this.length = 4;
         this.maxTries = 10;
-        this.scoreHistory = ScoreFileHandler.loadScores(); //Guardar puntuaciones
-        resetGame(); // Inicializar el juego al crear el ModelGame
+        this.scoreHistory = ScoreFileHandler.loadScores(); //Save scores
+        resetGame(); // Initializing the game when creating the ModelGame
     }
     
     public ModelGame(int length, int maxTries) {
         this.length = length;
         this.maxTries = maxTries;
-        this.scoreHistory = ScoreFileHandler.loadScores(); //Guardar puntuaciones
-        resetGame(); // Inicializar el juego al crear el ModelGame
+        this.scoreHistory = ScoreFileHandler.loadScores();
+        resetGame(); 
     }
 
     // Resetear o xogo

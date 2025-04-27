@@ -18,7 +18,6 @@ import view.ViewIndex;
  * @author Alfonso Gallego Fernández
  */
 public class ControllerGame implements ActionListener, KeyListener {
-    //view y model
     ViewGame view;
     ModelGame model;
 
@@ -80,9 +79,9 @@ public class ControllerGame implements ActionListener, KeyListener {
             view.displayFeedback(model.getMaxTries() - model.getTriesLeft() - 1, guess, feedbackInfo); 
 
             if (model.hitsSamePlace(guess) == model.getLength()) {
-                this.finishGame(true); // El jugador ganó
+                this.finishGame(true); // the user win
             } else if (model.getTriesLeft() == 0) {
-                this.finishGame(false); // El jugador perdió
+                this.finishGame(false); // the user lost
             }
         } else {
             view.clearInputFields();
@@ -113,15 +112,13 @@ public class ControllerGame implements ActionListener, KeyListener {
             });
         }
     }
-    
-    
+        
     private void showGoodbyeMessage() {
         JOptionPane.showMessageDialog(view, "Thank you for playing Mastermind! See you soon. 👋", "Goodbye!", JOptionPane.INFORMATION_MESSAGE);
-       // javax.swing.SwingUtilities.invokeLater(System::exit);
     }
     
     public void resetGame() {
-        model.resetGame(); // Usar el método resetGame del ModelGame -> genera un nuevo número, triesLeft = maxTries, gameFinished = false, attemptHistoy.clear()
+        model.resetGame(); // Use  resetGame of ModelGame -> generate new number, triesLeft = maxTries, gameFinished = false, attemptHistoy.clear()
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
         view.enableInputs();
