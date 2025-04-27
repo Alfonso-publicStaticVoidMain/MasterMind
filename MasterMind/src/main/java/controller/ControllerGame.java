@@ -11,10 +11,11 @@ import view.ViewDifficulty;
 import view.ViewGame;
 import view.ViewIndex;
 
-
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ControllerGame implements ActionListener, KeyListener {
     //view y model

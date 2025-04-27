@@ -13,7 +13,9 @@ import view.ViewLeaderboard;
 
 /**
  *
- * @author agall
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ControllerLeaderboard implements ActionListener {
 
@@ -36,15 +38,12 @@ public class ControllerLeaderboard implements ActionListener {
             String playerName = entry.getKey();
             int score = entry.getValue();
 
-            if (row == 1) {
-                playerName = "🥇 " + playerName;
-            } else if (row == 2) {
-                playerName = "🥈 " + playerName;
-            } else if (row == 3) {
-                playerName = "🥉 " + playerName;
-            } else {
-                playerName = "    " + playerName; 
-            }
+            playerName = switch (row) {
+                case 1 -> "🥇 " + playerName;
+                case 2 -> "🥈 " + playerName;
+                case 3 -> "🥉 " + playerName;
+                default -> "    " + playerName;
+            };
             
             // Cambiar la fuente del JLabel que contiene los símbolos
             this.view.getScoreBoard()[row][0].setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
@@ -71,9 +70,5 @@ public class ControllerLeaderboard implements ActionListener {
             }
         }
     }
-
-    // Add this method to be called when exiting the application
-//    public void onExit() {
-//        model.saveScoresOnExit();
-//    }
+    
 }

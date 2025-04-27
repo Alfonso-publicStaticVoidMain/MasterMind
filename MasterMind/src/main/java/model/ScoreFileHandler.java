@@ -5,9 +5,10 @@ import java.util.*;
 
 /**
  *
- * @author nuria.calomosquera
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
-
 public class ScoreFileHandler {
 
     private static final String SCORES_FILE = "scores.dat";

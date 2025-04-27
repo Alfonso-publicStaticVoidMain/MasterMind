@@ -10,9 +10,9 @@ import view.ViewIndex;
 
 /**
  *
- * @author Silvia
- * @author Alfonso
- * @author Nuria
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ControllerDifficulty implements ActionListener {
 
