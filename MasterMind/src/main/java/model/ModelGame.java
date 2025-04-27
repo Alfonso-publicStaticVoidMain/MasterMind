@@ -30,9 +30,8 @@ public class ModelGame {
     private int triesLeft;
     // Guardar el historial de intentos:
     private boolean gameFinished = false;
+    private boolean gameStarted = false;
     private int score = 0;
-
-    boolean[] secretUse;
 
     private Map<String, Integer> scoreHistory;
 
@@ -78,23 +77,18 @@ public class ModelGame {
     }
 
     // Recibe numero de intentos restantes y los va modificando
-    public void setTriesLeft(int triesLeft) {
-        this.triesLeft = triesLeft;
-    }
+    public void setTriesLeft(int triesLeft) {this.triesLeft = triesLeft;}
 
     // Disminuye los intentos restantes
-    public void consumeTry() {
-        triesLeft--;
-    }
+    public void consumeTry() {triesLeft--;}
 
-    // Termina el juego
-    public boolean isGameFinished() {
-        return gameFinished;
-    }
+    public boolean isGameStarted() {return gameStarted;}
+    
+    public void startGame() {gameStarted = true;}
 
-    public void finishGame() {
-        gameFinished = true;
-    }
+    public boolean isGameFinished() {return gameFinished;}
+
+    public void finishGame() {gameFinished = true;}
 
     public Map<String, Integer> getScoreHistory() {
         return scoreHistory;
@@ -166,7 +160,7 @@ public class ModelGame {
     public int hitsAnyWhere(String guess) {
         int cont = 0;
         String secret = this.numberToGuess;
-        secretUse = new boolean[secret.length()]; // dig igual o no
+        boolean[] secretUse = new boolean[secret.length()]; // dig igual o no
 
         for (int i = 0; i < guess.length(); i++) {
             char digitIntroduced = guess.charAt(i);

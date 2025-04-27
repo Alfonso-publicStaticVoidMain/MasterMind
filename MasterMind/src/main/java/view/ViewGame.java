@@ -45,7 +45,7 @@ public class ViewGame extends javax.swing.JFrame {
     /**
      * Array of 4 textfields for the user to type the 4 digits.
      */
-    private RoundedTextField[] userInputs;
+    private JTextField[] userInputs;
 
     /**
      * Array of 4 JTextArea where the previous attempts are displayed
@@ -268,16 +268,36 @@ public class ViewGame extends javax.swing.JFrame {
         userInputs[0].requestFocusInWindow();
     }
 
-    public void setActionListener(ControllerGame controller) {
-        if (submitButton.getActionListeners().length == 0) {
-            submitButton.addActionListener(controller);
-        }
+    public void setController(ControllerGame controller) {
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
+        
+        for (ActionListener al : submitButton.getActionListeners()) {
+            submitButton.removeActionListener(al);
+        }
+        submitButton.addActionListener(controller);
+        
         for (ActionListener al : backButton.getActionListeners()) {
             backButton.removeActionListener(al);
         }
         backButton.addActionListener(controller);
+        
+        // Add the key listener the controller implements to each JTextField
+        for (JTextField userInput : userInputs) {
+            userInput.addKeyListener(controller);
+        }
+    }
+    
+    public void deleteOneUserInput() {
+        for (int i = 0; i < length; i++) {
+            if (userInputs[i].isFocusOwner()) {
+                if (!userInputs[i].getText().isEmpty()) userInputs[i].setText("");
+                else if (i != 0) {
+                    userInputs[i-1].setText("");
+                    userInputs[i-1].requestFocusInWindow();
+                }
+            }
+        }
     }
 
     // The ControllerGame tells the ViewGame what to display and where to display it.

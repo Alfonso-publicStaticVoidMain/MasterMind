@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.ModelGame;
@@ -14,7 +16,7 @@ import view.ViewIndex;
  *
  * @author silvia
  */
-public class ControllerGame implements ActionListener {
+public class ControllerGame implements ActionListener, KeyListener {
     //view y model
     ViewGame view;
     ModelGame model;
@@ -23,8 +25,24 @@ public class ControllerGame implements ActionListener {
         this.view = view;
         this.model = model;
         this.view.createView(model.getLength(), model.getMaxTries());
-        this.view.setActionListener(this);
+        this.view.setController(this);
     }
+    
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && !model.isGameFinished()) {
+            handleSubmitLogic();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            view.deleteOneUserInput();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -32,7 +50,7 @@ public class ControllerGame implements ActionListener {
         System.out.println("Action received: "+command);
         
         if (command.equals("back")) {
-            if (view.playerChoice("Confirmation", "Are you sure you want to go back?")) {
+            if (!model.isGameStarted() || view.playerChoice("Confirmation", "Are you sure you want to go back?")) {
                 SwingUtilities.invokeLater( () -> {
                     view.dispose();
                     ControllerDifficulty controllerDifficulty = new ControllerDifficulty(new ViewDifficulty());
@@ -41,25 +59,35 @@ public class ControllerGame implements ActionListener {
         }
 
         if (!model.isGameFinished() && command.equals("submit")) {
-            String guess = view.getUserDigits();
+            handleSubmitLogic();
+        }
+    }
+    
+    private void handleSubmitLogic() {
+        String guess = view.getUserDigits();
 
-            if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
-                model.consumeTry();
-                view.setTriesLeftText(model.getTriesLeft()); 
-                view.clearInputFields();
+        if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
+            if (!model.isGameStarted()) model.startGame();
+            model.consumeTry();
+            view.setTriesLeftText(model.getTriesLeft()); 
+            view.clearInputFields();
 
-                String[] feedbackInfo = model.feedbackInfo(guess);
-                view.displayFeedback(this.getMaxTries() - this.getTriesLeft() - 1, guess, feedbackInfo); 
+            String[] feedbackInfo = model.feedbackInfo(guess);
+            view.displayFeedback(model.getMaxTries() - model.getTriesLeft() - 1, guess, feedbackInfo); 
 
-                if (model.hitsSamePlace(guess) == model.getLength()) {
-                    this.finishGame(true); // El jugador ganó
-                } else if (this.model.getTriesLeft() == 0) {
-                    this.finishGame(false); // El jugador perdió
-                }
-            } else {
-                view.clearInputFields();
-                JOptionPane.showMessageDialog(view, "Please enter " + model.getLength() + " digits.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            if (model.hitsSamePlace(guess) == model.getLength()) {
+                this.finishGame(true); // El jugador ganó
+            } else if (model.getTriesLeft() == 0) {
+                this.finishGame(false); // El jugador perdió
             }
+        } else {
+            view.clearInputFields();
+            JOptionPane.showMessageDialog(
+                view,
+                "Please enter " + model.getLength() + " digits.",
+                "Invalid Input",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
