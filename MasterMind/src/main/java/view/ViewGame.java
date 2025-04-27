@@ -141,9 +141,8 @@ public class ViewGame extends javax.swing.JFrame {
             triesLeftPanel.setPreferredSize(new Dimension(360, 17));
         }
         triesLeftField = new JTextField("Remaining attempts: " + this.maxTries);
-        Font boldLargeFont = new Font("Poppins", Font.BOLD, 16);
         triesLeftField.setForeground(Colors.TITLE);
-        triesLeftField.setFont(boldLargeFont);
+        triesLeftField.setFont(new Font("Poppins", Font.BOLD, 16));
         triesLeftField.setBorder(null);
         triesLeftField.setEditable(false);
         triesLeftField.setBackground(Colors.BACKGROUND);
