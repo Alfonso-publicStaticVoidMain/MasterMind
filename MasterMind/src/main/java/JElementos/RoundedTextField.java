@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package JElementos;
 
 import java.awt.Component;
@@ -10,14 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class RoundedTextField extends JTextField {
 

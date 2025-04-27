@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -29,7 +28,9 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ViewGame extends javax.swing.JFrame {
 
@@ -45,7 +46,7 @@ public class ViewGame extends javax.swing.JFrame {
     /**
      * Array of 4 textfields for the user to type the 4 digits.
      */
-    private RoundedTextField[] userInputs;
+    private JTextField[] userInputs;
 
     /**
      * Array of 4 JTextArea where the previous attempts are displayed
@@ -140,9 +141,8 @@ public class ViewGame extends javax.swing.JFrame {
             triesLeftPanel.setPreferredSize(new Dimension(360, 17));
         }
         triesLeftField = new JTextField("Remaining attempts: " + this.maxTries);
-        Font boldLargeFont = new Font("Poppins", Font.BOLD, 16);
         triesLeftField.setForeground(Colors.TITLE);
-        triesLeftField.setFont(boldLargeFont);
+        triesLeftField.setFont(new Font("Poppins", Font.BOLD, 16));
         triesLeftField.setBorder(null);
         triesLeftField.setEditable(false);
         triesLeftField.setBackground(Colors.BACKGROUND);
@@ -175,34 +175,6 @@ public class ViewGame extends javax.swing.JFrame {
         userInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 20, 20));
         if (maxTries == 10) {
             userInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        }
-        for (int i = 0; i < userInputs.length; i++) {
-            final int currentIndex = i;
-            userInputs[i].addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent evt) {
-                    if (Character.isDigit(evt.getKeyChar())) {
-                        userInputs[currentIndex].setText(String.valueOf(evt.getKeyChar())); // Set input
-
-                        if (currentIndex < userInputs.length - 1) {
-                            userInputs[currentIndex + 1].requestFocusInWindow(); // Move to next field
-                        }
-                        evt.consume(); // Prevent extra characters
-                    }
-                }
-
-                @Override
-                public void keyPressed(KeyEvent evt) {
-                    if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                        if (userInputs[currentIndex].getText().isEmpty() && currentIndex > 0) {
-                            userInputs[currentIndex - 1].requestFocusInWindow(); // Move focus to previous field
-                        } else if (userInputs[currentIndex].getText().length() == 1) {
-                            userInputs[currentIndex].setText(""); // Clear the current field
-                        }
-                    }
-                }
-            });
-
         }
 
         //Previous tries Panel.
@@ -269,16 +241,45 @@ public class ViewGame extends javax.swing.JFrame {
         userInputs[0].requestFocusInWindow();
     }
 
-    public void setActionListener(ControllerGame controller) {
-        if (submitButton.getActionListeners().length == 0) {
-            submitButton.addActionListener(controller);
-        }
+    public void setController(ControllerGame controller) {
         this.length = controller.getLength();
         this.maxTries = controller.getMaxTries();
+        
+        for (ActionListener al : submitButton.getActionListeners()) {
+            submitButton.removeActionListener(al);
+        }
+        submitButton.addActionListener(controller);
+        
         for (ActionListener al : backButton.getActionListeners()) {
             backButton.removeActionListener(al);
         }
         backButton.addActionListener(controller);
+        
+        // Add the key listener the controller implements to each JTextField
+        for (JTextField userInput : userInputs) {
+            userInput.addKeyListener(controller);
+        }
+    }
+    
+    public void deleteOneUserInput() {
+        for (int i = 0; i < length; i++) {
+            if (userInputs[i].isFocusOwner()) {
+                if (!userInputs[i].getText().isEmpty()) userInputs[i].setText("");
+                else if (i != 0) {
+                    userInputs[i-1].setText("");
+                    userInputs[i-1].requestFocusInWindow();
+                }
+            }
+        }
+    }
+    
+    public void updateValue(char value) {
+        for (int i = 0; i < length; i++) {
+            if (userInputs[i].isFocusOwner() && Character.isDigit(value)) {
+                userInputs[i].setText(String.valueOf(value)); // Set input
+                if (i < length - 1) userInputs[i + 1].requestFocusInWindow(); // Move to next field
+            }
+        }
     }
 
     // The ControllerGame tells the ViewGame what to display and where to display it.
@@ -330,10 +331,10 @@ public class ViewGame extends javax.swing.JFrame {
     //Name users.
     public String getPlayerName() {
         String playerName = JOptionPane.showInputDialog(
-                this,
-                "Enter your name for the leaderboard:",
-                "Player Name",
-                JOptionPane.QUESTION_MESSAGE
+            this,
+            "Enter your name for the leaderboard:",
+            "Player Name",
+            JOptionPane.QUESTION_MESSAGE
         );
 
         if (playerName == null || playerName.trim().isEmpty()) {
@@ -341,22 +342,6 @@ public class ViewGame extends javax.swing.JFrame {
         }
 
         return playerName; // Return the entered name
-    }
-
-    //LeaderBoard.
-    public void showLeaderboard(ArrayList<String> names, ArrayList<Integer> scores) {
-        StringBuilder leaderboardText = new StringBuilder("🏆 High Scores 🏆\n");
-        for (int i = 0; i < names.size(); i++) {
-            leaderboardText.append((i + 1)).append(". ").append(names.get(i))
-                    .append(" - ").append(scores.get(i)).append(" points\n");
-        }
-
-        JOptionPane.showMessageDialog(
-                this,
-                leaderboardText.toString(),
-                "Leaderboard",
-                JOptionPane.INFORMATION_MESSAGE
-        );
     }
 
     public void clearPreviousTries() {
@@ -371,18 +356,18 @@ public class ViewGame extends javax.swing.JFrame {
     //New Game again.
     public void enableInputs() {
         for (JTextField field : userInputs) {
-            field.setText("");  // Clear existing input
-            field.setEnabled(true);  // 🚀 Make sure users can type again
+            field.setText("");
+            field.setEnabled(true); 
         }
         submitButton.setEnabled(true);
     }
 
     public boolean playerChoice(String title, String message) {
         return JOptionPane.showConfirmDialog(
-                this,
-                message,
-                title,
-                JOptionPane.YES_NO_OPTION
+            this,
+            message,
+            title,
+            JOptionPane.YES_NO_OPTION
         ) == JOptionPane.YES_OPTION;
     }
 

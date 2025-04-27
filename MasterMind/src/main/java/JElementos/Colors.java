@@ -4,7 +4,9 @@ import java.awt.Color;
 
 /**
  *
- * @author agall
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class Colors {
     /**

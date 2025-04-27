@@ -3,10 +3,15 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ *
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
+ */
 public class ModelGame {
     // Variables
 
@@ -28,11 +33,9 @@ public class ModelGame {
      * Número de intentos restantes.
      */
     private int triesLeft;
-    // Guardar el historial de intentos:
     private boolean gameFinished = false;
+    private boolean gameStarted = false;
     private int score = 0;
-
-    boolean[] secretUse;
 
     private Map<String, Integer> scoreHistory;
 
@@ -68,7 +71,6 @@ public class ModelGame {
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
-        System.out.println("[DEBUG] setLength: " + numberToGuess);
     }
 
     // Recibe numero de filas
@@ -78,23 +80,18 @@ public class ModelGame {
     }
 
     // Recibe numero de intentos restantes y los va modificando
-    public void setTriesLeft(int triesLeft) {
-        this.triesLeft = triesLeft;
-    }
+    public void setTriesLeft(int triesLeft) {this.triesLeft = triesLeft;}
 
     // Disminuye los intentos restantes
-    public void consumeTry() {
-        triesLeft--;
-    }
+    public void consumeTry() {triesLeft--;}
 
-    // Termina el juego
-    public boolean isGameFinished() {
-        return gameFinished;
-    }
+    public boolean isGameStarted() {return gameStarted;}
+    
+    public void startGame() {gameStarted = true;}
 
-    public void finishGame() {
-        gameFinished = true;
-    }
+    public boolean isGameFinished() {return gameFinished;}
+
+    public void finishGame() {gameFinished = true;}
 
     public Map<String, Integer> getScoreHistory() {
         return scoreHistory;
@@ -105,7 +102,7 @@ public class ModelGame {
     }
 
     public String generateRandomNumber() {
-        StringBuilder str = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         StringBuilder availableDigits = new StringBuilder("123456789");
         Random random = new Random();
         for (int i = 0; i < this.length; i++) {
@@ -113,11 +110,11 @@ public class ModelGame {
                 break;
             }
             int numero = random.nextInt(availableDigits.length());
-            str.append(availableDigits.charAt(numero));
+            result.append(availableDigits.charAt(numero));
             availableDigits.deleteCharAt(numero);
         }
-        System.out.println("[DEBUG] generateRandomNumber: " + str.toString());
-        return str.toString();
+        System.out.println("[DEBUG] generateRandomNumber: " + result.toString());
+        return result.toString();
     }
 
     /**
@@ -166,7 +163,7 @@ public class ModelGame {
     public int hitsAnyWhere(String guess) {
         int cont = 0;
         String secret = this.numberToGuess;
-        secretUse = new boolean[secret.length()]; // dig igual o no
+        boolean[] secretUse = new boolean[secret.length()]; // dig igual o no
 
         for (int i = 0; i < guess.length(); i++) {
             char digitIntroduced = guess.charAt(i);

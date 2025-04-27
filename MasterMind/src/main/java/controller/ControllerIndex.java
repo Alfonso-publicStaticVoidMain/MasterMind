@@ -3,19 +3,16 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
-import model.ModelGame;
-import model.ModelGameDifficult;
 import view.ViewDifficulty;
-import view.ViewGame;
 import view.ViewHowToPlay;
 import view.ViewIndex;
 import view.ViewLeaderboard;
 
 /**
  *
- * @author Silvia
- * @author Alfonso
- * @author Nuria
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ControllerIndex implements ActionListener {
 
