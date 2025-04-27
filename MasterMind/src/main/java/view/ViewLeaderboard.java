@@ -79,6 +79,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         // panel do título "Scoreboard" e seu label
         midTitlePanel = new JPanel();
         midTitleLabel = new JLabel("Scoreboard 🏆");
+        midTitleLabel.setFont(new Font("Segoe UI Emoji", Font.BOLD, 22));
         midTitleLabel.setForeground(Colors.TEXT);
         midTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         midTitlePanel.add(midTitleLabel);
