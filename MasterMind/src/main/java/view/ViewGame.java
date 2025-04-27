@@ -177,33 +177,6 @@ public class ViewGame extends javax.swing.JFrame {
         if (maxTries == 10) {
             userInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         }
-        for (int i = 0; i < userInputs.length; i++) {
-            final int currentIndex = i;
-            userInputs[i].addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent evt) {
-                    if (Character.isDigit(evt.getKeyChar())) {
-                        userInputs[currentIndex].setText(String.valueOf(evt.getKeyChar())); // Set input
-
-                        if (currentIndex < userInputs.length - 1) {
-                            userInputs[currentIndex + 1].requestFocusInWindow(); // Move to next field
-                        }
-                        evt.consume(); // Prevent extra characters
-                    }
-                }
-
-                @Override
-                public void keyPressed(KeyEvent evt) {
-                    if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                        if (userInputs[currentIndex].getText().isEmpty() && currentIndex > 0) {
-                            userInputs[currentIndex - 1].requestFocusInWindow(); // Move focus to previous field
-                        } else if (userInputs[currentIndex].getText().length() == 1) {
-                            userInputs[currentIndex].setText(""); // Clear the current field
-                        }
-                    }
-                }
-            });
-        }
 
         //Previous tries Panel.
         previousTries = new JTextArea[this.maxTries][this.length];
@@ -297,6 +270,15 @@ public class ViewGame extends javax.swing.JFrame {
                     userInputs[i-1].setText("");
                     userInputs[i-1].requestFocusInWindow();
                 }
+            }
+        }
+    }
+    
+    public void updateValue(char value) {
+        for (int i = 0; i < length; i++) {
+            if (userInputs[i].isFocusOwner() && Character.isDigit(value)) {
+                userInputs[i].setText(String.valueOf(value)); // Set input
+                if (i < length - 1) userInputs[i + 1].requestFocusInWindow(); // Move to next field
             }
         }
     }

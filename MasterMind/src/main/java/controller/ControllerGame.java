@@ -30,7 +30,10 @@ public class ControllerGame implements ActionListener, KeyListener {
     }
     
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+        view.updateValue(e.getKeyChar());
+        e.consume();
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -94,8 +97,8 @@ public class ControllerGame implements ActionListener, KeyListener {
 
     private void finishGame(boolean won) {
         model.finishGame();
-        model.updateScore(won);
-        String message = won ? "You guessed correctly!👏 \nYou got a score of "+model.getScore()+"\nPlay again?" : "You ran out of tries!😢😢 The number was " + model.getNumberToGuess() + ". Play again?";
+        if (model.getLength() == 5) model.updateScore(won);
+        String message = won ? "You guessed correctly!👏 \n"+(model.getLength() == 5 ? "You got a score of "+model.getScore()+"\n" : "")+"Play again?" : "You ran out of tries!😢😢 The number was " + model.getNumberToGuess() + ". Play again?";
         String title = won ? "Congratulations!🎉🎉🎉" : "Game Over";
         boolean continuePlaying = view.playerChoice(title, message);
         if (model.getLength() == 5) {
