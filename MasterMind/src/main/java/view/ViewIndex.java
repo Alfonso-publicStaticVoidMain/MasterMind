@@ -28,12 +28,12 @@ import javax.swing.border.EmptyBorder;
 public class ViewIndex extends javax.swing.JFrame {
     
     /**
-     * Paneles
+     * Panels
      */
     private JPanel titlePanel;
     private JPanel buttonPanel;
     /**
-     * Elementos
+     * Elements
      */
     private JLabel titleLabel;
     private JButton playButton;
@@ -48,16 +48,13 @@ public class ViewIndex extends javax.swing.JFrame {
         Image customIcon = Toolkit.getDefaultToolkit().getImage("src"+File.separator+"main"+File.separator+"resources"+File.separator+"LogoSinTitulo.png");
         setIconImage(customIcon);
 
-        // panel titulo
+        // Title panel.
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(200, 200)); // Establece un tamaño preferido inicial
-
+        titlePanel.setPreferredSize(new Dimension(200, 200));
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
-
         if (titleImage != null) {
-            // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
                     titlePanel.getPreferredSize().width,
                     titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
@@ -72,18 +69,12 @@ public class ViewIndex extends javax.swing.JFrame {
             titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
             titlePanel.add(titleLabel);
         }
-
         add(titlePanel);
-     
-       
 
-        //panel elementos
+        //Button panel.
         playButton = PersonalizedButton.bigButton("Game", "game");
-//        playButton.setActionCommand("game");
         howToPlayButton = PersonalizedButton.bigButton("How to play", "howToPlay");
-//        howToPlayButton.setActionCommand("howToPlay");
         leaderBoardButton = PersonalizedButton.bigButton("Leader Board", "leaderBoard");
-//        leaderBoardButton.setActionCommand("leaderBoard");
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colors.BACKGROUND);
         buttonPanel.setPreferredSize(new Dimension(160,440));
@@ -92,10 +83,9 @@ public class ViewIndex extends javax.swing.JFrame {
         buttonPanel.add(playButton);
         buttonPanel.add(howToPlayButton);
         buttonPanel.add(leaderBoardButton);        
-        //tamaño adaptado, contenido centrado, visible
+
         setSize(360, 640);
-        setResizable(false);//q no ca,bie el tamaño eluser
-        // pack();
+        setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -106,8 +96,6 @@ public class ViewIndex extends javax.swing.JFrame {
         if (howToPlayButton.getActionListeners().length == 0) howToPlayButton.addActionListener(controller);
         if (leaderBoardButton.getActionListeners().length == 0) leaderBoardButton.addActionListener(controller);
     }
-
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -126,7 +114,6 @@ public class ViewIndex extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

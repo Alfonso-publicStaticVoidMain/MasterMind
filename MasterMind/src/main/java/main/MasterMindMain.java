@@ -14,7 +14,6 @@ import view.ViewIndex;
 public class MasterMindMain {
 
     public static void main(String[] args) {
-        // Configuración inicial de la interfaz gráfica
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {

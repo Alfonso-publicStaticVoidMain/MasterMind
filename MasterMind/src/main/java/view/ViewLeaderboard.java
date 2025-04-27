@@ -28,12 +28,12 @@ import javax.swing.border.EmptyBorder;
  */
 public class ViewLeaderboard extends javax.swing.JFrame {
 
-    //Paneles de la vista
+    //Panels.
     private JPanel titlePanel;
     private JPanel midTitlePanel;
     private JPanel scorePanel;
     private JPanel backPanel;
-    //Elementos
+    //Elements.
     private JLabel titleLabel;
     private JLabel midTitleLabel;
     private JLabel[][] scoreBoard;
@@ -49,16 +49,15 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
 
-        // panel do título "Mastermind" e seu label
+        // Title panel.
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(200, 200)); // Establece un tamaño preferido inicial
+        titlePanel.setPreferredSize(new Dimension(200, 200)); 
 
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
 
         if (titleImage != null) {
-            // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
                     titlePanel.getPreferredSize().width,
                     titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
@@ -76,7 +75,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
 
         add(titlePanel);
 
-        // panel do título "Scoreboard" e seu label
+        // mid text panel.
         midTitlePanel = new JPanel();
         midTitleLabel = new JLabel("Scoreboard 🏆");
         midTitleLabel.setFont(new Font("Segoe UI Emoji", Font.BOLD, 22));
@@ -87,7 +86,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         midTitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         add(midTitlePanel);
 
-        // panel que contén as scores
+        // Score panel.
         scorePanel = new JPanel(new GridLayout(10, 2));
         scorePanel.setBackground(Colors.BACKGROUND);
         scoreBoard = new JLabel[10][2];
@@ -110,20 +109,16 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
         add(scorePanel);
 
-        // panel boton detras
+        // Back button panel.
         backButton = PersonalizedButton.midBackButton;
-//        backButton.setActionCommand("back");
-//        backButton.setPreferredSize(new Dimension(100, 50));
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
         backPanel.setPreferredSize(new Dimension(160, 180));
         add(backPanel);
 
-        //tamaño adaptado, contenido centrado, visible
         setSize(360, 640);
-        setResizable(false);//q no ca,bie el tamaño eluser
-        // pack();
+        setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
     }

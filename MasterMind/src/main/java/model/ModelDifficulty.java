@@ -6,8 +6,9 @@ package model;
 
 /**
  *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
-public class ModelDifficulty {
-    
+public class ModelDifficulty {    
 }

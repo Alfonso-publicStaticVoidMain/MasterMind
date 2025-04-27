@@ -30,12 +30,12 @@ import javax.swing.border.EmptyBorder;
  */
 public class ViewHowToPlay extends javax.swing.JFrame {
 
-    // Componentes de la interfaz
+    // Panels.
     private JPanel mainContentPanel;
     private JPanel titlePanel;
-    // private JPanel buttonPanel;
     private JPanel descriptionPanel;
     private JPanel backPanel;
+    //Elements.
     private JLabel titleLabel;
     private JButton backButton;
     private JButton darkModeButton;
@@ -44,26 +44,27 @@ public class ViewHowToPlay extends javax.swing.JFrame {
     private final Color LIGHT_BG = Colors.BACKGROUND;
 
     public ViewHowToPlay() {
-        // Configuración básica de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Mastermind");
         Image customIcon = Toolkit.getDefaultToolkit().getImage("src" + File.separator + "main" + File.separator + "resources" + File.separator + "LogoSinTitulo.png");
         setIconImage(customIcon);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().setBackground(Colors.BACKGROUND);
-        // Panel principal con márgenes
+        
+        // Main Panel.
         mainContentPanel = new JPanel();
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainContentPanel.setBackground(Colors.BACKGROUND);
         add(mainContentPanel, BorderLayout.CENTER);
+        
+        //Tittle panel.
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(5, 0, 0, 0));
         titlePanel.setPreferredSize(new Dimension(130, 130));
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
         if (titleImage != null) {
-            // Escala la imagen al tamaño PREFERIDO del panel
             Image imagenEscalada = titleImage.getImage().getScaledInstance(
                     titlePanel.getPreferredSize().width,
                     titlePanel.getPreferredSize().height - titlePanel.getInsets().top - titlePanel.getInsets().bottom,
@@ -79,12 +80,9 @@ public class ViewHowToPlay extends javax.swing.JFrame {
             titlePanel.add(titleLabel);
         }
         mainContentPanel.add(titlePanel);
-
+        
+        //Description panel.
         backButton = PersonalizedButton.midBackButton;
-//        backButton.setActionCommand("back");
-//        backButton.setPreferredSize(new Dimension(100, 50));
-
-        // Texto de instrucciones (now with more space)
         descriptionPanel = new JPanel(new BorderLayout());
         descriptionPanel.setBackground(LIGHT_PANEL);
         descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -92,14 +90,14 @@ public class ViewHowToPlay extends javax.swing.JFrame {
                 BorderFactory.createEmptyBorder(15, 20, 20, 20)
         ));
 
-        // Crear el JEditorPane y configurarlo para usar HTML
+        // Create JEditorPane and configurre for use HTML
         JEditorPane instructions = new JEditorPane();
         instructions.setContentType("text/html");
         instructions.setEditable(false);
         instructions.setBackground(LIGHT_PANEL);
         instructions.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-        // Texto de intrucións con HTML
+        // Text html
         String htmlContent = "<html>"
                 + "<body style='font-family: Arial; font-size: 14px; color: #333333;'>"
                 + "<h1>How to Play:</h1>"
@@ -119,14 +117,14 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         instructions.setText(htmlContent);
         instructions.setCaretPosition(0);
 
-        // Crear el JScrollPane que envuelve el JEditorPane
+        // Create JScrollPane that wrapping JEditorPane
         JScrollPane scrollPane = new JScrollPane(instructions);
         scrollPane.setPreferredSize(new Dimension(220, 350));
         scrollPane.setBorder(null);
         scrollPane.setBackground(LIGHT_PANEL);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        // Añadir el scrollPane al descriptionPanel en lugar de instructions directamente
+        // Add scrollPane to the descriptionPanel 
         descriptionPanel = new JPanel(new BorderLayout());
         descriptionPanel.setBackground(LIGHT_PANEL);
         descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -136,7 +134,7 @@ public class ViewHowToPlay extends javax.swing.JFrame {
 
         descriptionPanel.add(scrollPane, BorderLayout.CENTER);
 
-        //Panel de intruciones
+        //Content wrapper panel.
         JPanel contentWrapper = new JPanel(new BorderLayout());
         contentWrapper.setBackground(LIGHT_BG);
         contentWrapper.add(descriptionPanel, BorderLayout.CENTER);
@@ -147,7 +145,6 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         backPanel.add(backButton);
         mainContentPanel.add(backPanel);
 
-        // Configuración final de la ventana
         setSize(360, 640);
         setMinimumSize(new Dimension(360, 640));
         setResizable(false);
