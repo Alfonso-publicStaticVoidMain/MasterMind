@@ -7,7 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -47,6 +49,9 @@ public class ViewDifficulty extends javax.swing.JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setTitle("Mastermind");
         getContentPane().setBackground(Colors.BACKGROUND);
+        Image customIcon = Toolkit.getDefaultToolkit().getImage("src"+File.separator+"main"+File.separator+"resources"+File.separator+"LogoSinTitulo.png");
+        setIconImage(customIcon);
+        
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
