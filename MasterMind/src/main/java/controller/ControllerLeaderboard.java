@@ -46,7 +46,7 @@ public class ControllerLeaderboard implements ActionListener {
             };
             
             // Cambiar la fuente del JLabel que contiene los símbolos
-            this.view.getScoreBoard()[row][0].setFont(new Font("Noto Color Emoji", Font.PLAIN, 18));
+            this.view.getScoreBoard()[row][0].setFont(new Font("Noto Sans Symbols", Font.PLAIN, 18));
             this.view.getScoreBoard()[row][0].setText(playerName);
             this.view.getScoreBoard()[row][1].setText(Integer.toString(score));
             row++;
