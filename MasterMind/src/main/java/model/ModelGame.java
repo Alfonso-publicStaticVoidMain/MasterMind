@@ -53,7 +53,7 @@ public class ModelGame {
         resetGame(); 
     }
 
-    // Resetear o xogo
+    // Reset
     public void resetGame() {
         this.numberToGuess = generateRandomNumber();
         this.triesLeft = this.maxTries;
@@ -61,12 +61,12 @@ public class ModelGame {
         this.score = 0;
     }
 
-    // Novo xogo
+    // New game
     public void startNewGame() {
         resetGame();
     }
 
-    // Recibe numero de columnas
+    // number of row
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
