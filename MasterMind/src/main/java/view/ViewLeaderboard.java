@@ -79,7 +79,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         // mid text panel.
         midTitlePanel = new JPanel();
         midTitleLabel = new JLabel("Scoreboard 🏆");
-        midTitleLabel.setFont(new Font("Noto Color Emoji", Font.BOLD, 22));
+        midTitleLabel.setFont(new Font("Noto Sans Symbols", Font.BOLD, 22));
         midTitleLabel.setForeground(Colors.TEXT);
         midTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         midTitlePanel.add(midTitleLabel);
