@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.ModelGame;
@@ -18,16 +20,20 @@ import view.ViewIndex;
  * @author Alfonso Gallego Fernández
  */
 public class ControllerGame implements ActionListener, KeyListener {
-    ViewGame view;
+ ViewGame view;
     ModelGame model;
+    // To store the user's previous guesses
+    private Set<String> previousGuesses; 
 
     public ControllerGame(ViewGame view, ModelGame model) {
         this.view = view;
         this.model = model;
         this.view.createView(model.getLength(), model.getMaxTries());
         this.view.setController(this);
+        // Initialize the set of previous guesses
+        this.previousGuesses = new HashSet<>(); 
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
         view.updateValue(e.getKeyChar());
@@ -51,7 +57,7 @@ public class ControllerGame implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         System.out.println("Action received: "+command);
-        
+
         if (command.equals("back")) {
             if (!model.isGameStarted() || view.playerChoice("Confirmation", "Are you sure you want to go back?")) {
                 SwingUtilities.invokeLater( () -> {
@@ -65,18 +71,32 @@ public class ControllerGame implements ActionListener, KeyListener {
             handleSubmitLogic();
         }
     }
-    
+
     private void handleSubmitLogic() {
         String guess = view.getUserDigits();
 
         if (guess.length() == model.getLength() && guess.matches("[0-9]+")) {
+            if (previousGuesses.contains(guess)) {
+                view.clearInputFields();
+                JOptionPane.showMessageDialog(
+                        view,
+                        "You have already tried this number.",
+                        "Invalid Input",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                // Don't proceed if the guess was made before
+                return; 
+            }
+
             if (!model.isGameStarted()) model.startGame();
             model.consumeTry();
-            view.setTriesLeftText(model.getTriesLeft()); 
+            view.setTriesLeftText(model.getTriesLeft());
             view.clearInputFields();
 
             String[] feedbackInfo = model.feedbackInfo(guess);
-            view.displayFeedback(model.getMaxTries() - model.getTriesLeft() - 1, guess, feedbackInfo); 
+            view.displayFeedback(model.getMaxTries() - model.getTriesLeft() - 1, guess, feedbackInfo);
+            // Add the current guess to the set of previous guesses
+            previousGuesses.add(guess); 
 
             if (model.hitsSamePlace(guess) == model.getLength()) {
                 this.finishGame(true); // the user win
@@ -86,10 +106,10 @@ public class ControllerGame implements ActionListener, KeyListener {
         } else {
             view.clearInputFields();
             JOptionPane.showMessageDialog(
-                view,
-                "Please enter " + model.getLength() + " digits.",
-                "Invalid Input",
-                JOptionPane.ERROR_MESSAGE
+                    view,
+                    "Please enter " + model.getLength() + " digits.",
+                    "Invalid Input",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
     }
@@ -101,27 +121,29 @@ public class ControllerGame implements ActionListener, KeyListener {
         String title = won ? "Congratulations!🎉🎉🎉" : "Game Over";
         boolean continuePlaying = view.playerChoice(title, message);
         if (model.getLength() == 5) {
-            String playerName = view.getPlayerName();       
+            String playerName = view.getPlayerName();
             model.updateHighScores(playerName);
         }
         resetGame();
         if (!continuePlaying) {
             SwingUtilities.invokeLater( () -> {
                 view.dispose();
-            ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
+                ControllerIndex controllerIndex = new ControllerIndex(new ViewIndex());
             });
         }
     }
-        
+
     private void showGoodbyeMessage() {
         JOptionPane.showMessageDialog(view, "Thank you for playing Mastermind! See you soon. 👋", "Goodbye!", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     public void resetGame() {
         model.resetGame(); // Use  resetGame of ModelGame -> generate new number, triesLeft = maxTries, gameFinished = false, attemptHistoy.clear()
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
         view.enableInputs();
+        // Clear the set of previous guesses for a new game
+        previousGuesses.clear(); 
     }
 
     public int getLength() {
@@ -135,5 +157,4 @@ public class ControllerGame implements ActionListener, KeyListener {
     public int getTriesLeft() {
         return model.getTriesLeft();
     }
-
 }
