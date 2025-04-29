@@ -8,8 +8,9 @@ import java.util.Map;
 
 
 /**
- *
- * @author silvia
+ * @author Silvia García Bouza
+ * @author Nuria Calo Mosquera
+ * @author Alfonso Gallego Fernández
  */
 public class ModelGameTest {
     
