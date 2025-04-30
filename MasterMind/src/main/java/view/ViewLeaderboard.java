@@ -91,7 +91,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         // Score panel.
         scorePanel = new JPanel(new GridLayout(10, 2));
         scorePanel.setBackground(Colors.BACKGROUND);
-        scorePanel.setPreferredSize(new Dimension(360, 300));
+        scorePanel.setPreferredSize(new Dimension(360, 250));
         scoreBoard = new JLabel[10][2];
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 2; col++) {

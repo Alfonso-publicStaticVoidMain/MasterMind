@@ -90,7 +90,7 @@ public class ViewDifficulty extends javax.swing.JFrame {
         buttonPanel.setPreferredSize(new Dimension(160, 100));
 
         // Back button panel.
-        backButton = PersonalizedButton.bigBackButton;
+        backButton = PersonalizedButton.midBackButton;
         backPanel = new JPanel();
         backPanel.setBackground(Colors.BACKGROUND);
         backPanel.add(backButton);
