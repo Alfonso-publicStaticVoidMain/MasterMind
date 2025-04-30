@@ -1,11 +1,8 @@
 
-
-
 import model.ModelGame;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Map;
-
 
 /**
  * @author Silvia García Bouza
@@ -13,8 +10,8 @@ import java.util.Map;
  * @author Alfonso Gallego Fernández
  */
 public class ModelGameTest {
-    
-   @Test
+
+    @Test
     void testResetGame() {
         ModelGame game = new ModelGame(4, 10);
         String initialNumber = game.getNumberToGuess();
