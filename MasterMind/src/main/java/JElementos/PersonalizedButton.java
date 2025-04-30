@@ -83,7 +83,7 @@ public class PersonalizedButton extends JButton {
 
     @Override
     protected void paintBorder(Graphics g) {
-        // No pintar el borde estándar
+        // Do not paint the standard border.
     }
 
 }

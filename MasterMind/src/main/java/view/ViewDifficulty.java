@@ -117,7 +117,6 @@ public class ViewDifficulty extends javax.swing.JFrame {
         }
         backButton.addActionListener(controller);
     }
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -136,7 +135,6 @@ public class ViewDifficulty extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
