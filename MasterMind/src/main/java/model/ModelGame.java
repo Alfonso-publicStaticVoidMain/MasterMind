@@ -53,7 +53,7 @@ public class ModelGame {
         resetGame(); 
     }
 
-    // Reset
+    // Reset.
     public void resetGame() {
         this.numberToGuess = generateRandomNumber();
         this.triesLeft = this.maxTries;
@@ -61,27 +61,27 @@ public class ModelGame {
         this.score = 0;
     }
 
-    // New game
+    // New game.
     public void startNewGame() {
         resetGame();
     }
 
-    // number of row
+    // Change number of row.
     public void setLength(int length) {
         this.length = length;
         this.numberToGuess = this.generateRandomNumber();
     }
 
-    // Recibe numero de filas
+    // Receives number of rows.
     public void setMaxTries(int maxTries) {
         this.maxTries = maxTries;
         this.triesLeft = this.maxTries;
     }
 
-    // Recibe numero de intentos restantes y los va modificando
+    // Receives the number of remaining attempts and modifies them.
     public void setTriesLeft(int triesLeft) {this.triesLeft = triesLeft;}
 
-    // Disminuye los intentos restantes
+    // Decreases remaining attempts.
     public void consumeTry() {triesLeft--;}
 
     public boolean isGameStarted() {return gameStarted;}
@@ -120,11 +120,11 @@ public class ModelGame {
      * Resume información acerca del intento del usuario en un array de Strings.
      *
      * @param guess String que guarda el intento del usuario.
-     * @return Retorna un array de Strings de forma que si en la posición i
-     * aparece "correct", es porque el dígito de la posición i del intento
-     * coincide con el número del juego en la posición i, si aparece "partial"
-     * el dígito del intento aparece en el número del juego pero en otra
-     * posición y si aparece "incorrect" no aparece en el número del juego.
+     * @return Returns an array of Strings so that if in the position i
+     * appears “correct”, it is because the digit in position i of the
+     * coincides with the set number in position i, if “partial” appears
+     * the digit of the attempt appears in the number of the set but in another
+     * position and if “incorrect” appears, it does not appear in the set number.
      */
     public String[] feedbackInfo(String guess) {
         String[] result = new String[this.length];
@@ -167,12 +167,12 @@ public class ModelGame {
         for (int i = 0; i < guess.length(); i++) {
             char digitIntroduced = guess.charAt(i);
 
-            // si hay un acierto nomisma posición
+            // Looking for a same position
             if (secret.charAt(i) == digitIntroduced) {
                 continue; // Si es acierto namisma posición, lo ignoramos
             }
 
-            // Buscamos en una posición diferente
+            //Looking for a different position
             for (int j = 0; j < secret.length(); j++) {
                 if (!secretUse[j] && secret.charAt(j) == digitIntroduced && i != j) {
                     cont++;
@@ -184,7 +184,7 @@ public class ModelGame {
         return cont;
     }
 
-    // Puntuaje
+    // Score.
     public int getScore() {
         return score;
     }
@@ -210,7 +210,7 @@ public class ModelGame {
                 scoreHistory.put(entry.getKey(), entry.getValue());
             }
 
-            // Gardar puntuacións
+            // Save scores.
             ScoreFileHandler.saveScores(scoreHistory);
         }
     }
