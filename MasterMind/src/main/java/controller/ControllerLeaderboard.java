@@ -53,14 +53,14 @@ public class ControllerLeaderboard implements ActionListener {
             };
 
             // Asignar imagen y texto al JLabel
-            JLabel label = this.view.getScoreBoard()[row][0];
+            JLabel label = this.view.getScoreBoard()[row-1][0];
             label.setFont(new Font("Noto Sans", Font.PLAIN, 18));
             label.setIcon(icon);
             // Ajustar el nombre con espacios manualmente para alinear el texto
             String formattedName = (row > 3) ? "     " + playerName : playerName;
             label.setText(formattedName);
 
-            this.view.getScoreBoard()[row][1].setText(Integer.toString(score));
+            this.view.getScoreBoard()[row-1][1].setText(Integer.toString(score));
             row++;
             if (row > 10) {
                 break;
