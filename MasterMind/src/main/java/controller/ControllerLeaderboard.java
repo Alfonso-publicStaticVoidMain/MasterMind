@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import model.ScoreFileHandler;
 import view.ViewIndex;
@@ -38,16 +40,26 @@ public class ControllerLeaderboard implements ActionListener {
             String playerName = entry.getKey();
             int score = entry.getValue();
 
-            playerName = switch (row) {
-                case 1 -> "🥇 " + playerName;
-                case 2 -> "🥈 " + playerName;
-                case 3 -> "🥉 " + playerName;
-                default -> "    " + playerName;
+            // Cargar la imagen correspondiente (medalla o nada)
+            ImageIcon icon = switch (row) {
+                case 1 ->
+                    new ImageIcon(getClass().getResource("/medals/gold.png"));
+                case 2 ->
+                    new ImageIcon(getClass().getResource("/medals/silver.png"));
+                case 3 ->
+                    new ImageIcon(getClass().getResource("/medals/bronze.png"));
+                default ->
+                    null;
             };
-            
-            // Cambiar la fuente del JLabel que contiene los símbolos
-            this.view.getScoreBoard()[row][0].setFont(new Font("Noto Sans Symbols", Font.PLAIN, 18));
-            this.view.getScoreBoard()[row][0].setText(playerName);
+
+            // Asignar imagen y texto al JLabel
+            JLabel label = this.view.getScoreBoard()[row][0];
+            label.setFont(new Font("Noto Sans", Font.PLAIN, 18));
+            label.setIcon(icon);
+            // Ajustar el nombre con espacios manualmente para alinear el texto
+            String formattedName = (row > 3) ? "     " + playerName : playerName;
+            label.setText(formattedName);
+
             this.view.getScoreBoard()[row][1].setText(Integer.toString(score));
             row++;
             if (row > 10) {
@@ -70,5 +82,5 @@ public class ControllerLeaderboard implements ActionListener {
             }
         }
     }
-    
+
 }

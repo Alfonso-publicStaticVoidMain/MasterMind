@@ -27,13 +27,13 @@ import javax.swing.border.EmptyBorder;
  * @author Alfonso Gallego Fernández
  */
 public class ViewLeaderboard extends javax.swing.JFrame {
-    
+
     //Panels.
     private JPanel titlePanel;
     private JPanel midTitlePanel;
     private JPanel scorePanel;
     private JPanel backPanel;
-    
+
     //Elements.
     private JLabel titleLabel;
     private JLabel midTitleLabel;
@@ -54,7 +54,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
         titlePanel = new JPanel();
         titlePanel.setBackground(Colors.BACKGROUND);
         titlePanel.setBorder(new EmptyBorder(20, 0, 0, 0)); // Top, Left, Bottom, Right
-        titlePanel.setPreferredSize(new Dimension(150, 150)); 
+        titlePanel.setPreferredSize(new Dimension(150, 150));
 
         titleImage = new ImageIcon(getClass().getResource("/TituloImagen.png"));
 
@@ -78,7 +78,8 @@ public class ViewLeaderboard extends javax.swing.JFrame {
 
         // mid text panel.
         midTitlePanel = new JPanel();
-        midTitleLabel = new JLabel("Scoreboard 🏆");
+        midTitleLabel = new JLabel("Scoreboard");
+        midTitleLabel.setIcon(new ImageIcon(getClass().getResource("/cup.png")));
         midTitleLabel.setFont(new Font("Noto Sans Symbols", Font.BOLD, 22));
         midTitleLabel.setForeground(Colors.TEXT);
         midTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
@@ -108,7 +109,7 @@ public class ViewLeaderboard extends javax.swing.JFrame {
                 scorePanel.add(scoreBoard[row][col]);
             }
         }
-        
+
         scorePanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
         add(scorePanel);
 
