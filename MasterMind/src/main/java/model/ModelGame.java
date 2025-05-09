@@ -16,9 +16,8 @@ public class ModelGame {
     // Variables
 
     /**
-     * Random number that the user has to guess. It is stored in a
-    * String for convenience of use. It defaults to 4 digits without
-    * repetitions..
+     * Random number that the user has to guess. It is stored in a String for
+     * convenience of use. It defaults to 4 digits without repetitions..
      */
     private String numberToGuess;
     /**
@@ -45,12 +44,12 @@ public class ModelGame {
         this.scoreHistory = ScoreFileHandler.loadScores(); //Save scores
         resetGame(); // Initializing the game when creating the ModelGame
     }
-    
+
     public ModelGame(int length, int maxTries) {
         this.length = length;
         this.maxTries = maxTries;
         this.scoreHistory = ScoreFileHandler.loadScores();
-        resetGame(); 
+        resetGame();
     }
 
     // Reset.
@@ -79,18 +78,30 @@ public class ModelGame {
     }
 
     // Receives the number of remaining attempts and modifies them.
-    public void setTriesLeft(int triesLeft) {this.triesLeft = triesLeft;}
+    public void setTriesLeft(int triesLeft) {
+        this.triesLeft = triesLeft;
+    }
 
     // Decreases remaining attempts.
-    public void consumeTry() {triesLeft--;}
+    public void consumeTry() {
+        triesLeft--;
+    }
 
-    public boolean isGameStarted() {return gameStarted;}
-    
-    public void startGame() {gameStarted = true;}
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
 
-    public boolean isGameFinished() {return gameFinished;}
+    public void startGame() {
+        gameStarted = true;
+    }
 
-    public void finishGame() {gameFinished = true;}
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
+
+    public void finishGame() {
+        gameFinished = true;
+    }
 
     public Map<String, Integer> getScoreHistory() {
         return scoreHistory;
@@ -120,11 +131,11 @@ public class ModelGame {
      * Resume información acerca del intento del usuario en un array de Strings.
      *
      * @param guess String que guarda el intento del usuario.
-     * @return Returns an array of Strings so that if in the position i
-     * appears “correct”, it is because the digit in position i of the
-     * coincides with the set number in position i, if “partial” appears
-     * the digit of the attempt appears in the number of the set but in another
-     * position and if “incorrect” appears, it does not appear in the set number.
+     * @return Returns an array of Strings so that if in the position i appears
+     * "correct", it is because the digit in position i of the coincides with
+     * the set number in position i, if "partial" appears the digit of the
+     * attempt appears in the number of the set but in another position and if
+     * "incorrect" appears, it does not appear in the set number.
      */
     public String[] feedbackInfo(String guess) {
         String[] result = new String[this.length];
@@ -169,7 +180,7 @@ public class ModelGame {
 
             // Looking for a same position
             if (secret.charAt(i) == digitIntroduced) {
-                continue; // Si es acierto namisma posición, lo ignoramos
+                continue; // If it’s correct in the same location, we ignore it
             }
 
             //Looking for a different position
@@ -177,7 +188,7 @@ public class ModelGame {
                 if (!secretUse[j] && secret.charAt(j) == digitIntroduced && i != j) {
                     cont++;
                     secretUse[j] = true;
-                    break; // Pasamos al siguiente dgito
+                    break; // NExt digit
                 }
             }
         }
@@ -185,17 +196,17 @@ public class ModelGame {
     }
 
     /**
-     * Getter para el atributo score.
-     * @return La puntuación guardada actualmente en el juego.
+     * Getter for score attribute.
+     * @return The punctuation that is saved in the game now.
      */
     public int getScore() {
         return score;
     }
 
     /**
-     * Calcula la puntuación del jugador y la guarda en su atributo score si
-     * el parámetro won es true, o la resetea a cero si es false.
-     * @param won Estado de si el jugador ganó o perdió la partida.
+     * Calculate the punctuation of the player and save it in its attribute if:
+     * the parameter won is true, or it reset to zero if it’s false.
+     * @param won Condition about if the player won or lost the game.
      */
     public void updateScore(boolean won) {
         if (won) {
@@ -209,9 +220,9 @@ public class ModelGame {
     }
 
     /**
-     * Añade el par (playerName, score) al Map scoreHistory, reordenándolo para
-     * que los jugadores con mayor puntuación aparezcan primero.
-     * @param playerName Nombre del jugador.
+     * Add entry (playerName, score) to Map scoreHistory, rearranging for The
+     * players with high punctuation appear first.
+     * @param playerName Name of th player.
      */
     public void updateHighScores(String playerName) {
         if ((scoreHistory.containsKey(playerName) && scoreHistory.get(playerName) < score) || !scoreHistory.containsKey(playerName)) {
@@ -227,32 +238,32 @@ public class ModelGame {
     }
 
     /**
-     * Getter del atributo length.
-     * @return La longitud del número a adivinar en este juego.
+     * Getter for the length attribute.
+     * @return The length of the number to guess in this game.
      */
     public int getLength() {
         return length;
     }
 
     /**
-     * Getter del atributo maxTries.
-     * @return El número máximo de intentos en este juego.
+     * Getter for the attribute maxTries.
+     * @return The maximum number of tries in this game.
      */
     public int getMaxTries() {
         return maxTries;
     }
 
     /**
-     * Getter del atributo triesLeft.
-     * @return El número de intentos restante.
+     * Getter for the attribute triesLeft.
+     * @return The number of tries left.
      */
     public int getTriesLeft() {
         return triesLeft;
     }
 
     /**
-     * Getter del atributo numberToGuess.
-     * @return El número secreto a adivinar.
+     * Getter of the attribute numberToGuess.
+     * @return The secret number to guess.
      */
     public String getNumberToGuess() {
         return numberToGuess;
