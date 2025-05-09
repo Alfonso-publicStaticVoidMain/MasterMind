@@ -1,8 +1,8 @@
 package view;
 
-import JElementos.RoundedTextField;
-import JElementos.Colors;
-import JElementos.PersonalizedButton;
+import JElements.RoundedTextField;
+import JElements.Colors;
+import JElements.PersonalizedButton;
 import controller.ControllerGame;
 import java.awt.Color;
 import java.awt.Dimension;

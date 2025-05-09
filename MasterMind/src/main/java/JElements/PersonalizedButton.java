@@ -1,4 +1,4 @@
-package JElementos;
+package JElements;
 
 /**
  *

@@ -1,4 +1,4 @@
-package JElementos;
+package JElements;
 
 import java.awt.Component;
 import java.awt.Graphics;

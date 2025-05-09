@@ -1,7 +1,7 @@
 package view;
 
-import JElementos.Colors;
-import JElementos.PersonalizedButton;
+import JElements.Colors;
+import JElements.PersonalizedButton;
 import controller.ControllerDifficulty;
 import java.awt.BorderLayout;
 import java.awt.Dimension;

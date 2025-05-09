@@ -46,9 +46,6 @@ public class ControllerGame implements ActionListener, KeyListener {
         } else if (Character.isDigit(enteredChar) && currentInput.contains(String.valueOf(enteredChar))) {
             // SHOW MESSAGE WHEN TRYING TO ENTER A DUPLICATE DIGIT WHILE TYPING
             JOptionPane.showMessageDialog(view, "You cannot enter the same digit twice.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
-        } else if (!Character.isDigit(enteredChar)) {
-            // Optionally, provide feedback to the user that only digits are allowed
-            // JOptionPane.showMessageDialog(view, "Only digits are allowed.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
         }
         e.consume(); // Consume the event to prevent further processing
     }
@@ -127,7 +124,8 @@ public class ControllerGame implements ActionListener, KeyListener {
 
             String[] feedbackInfo = model.feedbackInfo(guess);
             // DISPLAY FEEDBACK FOR THE CURRENT TRY ONLY (WHICH WILL BE THE FIRST AVAILABLE ROW)
-            view.displayFeedback(model.getMaxTries() - model.getTriesLeft() - 1, guess, feedbackInfo);            // Add the current guess to the set of previous guesses
+            view.displayFeedback(model.getMaxTries() - model.getTriesLeft() - 1, guess, feedbackInfo);
+            // Add the current guess to the set of previous guesses
             previousGuesses.add(guess);
 
             if (model.hitsSamePlace(guess) == model.getLength()) {
@@ -157,6 +155,7 @@ public class ControllerGame implements ActionListener, KeyListener {
 
     private void finishGame(boolean won) {
         model.finishGame();
+        // Only update the score if playing difficult mode
         if (model.getLength() == 5) {
             model.updateScore(won);
         }
@@ -181,7 +180,7 @@ public class ControllerGame implements ActionListener, KeyListener {
     }
 
     public void resetGame() {
-        model.resetGame(); // Use  resetGame of ModelGame -> generate new number, triesLeft = maxTries, gameFinished = false, attemptHistoy.clear()
+        model.resetGame(); // Use resetGame of ModelGame -> generate new number, triesLeft = maxTries, gameFinished = false, attemptHistoy.clear()
         view.clearPreviousTries();
         view.setTriesLeftText(model.getMaxTries());
         view.enableInputs();

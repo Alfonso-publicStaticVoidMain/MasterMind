@@ -184,11 +184,19 @@ public class ModelGame {
         return cont;
     }
 
-    // Score.
+    /**
+     * Getter para el atributo score.
+     * @return La puntuación guardada actualmente en el juego.
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Calcula la puntuación del jugador y la guarda en su atributo score si
+     * el parámetro won es true, o la resetea a cero si es false.
+     * @param won Estado de si el jugador ganó o perdió la partida.
+     */
     public void updateScore(boolean won) {
         if (won) {
             score += (triesLeft * 100); // Base points
@@ -200,6 +208,11 @@ public class ModelGame {
         }
     }
 
+    /**
+     * Añade el par (playerName, score) al Map scoreHistory, reordenándolo para
+     * que los jugadores con mayor puntuación aparezcan primero.
+     * @param playerName Nombre del jugador.
+     */
     public void updateHighScores(String playerName) {
         if ((scoreHistory.containsKey(playerName) && scoreHistory.get(playerName) < score) || !scoreHistory.containsKey(playerName)) {
             scoreHistory.put(playerName, score);
@@ -209,28 +222,38 @@ public class ModelGame {
             for (Map.Entry<String, Integer> entry : scoreList) {
                 scoreHistory.put(entry.getKey(), entry.getValue());
             }
-
-            // Save scores.
             ScoreFileHandler.saveScores(scoreHistory);
         }
     }
 
-    public void saveScoresOnExit() {
-        ScoreFileHandler.saveScores(scoreHistory);
-    }
-
+    /**
+     * Getter del atributo length.
+     * @return La longitud del número a adivinar en este juego.
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     * Getter del atributo maxTries.
+     * @return El número máximo de intentos en este juego.
+     */
     public int getMaxTries() {
         return maxTries;
     }
 
+    /**
+     * Getter del atributo triesLeft.
+     * @return El número de intentos restante.
+     */
     public int getTriesLeft() {
         return triesLeft;
     }
 
+    /**
+     * Getter del atributo numberToGuess.
+     * @return El número secreto a adivinar.
+     */
     public String getNumberToGuess() {
         return numberToGuess;
     }

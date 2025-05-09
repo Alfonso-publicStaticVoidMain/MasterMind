@@ -1,10 +1,8 @@
 package view;
 
-import JElementos.Colors;
-import JElementos.PersonalizedButton;
+import JElements.Colors;
+import JElements.PersonalizedButton;
 import controller.ControllerIndex;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
