@@ -159,50 +159,6 @@ public class ViewHowToPlay extends javax.swing.JFrame {
         backButton.addActionListener(controller);
     }
 
-    /**
-     * Panel del título (centrado) titlePanel = new JPanel(new BorderLayout());
-     * titlePanel.setBackground(LIGHT_BG); titlePanel.setPreferredSize(new
-     * Dimension(200,200)); titleLabel = new JLabel("MasterMind",
-     * SwingConstants.CENTER); titleLabel.setFont(new Font("Arial", Font.BOLD,
-     * 36)); titleLabel.setForeground(TITLE_COLOR); titlePanel.add(titleLabel,
-     * BorderLayout.CENTER); mainContentPanel.add(titlePanel); * Panel de
-     * botones (now smaller) buttonPanel = new JPanel(new BorderLayout());
-     * buttonPanel.setBackground(LIGHT_BG); buttonPanel.setMaximumSize(new
-     * Dimension(Integer.MAX_VALUE, 40)); * Configurar botón Dark Mode (smaller
-     * size) darkModeButton = new JButton(darkMode ? "☀ Light" : "☾ Dark");
-     * darkModeButton.setFont(new Font("Arial", Font.PLAIN, 12));
-     * darkModeButton.setBackground(BUTTON_COLOR);
-     * darkModeButton.setForeground(Color.WHITE);
-     * darkModeButton.setOpaque(true);
-     * darkModeButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-     * darkModeButton.setFocusPainted(false); darkModeButton.addActionListener(e
-     * -> toggleDarkMode()); * Añadir botones al panel
-     * buttonPanel.add(backButton); backButton.setPreferredSize(new
-     * Dimension(100, 50)); buttonPanel.add(darkModeButton, BorderLayout.EAST);
-     * * MÉTODOS PARA EL MODO OSCURO private void toggleDarkMode() { darkMode =
-     * !darkMode; applyColorScheme(); darkModeButton.setText(darkMode ? "☀
-     * Light" : "☾ Dark");} * Función para aplicar o Esquema de Colores private
-     * void applyColorScheme() { // Seleccionar colores según el modo actual
-     * Color bgColor = darkMode ? DARK_BG : LIGHT_BG; Color textColor = darkMode
-     * ? DARK_TEXT : LIGHT_TEXT; Color panelColor = darkMode ? DARK_PANEL :
-     * LIGHT_PANEL; // Aplicar los cambios
-     * getContentPane().setBackground(bgColor);
-     * titlePanel.setBackground(bgColor); titleLabel.setForeground(darkMode ?
-     * DARK_TEXT : TITLE_COLOR); descriptionPanel.setBackground(panelColor);
-     * descriptionPanel.setBorder(BorderFactory.createCompoundBorder(
-     * BorderFactory.createLineBorder(darkMode ? new Color(100, 100, 110) :
-     * Colors.GREY, 1), BorderFactory.createEmptyBorder(15, 20, 20, 20) ));
-     *
-     * getContentPane().revalidate(); getContentPane().repaint(); } * Aplicar
-     * esquema de colores inicial applyColorScheme(); * Color scheme from Colors
-     * class private final Color LIGHT_TEXT = Colors.TEXT; private final Color
-     * BUTTON_COLOR = Colors.BUTTON; private final Color TITLE_COLOR =
-     * Colors.TITLE; private final Color DARK_BG = new Color(40, 40, 50);
-     * private final Color DARK_TEXT = new Color(230, 230, 230); private final
-     * Color DARK_PANEL = new Color(60, 60, 70); private boolean darkMode =
-     * false;
-     */
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
